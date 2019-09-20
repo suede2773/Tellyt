@@ -1,0 +1,277 @@
+﻿@{
+    ViewBag.Title = "Dashboard Start";
+}
+
+
+
+@if (Request.IsAuthenticated)
+{
+  <div class="col-sm-12 col-md-12 col-lg-12 earth">
+    <div class="earthtext">
+      <h2>Welcome to</h2>
+      <img src="@Url.Content("~/Images/tellytlogo3.svg")" class="logo2">
+    </div>
+  </div>
+  <!--/main-->
+}
+else
+{
+  //Sign up form
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6" style="height: 1200px">
+
+      <div class="earthtext">
+        <h2>Welcome to</h2>
+        <img src="@Url.Content("~/Images/tellytlogo3.svg")" class="logo2">
+      </div>
+
+    </div>
+
+    <div class="col-sm-4 col-md-4 col-lg-4">
+      <div class="row" style="padding-top:200px">
+        <div class="col-md-12">
+          <div class="row" id="selectProviderRow" style="display:none">
+            <div class="row">
+              <div class="col-md-12">
+                <h1>How would you like to log in?</h1>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-6">
+                <button type="button" class="btn btn-danger btn-lg btn-block">Google</button>
+                <button type="button" class="btn btn-primary btn-lg btn-block">Facebook</button>
+                <button type="button" class="btn btn-info btn-lg btn-block" id="btnSignInEmail">Email</button>
+              </div>
+              <div class="col-md-3"></div>
+            </div>
+          </div>
+          <div class="row" id="selectJoinRow" style="display:none">
+            <div class="row">
+              <div class="col-md-12">
+                <h1>How would you like to join?</h1>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-6">
+                <button type="button" class="btn btn-danger btn-lg btn-block" id="btnJoinGoogle">Google</button>
+                <button type="button" class="btn btn-primary btn-lg btn-block" id="btnJoinFacebook">Facebook</button>
+                <button type="button" class="btn btn-info btn-lg btn-block" id="btnJoinEmail">Email</button>
+              </div>
+              <div class="col-md-3"></div>
+            </div>
+          </div>
+          <div class="row" id="createAccountRow" style="display: none">
+            <div class="row">
+              <h1>Create a new account</h1>
+            </div>
+            <div class="row">
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name">
+
+                </div>
+                <div class="col-sm-6">
+                  <input class="form-control" id="lastName" name="lastName" placeholder="Last Name">
+                  <!-- /.col -->
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+
+                  <input type="text" class="form-control" id="emailAddress" name="emailAddress" placeholder="Email Address">
+
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+
+                  <input type="text" class="form-control" id="emailAddress2" name="emailAddress2" placeholder="Re-enter Email Address">
+
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Your Password">
+
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12 clearfix">
+                  <button type="button" class="btn btn-primary btn-lg pull-right" id="btnCreateAccountEmail">Go!</button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="errorRow" style="display:none" class="row">
+            <div class="row">
+              <div class="col-md-12">
+                <span id="errorMessage" style="color: darkred; font-size: 1.1em; font-weight:bold"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="col-sm-2 col-md-2 col-lg-2">
+  </div>
+</div>
+}
+@section Scripts
+{
+  <script>
+
+    $("#btnJoinFacebook").click(function () {
+      //Just redirect to the interview page, which will force them to log in
+      var nextUrl = '@Url.Action("Index", "Interview")';
+      window.location.href = nextUrl;
+      return;
+    });
+
+    $("#btnJoinGoogle").click(function () {
+      //Just redirect to the interview page, which will force them to log in
+      var nextUrl = '@Url.Action("Index", "Interview")';
+      window.location.href = nextUrl;
+      return;
+    });
+
+    $("#btnJoinEmail").click(function () {
+      if ($("#selectJoinRow").is(":visible")) {
+        //$("#selectJoinRow").hide("slow");
+        $("#selectJoinRow").hide();
+        $("#createAccountRow").fadeIn(1000);
+      } else {
+        $("#createAccountRow").fadeIn(1000);
+      }
+    });
+
+    $("#btnSignIn").click(function () {
+      ClearValidation();
+      //Just redirect to the interview page, which will force them to log in
+      var nextUrl = '@Url.Action("Index", "Interview")';
+      window.location.href = nextUrl;
+      return;
+
+    });
+
+    $("#btnJoin").click(function () {
+      ClearValidation();
+      if ($("#createAccountRow").is(":visible")) {
+        $("#createAccountRow").hide();
+      }
+      if ($("#selectProviderRow").is(":visible")) {
+        $("#selectProviderRow").hide();
+        $("#selectJoinRow").fadeIn(1000);
+      } else {
+        $("#selectJoinRow").fadeIn(1000);
+      }
+    });
+
+    $("#btnCreateAccountEmail").click(function() {
+      if (ValidateJoinFields()) {
+        //Sign me up!
+        $.post("@Url.Content("~/Account/CreateUserAccount")", { firstName: $("#firstName").val(), lastName: $("#lastName").val(), email: $("#emailAddress").val(), password: $("#password").val() }, function (data) {
+          var returnData = data;
+          var returnUserData = jQuery.parseJSON(data);
+          if (!returnUserData.IsValid) {
+            $("#errorMessage").html(returnUserData.Error);
+            $("#errorRow").show();
+            return;
+          }
+
+          //alert("user created! go to the next page");
+          var nextUrl = '@Url.Action("Index", "Interview")';
+          window.location.href = nextUrl;
+          return;
+        });
+
+      }
+      }
+    );
+
+    function ClearValidation() {
+      removeTextBoxError($("#firstName"));
+      removeTextBoxError($("#lastName"));
+      removeTextBoxError($("#emailAddress"));
+      removeTextBoxError($("#emailAddress2"));
+      removeTextBoxError($("#password"));
+    }
+
+    function ValidateJoinFields() {
+      ClearValidation();
+      if ($("#firstName").val().length == 0) {
+        raiseTextBoxError($("#firstName"));
+        return false;
+      }
+      if ($("#lastName").val().length == 0) {
+        raiseTextBoxError($("#lastName"));
+        return false;
+      }
+      if ($("#emailAddress").val().length == 0) {
+        raiseTextBoxError($("#emailAddress"));
+        return false;
+      }
+      if ($("#emailAddress2").val().length == 0) {
+        raiseTextBoxError($("#emailAddress2"));
+        return false;
+      }
+      if ($("#password").val().length == 0) {
+        raiseTextBoxError($("#password"));
+        return false;
+      }
+      if ($("#emailAddress").val() != $("#emailAddress2").val()) {
+        raiseTextBoxErrorWithMessage($("#emailAddress2"), "Your 2 email addresses must match.");
+      }
+      if ($("#password").val().length < 8) {
+        raiseTextBoxErrorWithMessage($("#password"), "Your password must be 8 characters in length.");
+        return false;
+      }
+      return true;
+    }
+
+    $(function () {
+      if ($("#isSignedIn").val() == "True") {
+        $("#divSidebar").hide();
+        $("#divShowSide").show();
+        $("#logoFlame").show();
+        $('.showside').click(function () {
+          if ($("#divSidebar").is(":visible")) {
+            $("#divSidebar").hide();
+          } else {
+            $("#divSidebar").show();
+          }
+        });
+      } else {
+        DeactivateMenuOptions();
+        $("#divSidebar").hide();
+        $("#logoFlame").hide();
+      }
+
+    });
+
+    $(document).ready(function() {
+      //if ($("#isSignedIn").val() == "True") {
+      //  $("#divSidebar").hide();
+      //  $("#divShowSide").show();
+      //  $("#logoFlame").show();
+      //  $('.showside').click(function () {
+      //    if ($("#divSidebar").is(":visible")) {
+      //      $("#divSidebar").show();
+      //    } else {
+      //      $("#divSidebar").hide();
+      //    }
+      //  });
+      //  $('.earthtext').delay(500).fadeTo(1500, 1);
+      //} else {
+      //  DeactivateMenuOptions();
+      //  $("#divSidebar").hide();
+      //  $("#logoFlame").hide();
+      //  $('.earthtext').delay(500).fadeTo(1000, 1);
+      //}
+    });
+  </script>
+}

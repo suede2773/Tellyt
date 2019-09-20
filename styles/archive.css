@@ -1,0 +1,41 @@
+body {
+  background-color: white;
+}
+.navbar1 {
+  background-color: white;
+}
+.biophoto {
+  border: 5px solid white;
+}
+.thumbnailinfo {
+  color:white;
+  height:200px;
+  position: relative;
+  top:10px;
+  background-color:black;
+  border-radius: 5px;
+  padding:0px;
+}
+.thumbnailinfo > h3 {
+
+}
+.thumbnailinfo > p {
+  display: inline-block;
+  margin-right: 10px;
+}
+.explore {
+  font-weight: bold;
+  display:inline-block;
+  position: relative;
+  left: 90px;
+  color:white;
+  background-color: #6699ff;
+  border-radius: 25px;
+  border: 1px solid #6699ff;
+  padding: 10px;
+}
+.explore:hover {
+  background-color: white;
+  color: #6699ff;
+  border: 1px solid white;
+}

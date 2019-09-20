@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d7229ecd79c4440c8d0818ee47642a47" Name="Diagram1">
+        <EntityTypeShape EntityType="AmandaDevModel.Question" Width="1.5" PointX="3.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AmandaDevModel.Topic" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AmandaDevModel.Video" Width="1.5" PointX="5.5" PointY="3" />
+        <AssociationConnector Association="AmandaDevModel.VideoQuestion" />
+        <AssociationConnector Association="AmandaDevModel.FK_Questions_Topic" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

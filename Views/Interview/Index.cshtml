@@ -1,0 +1,575 @@
+﻿
+@{
+  ViewBag.Title = "Your Life Interview";
+}
+
+
+<div class="row interviewerheader" style="background:transparent url('@Url.Content("~/images/Background_Header.png")') no-repeat 0% 0% / 100% auto;">
+  <div class="col-md-3">
+    <div class="centeredcontent">
+      <img src="@Url.Content("~/Images/TurnOnCamera.png")">
+    </div>
+  </div>
+  @*<div class="col-md-2">
+    <div class="vertcontent">
+      <span>Turn On Camera</span>
+    </div>
+  </div>*@
+  <div class="col-md-3">
+    <div class="centeredcontent">
+      <img src="@Url.Content("~/Images/ConnectCamera.png")">
+    </div>
+  </div>
+  @*<div class="col-md-2">
+    <div class="vertcontent" style="margin-left: -2%">
+      <span>Connect</span>
+    </div>
+  </div>*@
+  <div class="col-md-6"></div>
+</div>
+<div class="interviewerbody">
+  <div class="row interviewerrow" style="margin-top:40px">
+    <div class="col-md-12">
+      <span style="color: #363636; letter-spacing: .6px; font-size: 24px">Interviewer</span>
+    </div>
+  </div>
+
+  <div class="row interviewerrow">
+    <div class="col-md-12">
+      <hr align="left" class="simpledivider" />
+    </div>
+  </div>
+  
+  <div class="row interviewerrow" style="margin-top:25px">
+    <div class="col-md-4 col-sm-12 col-xs-12">
+      <span style="color: #ffa800; letter-spacing: .45px; font-size: 18px">Questions</span>
+    <img src=@Url.Content("~/Images/LargeIndicator.gif") id="topicLoadingImage" />
+    <div id="accordionoverflow">
+      <div class="accordion" id="questionAccordion">
+
+      </div>
+    </div>
+    </div>
+    <div class="col-md-4 col-sm-12 col-xs-12">
+      <div><span style="color: #ffa800; letter-spacing: .45px; font-size: 18px">Review</span></div>
+      <div style="margin-top: 15px">
+        <span id="questionShown"></span>
+      </div>
+      <div class="player" id="divRecorder">
+
+      </div>
+
+      <div id="recorderButtonContainer">
+        <div id="recordButton" class="enabledRecordButton">
+          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 20%; width:80%">Answer/</div>
+          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 22%; width:78%">Record</div>
+        </div>
+        <div id="stopButton" class="enabledStopButton">
+          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 30%; width:70%">Stop</div>
+        </div>
+        <div id="reviewButton" class="enabledReviewButton">
+          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 25%; width:75%">Review</div>
+        </div>
+        <div id="redoButton" class="enabledRedoButton">
+          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 30%; width:70%">Redo/</div>
+          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 25%; width:75%">Record</div>
+        </div>
+        <div id="postButton" class="enabledPostButton">
+          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 30%; width:70%">Post</div>
+        </div>
+      </div>
+      <div id="relatedPhotosHeaderContainer">
+        <div id="reloadedPhotosHeaderLabel">
+          Related Photos
+        </div>
+        <div id="uploadPhotoButton" class="uploader" style="float: left; margin-left: 30px; cursor:pointer">
+          <img src="@Url.Content("~/Images/uploadbutton.png")">
+        </div>
+      </div>
+      <div id="relatedPhotosContainer">
+        <img src="@Url.Content("~/Images/samplephoto1.png")">
+        <img src="@Url.Content("~/Images/samplephoto2.png")">
+        <img src="@Url.Content("~/Images/samplephoto3.png")">
+        <img src="@Url.Content("~/Images/samplephoto4.png")">
+        <img src="@Url.Content("~/Images/samplephoto5.png")">
+      </div>
+      
+      <div id="relatedVideosHeaderContainer">
+        <div id="reloadedVideosHeaderLabel">
+          Related Videos
+        </div>
+        <div id="uploadVideoButton" class="uploader" style="float: left; margin-left: 30px; cursor:pointer">
+          <img src="@Url.Content("~/Images/uploadbutton.png")">
+        </div>
+      </div>
+      <div id="relatedVideosContainer">
+        <img src="@Url.Content("~/Images/samplevideo1.png")">
+        <img src="@Url.Content("~/Images/samplevideo2.png")">
+        <img src="@Url.Content("~/Images/samplevideo3.png")">
+      </div>
+
+    </div>
+    <div class="col-md-4 col-sm-12 col-xs-12">
+      <div><span style="color: #ffa800; letter-spacing: .45px; font-size: 18px">Interview</span></div>
+      <div style="margin-top: 15px">
+        <span style="letter-spacing: .8px; font-size: 16px; font-weight:500">Topics > <strong>Father</strong></span>
+      </div>
+      <div id="interviewRecordingsContainer">
+        <div class="topicContainer">
+          <div class="videoThumbnailHolder">
+            <img class="videothumbnailimage" src="@Url.Content("~/Images/samplevideothumbnail.png")">
+            <div class="overlaytext">4:30</div>
+          </div>
+          <div class="videodescriptionholder">
+            <div class="topictext">
+              When he gave the ac...
+            </div>
+            <div class="topictiming">
+              1 week ago
+            </div>
+            <div class="overlaylatest">
+              Latest
+            </div>
+          </div>
+        </div>
+
+        <div class="topicContainer">
+          <div class="videoThumbnailHolder">
+            <img class="videothumbnailimage" src="@Url.Content("~/Images/samplevideothumbnail.png")">
+            <div class="overlaytext">7:20</div>
+          </div>
+          <div class="videodescriptionholder">
+            <div class="topictext">
+              His lifetime achievem...
+            </div>
+            <div class="topictiming">
+              1 week ago
+            </div>
+            @*<div class="overlaylatest">
+              Latest
+            </div>*@
+          </div>
+        </div>
+        <div class="topicContainer">
+          <div class="videoThumbnailHolder">
+            <img class="videothumbnailimage" src="@Url.Content("~/Images/samplevideothumbnail.png")">
+            <div class="overlaytext">1:45</div>
+          </div>
+          <div class="videodescriptionholder">
+            <div class="topictext">
+              His love for golf
+            </div>
+            <div class="topictiming">
+              1 week ago
+            </div>
+            @*<div class="overlaylatest">
+              Latest
+            </div>*@
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<audio src="@Url.Content("~/Questions/E01.mp3")" id="questionAudio" onended="AudioComplete()">
+  <p>
+    Your browser does not support the <code>audio</code> element.
+  </p>
+</audio>
+
+<input type="hidden" id="defaultQuestionPath" value="@Url.Content("~/Questions/default.mp3")" />
+<input type="hidden" id="defaultPlayQuestion" value="@Url.Content("~/Images/sm_play_icon.png")" />
+<input type="hidden" id="defaultPauseQuestion" value="@Url.Content("~/Images/sm_pause_icon.png")" />
+
+@section Scripts
+{
+
+  <script>
+
+    var $videos;
+    var $topics;
+    var $currentQuestionId = 0;
+    var isFlashReady = false;
+    var isCamReady = false;
+    var reviewButtonEnabled = false;
+    var responseButtonEnabled = false;
+    var stopButtonEnabled = false;
+    var currentStream = "";
+    var currentLocation = "";
+    var currentVideo = "";
+
+    var pipeParams = { size: { width: 480, height: 360 }, qualityurl: "avq/480p.xml", accountHash: "3a607b4a17256a0676680aca650548be", eid: "A9hIFB", mrt: 3600, showMenu: 0, asv: 0 };
+
+    //function onCamAccess(recorderId, allowed) {
+    //  if (allowed) {
+    //    isCamReady = true;
+    //  } else {
+    //    isCamReady = false;
+    //  }
+    //}
+
+    function DisableAllButtons() {
+      $("#recordButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
+      $("#stopButton").addClass("disabledStopButton").removeClass("enabledStopButton");
+      $("#redoButton").addClass("disabledRedoButton").removeClass("enabledRedoButton");
+      $("#postButton").addClass("disabledPostButton").removeClass("enabledPostButton");
+      $("#reviewButton").addClass("disabledReviewButton").removeClass("enabledReviewButton");
+    }
+
+
+    function EnableInitialButtons() {
+      $("#recordButton").addClass("enabledRecordButton").removeClass("disabledRecordButton");
+      $("#stopButton").addClass("disabledStopButton").removeClass("enabledStopButton");
+      $("#reviewButton").addClass("disabledReviewButton").removeClass("enabledReviewButton");
+      $("#redoButton").addClass("disabledReviewButton").removeClass("enabledReviewButton");
+      $("#postButton").addClass("disabledPostButton").removeClass("enabledPostButton");
+    }
+
+    function AudioComplete() {
+      $("img.imgquestion").attr("src", $("#defaultPlayQuestion").val());
+    }
+
+    function GetQuestionAudioLocationFromId() {
+      for (var iTopic = 0; iTopic < $topics.length; iTopic++) {
+        for (var iQuestion = 0; iQuestion < $topics[iTopic].TopicQuestions.length; iQuestion++) {
+          if ($topics[iTopic].TopicQuestions[iQuestion].QuestionId == $currentQuestionId) {
+            return $topics[iTopic].TopicQuestions[iQuestion].QuestionAudioLocation;
+          }
+        }
+      }
+      return "";
+    }
+
+    function QuestionIsAnswered() {
+      for (var iTopic = 0; iTopic < $topics.length; iTopic++) {
+        for (var iQuestion = 0; iQuestion < $topics[iTopic].TopicQuestions.length; iQuestion++) {
+          if ($topics[iTopic].TopicQuestions[iQuestion].QuestionId == $currentQuestionId) {
+            return $topics[iTopic].TopicQuestions[iQuestion].IsAnswered;
+          }
+        }
+      }
+      return false;
+    }
+
+    function GetQuestionTextFromId() {
+      for (var iTopic = 0; iTopic < $topics.length; iTopic++) {
+        for (var iQuestion = 0; iQuestion < $topics[iTopic].TopicQuestions.length; iQuestion++) {
+          if ($topics[iTopic].TopicQuestions[iQuestion].QuestionId == $currentQuestionId) {
+            return $topics[iTopic].TopicQuestions[iQuestion].QuestionText;
+          }
+        }
+      }
+      return "";
+    }
+
+    function SelectQuestion() {
+      $("span.question").removeClass("selectedQuestion");
+      $("span.recordedTime").removeClass("selectedQuestion");
+      $("div.card-item").addClass("unselectedCardItem").removeClass("selectedCardItem");
+      var accordionTopicSelector = "question" + $currentQuestionId;
+      $("#" + accordionTopicSelector).find("span.question").addClass("selectedQuestion");
+      $("#" + accordionTopicSelector).find("span.recordedTime").addClass("selectedQuestion");
+      $("#" + accordionTopicSelector).addClass("selectedCardItem").removeClass("unselectedCardItem");
+      var questionText = GetQuestionTextFromId();
+      var questionFormattedText = "Question <strong>" +
+        GetQuestionTextFromId() +
+        "</strong>";
+      $("#questionShown").html(questionFormattedText);
+      $("#questionShown").attr("title", questionText);
+      EnableInitialButtons();
+      //if (QuestionIsAnswered()) {
+      //  EnableButtonsForAnsweredQuestion();
+      //} else {
+      //  EnableButtonsForUnansweredQuestion();
+      //}
+    }
+
+    function BuildAccordion() {
+      var allTopics = "";
+      var cardHtml =
+        "<div class=\"card\" style=\"border:currentColor; border-image: none; background-color: rgb(238, 236, 236);\">";
+      for (var iTopic = 0; iTopic < $topics.length; iTopic++) {
+        var headingId = "heading" + $topics[iTopic].TopicId;
+        var collapseId = "collapse" + $topics[iTopic].TopicId;
+        allTopics += cardHtml;
+        allTopics += "<div class=\"card-header\" id=\"" +
+          headingId +
+            "\" style=\"padding: 0px 0.5rem 0.25rem; border-radius: calc(.5rem - 1px); margin-bottom: 5px;\">";
+        allTopics += "<h2 class=\"mb-0\">";
+        allTopics += "<button class=\"btn collapsed accordionbutton\" type=\"button\" data-toggle=\"collapse\" data-target=\"#" + collapseId + "\" aria-expanded=\"false\" aria-controls=\"" + collapseId + "\" style=\"box-shadow: none\">";
+        allTopics += "<div>Section " + iTopic + " <strong>" + $topics[iTopic].TopicName + "</strong></div>";
+        allTopics += "<div><strong>" + $topics[iTopic].AnsweredCount + "/" + $topics[iTopic].QuestionCount + "</strong></div>";
+        allTopics += "</button>";
+        allTopics += "</h2>";
+        allTopics += "</div>";
+
+        allTopics += "<div id=\"" + collapseId + "\" class=\"collapse\" aria-labelledby=\"" + headingId + "\" data-parent=\"#questionAccordion\">";
+        allTopics += "<div class=\"card-body\" style=\"padding:0px\">";
+
+        for (var iQuestion = 0; iQuestion < $topics[iTopic].TopicQuestions.length; iQuestion++) {
+          var questionId = "question" + $topics[iTopic].TopicQuestions[iQuestion].QuestionId;
+          allTopics += "<div class=\"card-item unselectedCardItem\" id=\"" +
+            questionId +
+            "\" style=\"cursor: pointer; border-radius: calc(.5rem - 1px); width: 100%; padding-right: 10px; padding-left: 10px; display: inline-block; font-size: .9em\">";
+          allTopics += "<div class=\"playquestion\" style=\"width: auto\">";
+          allTopics += "<img class=\"imgquestion\" src=\"@Url.Content("~/Images/sm_play_icon.png")\" style=\"margin-bottom:3px\">";
+          allTopics += "</div>";
+          allTopics += "<div style=\"width: 75%; padding-left: 5px\">";
+          allTopics += "<span class=\"question\" title=\"" + $topics[iTopic].TopicQuestions[iQuestion].QuestionText + "\">" + $topics[iTopic].TopicQuestions[iQuestion].QuestionText + "</span>";
+          allTopics += "</div>";
+          allTopics += "<div style=\"width:10%\">";
+          allTopics += "<span class=\"recordedTime\" style=\"float:right\">" + $topics[iTopic].TopicQuestions[iQuestion].RecordedTime + "</spran>";
+          allTopics += "</div>";
+          allTopics += "<div style=\"margin-left: 5px; margin-top: 2px; width:auto\">";
+          if ($topics[iTopic].TopicQuestions[iQuestion].IsAnswered) {
+            allTopics += "<img src=\"@Url.Content("~/Images/check.png")\" style=\"float:right\">";
+          } else {
+            allTopics += "<img src=\"@Url.Content("~/Images/checkbox_empty.png")\" style=\"float:right\">";
+          }
+          allTopics += "</div>";
+          allTopics += "</div>";
+        }
+
+        allTopics += "</div>";
+        allTopics += "</div>";
+
+        allTopics += "</div>";
+
+      }
+      $("#questionAccordion").html(allTopics);
+
+      $('.collapse').on('shown.bs.collapse',
+        function() {
+          $(this).parent().addClass('active');
+          $(this).parent().find("button").addClass('activeaccordionbutton');
+        });
+
+      $('.collapse').on('hidden.bs.collapse',
+        function() {
+          $(this).parent().removeClass('active');
+          $(this).parent().find("button").removeClass('activeaccordionbutton');
+        });
+
+      $(".card-item").click(function ()
+      {
+        $currentQuestionId = parseInt($(this)[0].id.replace("question", ""));
+        SelectQuestion();
+      });
+
+      $(".playquestion").click(function ()
+      {
+        $currentQuestionId = parseInt($(this).parent()[0].id.replace("question", ""));
+
+        if ($(this).find("img.imgquestion").attr("src") == $("#defaultPauseQuestion").val()) {
+          //Just pause it
+          document.getElementById('questionAudio').pause();
+          $(this).find("img.imgquestion").attr("src", $("#defaultPlayQuestion").val());
+        }
+        else
+        {
+          var questionAudioLocation = GetQuestionAudioLocationFromId();
+        if (questionAudioLocation.length) {
+          var newAudioPath = $("#defaultQuestionPath").val().replace("default.mp3", questionAudioLocation);
+          $("#questionAudio").attr("src", newAudioPath);
+          document.getElementById('questionAudio').play();
+
+          $("img.imgquestion").attr("src", $("#defaultPlayQuestion").val());
+          $(this).find("img.imgquestion").attr("src", $("#defaultPauseQuestion").val());
+
+          }
+        }
+      });
+    }
+
+    function RefreshAccordion() {
+      var getTopicsUrl = "@Url.Content("~/Interview/GetUserTopicsAndQuestions")";
+      $.get(getTopicsUrl,
+        { "_": $.now() },
+        function(data) {
+          $("#topicLoadingImage").hide();
+          if (data.length > 0) {
+            $topics = jQuery.parseJSON(data);
+            BuildAccordion(data);
+          }
+        });
+    }
+
+    $(function () {
+
+      DisableAllButtons();
+
+      PipeSDK.insert("divRecorder", pipeParams, function(recorderObject) {
+        recorderObject.onReadyToRecord()
+        {
+          $("#recordButton").click(function ()
+          {
+            if ($(this).hasClass("enabledRecordButton"))
+            {
+              //if (!isCamReady) {
+              //  alert(
+              //    "Your recording device is not ready. Please click on the \"Record Video\" image and allow access to your camera & microphone if necessary");
+              //  return;
+              //}
+              if ($currentQuestionId > 0) {
+                recorderObject.record();
+                //enable the stop button, disable the record/review/redo/post buttons
+                $("#recordButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
+                $("#stopButton").addClass("enabledStopButton").removeClass("disabledStopButton");
+                $("#reviewButton").addClass("enabledReviewButton").removeClass("disabledReviewButton");
+                $("#redoButton").addClass("enabledRedoButton").removeClass("disabledRedoButton");
+                $("#postButton").addClass("enabledPostButton").removeClass("disabledPostButton");
+              } else {
+                alert("Please select a topic and question before recording.");
+              }
+            }
+          });
+
+          $("#stopButton").click(function ()
+          {
+            if ($(this).hasClass("enabledStopButton")) {
+              recorderObject.stopVideo();
+              //disable the stop button, enable the review/redo/post buttons
+              $("#stopButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
+              $("#reviewButton").addClass("enabledReviewButton").removeClass("disabledReviewButton");
+              $("#redoButton").addClass("enabledRedoButton").removeClass("disabledRedoButton");
+              $("#postButton").addClass("enabledPostButton").removeClass("disabledPostButton");
+            }
+          });
+
+          $("#reviewButton").click(function () {
+            if ($(this).hasClass("enabledReviewButton")) {
+              recorderObject.playVideo();
+            }
+          });
+
+          $("#redoButton").click(function () {
+            if ($(this).hasClass("enabledRedoButton")) {
+              if (!isCamReady) {
+                alert(
+                  "Your recording device is not ready. Please click on the \"Record Video\" image and allow access to your camera & microphone if necessary");
+              }
+              if ($currentQuestionId > 0) {
+                recorderObject.record();
+                //enable the stop button, disable the record/redo/review/post buttons
+                $("#recordButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
+                $("#stopButton").addClass("enabledStopButton").removeClass("disabledStopButton");
+                $("#reviewButton").addClass("enabledReviewButton").removeClass("disabledReviewButton");
+                $("#redoButton").addClass("enabledRedoButton").removeClass("disabledRedoButton");
+                $("#postButton").addClass("enabledPostButton").removeClass("disabledPostButton");
+              } else {
+                alert("Please select a topic and question before recording.");
+              }
+            }
+          });
+
+          $("#postButton").click(function () {
+            if ($(this).hasClass("enabledPostButton")) {
+              recorderObject.save();
+              var postUrl = "@Url.Content("~/Interview/SaveVideo")";
+              $.post(postUrl, { location: currentLocation, hash: "@ViewBag.AccountHash", stream: currentStream, video: currentVideo, questionId: $currentQuestionId }, function(data) {
+                var returnData = data;
+                if (returnData == "success") {
+                  //do something
+                } else {
+                  //display the error
+                  alert("Error: " + returnData);
+                }
+                //Refresh the accordion to show the answered question
+                RefreshAccordion();
+                //RefreshPlaybackVideos();
+              });
+            }
+          });
+        }
+      });
+
+      RefreshAccordion();
+    });
+
+    $(document).ready(function() {
+
+
+      $("div.uploader").hover(function() {
+          $(this).find("img").attr("src",
+            function(index, attr) {
+              return attr.replace(".png", "active.png");
+            });
+        },
+        function() {
+          $(this).find("img").attr("src",
+            function(index, attr) {
+              return attr.replace("active.png", ".png");
+            });
+        });
+
+
+      $("#recordButton").hover(function ()
+      {
+        if ($(this).hasClass("enabledRecordButton")) {
+          $(this).addClass('highlightRecordButton');
+        }
+      }, function ()
+      {
+        if ($(this).hasClass("enabledRecordButton")) {
+          $(this).removeClass('highlightRecordButton');
+          }
+    });
+
+      $("div.enabledStopButton").hover(function () {
+        $(this).addClass('highlightStopButton');
+      }, function () {
+        $(this).removeClass('highlightStopButton');
+        });
+
+      $("div.enabledReviewButton").hover(function () {
+        $(this).addClass('highlightReviewButton');
+      }, function () {
+        $(this).removeClass('highlightReviewButton');
+        });
+
+      $("div.enabledRedoButton").hover(function () {
+        $(this).addClass('highlightRedoButton');
+      }, function () {
+        $(this).removeClass('highlightRedoButton');
+        });
+
+      $("div.enabledPostButton").hover(function () {
+        $(this).addClass('highlightPostButton');
+      }, function () {
+        $(this).removeClass('highlightPostButton');
+      });
+
+      $("#reloadedPhotosHeaderLabel").click(function() {
+        alert("Open a detailed panel showing all uploaded photos");
+      });
+
+      $("#relatedPhotosContainer").click(function() {
+        alert("Open a detailed panel showing all uploaded photos");
+      });
+
+      $("#reloadedVideosHeaderLabel").click(function() {
+        alert("Open a detailed panel showing all uploaded videos");
+      });
+
+      $("#relatedVideosContainer").click(function() {
+        alert("Open a detailed panel showing all uploaded videos");
+      });
+
+      $("#uploadPhotoButton").click(function() {
+        alert("Upload a new photo");
+      });
+
+      $("#uploadVideoButton").click(function() {
+        alert("Upload a new video");
+      });
+
+      $(".topicContainer").click(function() {
+        alert("This will select the topic and load the video in the player for the user to answer/review/redo/post");
+      });
+
+    });
+
+  </script>
+}

@@ -1,0 +1,543 @@
+﻿
+@{
+  ViewBag.Title = "Your Life Interview";
+}
+
+<div class="col-sm-2 col-md-12 col-lg-12 main">
+  <div class="row">
+    <!--System-->
+    <div class="col-sm-4 col-md-3 col-lg-3 col-lg-push-2 movetopics">
+      <h3 class="sub-header">Topics</h3>
+      <div class="topics">
+        <div class="card-group" id="accordion" role="tablist" aria-multiselectable="true">
+          <img src=@Url.Content("~/Images/LargeIndicator.gif") id="topicLoadingImage" />
+          <div class="card" id="NoTopicsAvailable" style="display: none">
+            <div class="card-header" role="tab" id="NoTopicsAvailableHeading">
+              <h4 class="card-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseNone" aria-expanded="false" aria-controls="collapseNone">
+                  No Topics Available
+                </a>
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 col-md-3 col-lg-9 col-lg-push-1 movecontrol">
+      @*<h3 class="sub-header">Controls</h3>*@
+      <div class="controls">
+        <button id="play" class="disabledbutton"><span class="numbers">1</span><i class="fa fa-volume-up" aria-hidden="true"></i> Hear Question</button>
+        <button id="start" class="disabledbutton"><span class="numbers">2</span><i class="fa fa-circle" aria-hidden="true"></i> Start Response</button>
+        <button id="stop" class="disabledbutton"><span class="numbers">3</span><i class="fa fa-stop" aria-hidden="true"></i> End Response</button>
+        <button id="review" class="disabledbutton"><span class="numbers">4</span><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Review</button>
+        <button id="redo" class="disabledbutton"><span class="numbers">5</span><i class="fa fa-repeat" aria-hidden="true"></i> Redo</button>
+        <button id="submit1" class="disabledbutton"><span class="numbers">6</span><i class="fa fa-upload" aria-hidden="true"></i> Submit</button>
+      </div>
+    </div>
+    <div class="col-sm-offset-4 col-sm-4 col-md-offset-0 col-md-2 col-lg-2 col-lg-push-2">
+      <div class="interviewer">
+        <img src="@Url.Content("~/Images/interviewlady.jpg")" class="profile">
+      </div>
+      <div class="question">
+        <h2>Question</h2>
+        <h4 class="questiondefault">No question selected</h4>
+        <h3 class="questionshown"><em>What is your earliest childhood memory?</em></h3>
+      </div>
+    </div>
+    <div class="col-sm-8 col-sm-offset-4 col-md-offset-0 col-md-4 col-md-pull-2 col-lg-pull-0 col-lg-4 col-lg-push-2">
+      <div class="player">
+        <!-- begin video recorder code -->
+        <script type="text/javascript">
+          var size = { width: 400, height: 330 };
+          var flashvars = { qualityurl: "avq/300p.xml", accountHash: "@ViewBag.AccountHash", eid: 1, showMenu: "true", mrt: 120, sis: 0, asv: 1, mv: 0, dpv: 0, ao: 0 };
+          (function () { var pipe = document.createElement('script'); pipe.type = 'text/javascript'; pipe.async = true; pipe.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 's1.addpipe.com/1.3/pipe.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(pipe, s); })();
+        </script>
+        <div id="hdfvr-content"></div>
+        <!-- end video recorder code -->
+
+        <div class="alert alert-info alert1" role="alert">
+          <strong>Hint:</strong> Try and recall what you saw, felt, or heard.
+        </div>
+        <div class="alert alert-info alert2" role="alert">
+          <strong>Hint:</strong> Try and recall what you saw, felt, or heard.
+        </div>
+      </div>
+    </div>
+  </div><!--/system-->
+  <div class="gap"></div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 playbackdown">
+      <h3 class="sub-header">Playback</h3>
+      <div id="videoPlaybackContainer" class="playback">
+        @*<img src="https://eu1-addpipe.s3.eu-central-1.amazonaws.com/3a607b4a17256a0676680aca650548be/1bdb381f4c5a20af312fe319a61021f2.jpg" location="eu1-addpipe.s3.eu-central-1.amazonaws.com" hash="3a607b4a17256a0676680aca650548be" stream="1bdb381f4c5a20af312fe319a61021f2" class="clip" data-toggle="tooltip" data-placement="top" title="What is your earliest childhood memory?">*@
+      </div>
+    </div>
+  </div>
+</div><!--/main-->
+@*
+  <div id="noAudioAlert" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">No Audio Available</h4>
+        </div>
+        <div class="modal-body" id="noAudioAlertBody">
+          <p>The audio is not available.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content modal-video">
+        <div class="modal-header">
+          <h5 class="modal-title" id="videoModalLabel">Your video</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div id="videoModalBody" class="modal-body">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnDeleteVideo">Delete</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>*@
+
+<audio src="@Url.Content("~/Questions/E01.mp3")" id="questionAudio">
+  <p>
+    Your browser does not support the <code>audio</code> element.
+  </p>
+</audio>
+
+<input type="hidden" id="defaultQuestionPath" value="@Url.Content("~/Questions/default.mp3")" />
+
+@section Scripts
+{
+  <script>
+    var $videos;
+    var $topics;
+    var $currentQuestionId = 0;
+    var isFlashReady = false;
+    var isCamReady = false;
+    var reviewButtonEnabled = false;
+    var responseButtonEnabled = false;
+    var stopButtonEnabled = false;
+    var currentStream = "";
+    var currentLocation = "";
+    var currentVideo = "";
+
+    function onFlashReady(recorderId) {
+      isFlashReady = true;
+      if (isCamReady) {
+        enableDisableResponseButton(true);
+      }
+    }
+
+    function onCamAccess(allowed, recorderId) {
+      if (allowed) {
+        isCamReady = true;
+        //if (isFlashReady)
+        //{
+
+        //}
+      } else {
+        isCamReady = false;
+      }is
+    }
+
+    function onSaveOk(streamName, streamDuration, userId, cameraName, micName, recorderId, audioCodec, videoCodec, fileType, videoId, audioOnly, location) {
+      var args = Array.prototype.slice.call(arguments);
+      currentLocation = args[11];
+      currentStream = args[0];
+      currentVideo = args[9];
+
+      //114203 - videoId : args [9]
+      //vs1470782010630_483 - streamName : args[0]
+      //<video poster="https://<location>/<hash>/<stream>.jpg" width="400" height="300" controls><source src="https://<location>/<hash>/<stream>.mp4" type="video/mp4">Your browser does not support the video tag.</video>
+
+    }
+
+
+    function GetQuestionAudioLocationFromId(questionId) {
+      for (var iTopic = 0; iTopic < $topics.length; iTopic++) {
+        for (var iQuestion = 0; iQuestion < $topics[iTopic].TopicQuestions.length; iQuestion++) {
+          if ($topics[iTopic].TopicQuestions[iQuestion].QuestionId == questionId) {
+            return $topics[iTopic].TopicQuestions[iQuestion].QuestionAudioLocation;
+          }
+        }
+      }
+      return "";
+    }
+
+    function GetQuestionTextFromId(questionId) {
+      for (var iTopic = 0; iTopic < $topics.length; iTopic++) {
+        for (var iQuestion = 0; iQuestion < $topics[iTopic].TopicQuestions.length; iQuestion++) {
+          if ($topics[iTopic].TopicQuestions[iQuestion].QuestionId == questionId) {
+            return $topics[iTopic].TopicQuestions[iQuestion].QuestionText;
+          }
+        }
+      }
+      return "";
+    }
+
+    function ClickQuestion(questionId) {
+      $currentQuestionId = questionId;
+      $('.questiondefault').css('display', 'none');
+      $('#play').switchClass("disabledbutton", "activebutton");
+      var questionText = "<em>" +
+        GetQuestionTextFromId(questionId) +
+        "</em>";
+      $('.questionshown').html(questionText);
+      $('.questionshown').css('opacity', '1');
+      $('.alert1').css('opacity', '1');
+      $('.alert2').css('opacity', '1');
+    }
+
+    function LoadVideo(element) {
+      $("#videoModalBody").html("");
+
+      var posterImage = "https://";
+      posterImage += $(element).attr("location");
+      posterImage += "/";
+      posterImage += $(element).attr("hash");
+      posterImage += "/";
+      posterImage += $(element).attr("stream");
+      var videoSource = posterImage;
+      posterImage += ".jpg";
+      videoSource += ".mp4";
+
+      var videoPlaybackHtml = "<video poster=\"";
+      videoPlaybackHtml += posterImage;
+      videoPlaybackHtml += "\" width=\"400\" height=\"300\" controls><source src=\"";
+      videoPlaybackHtml += videoSource;
+      videoPlaybackHtml += "\"  type=\"video/mp4\">Your browser does not support the video tag.</video>";
+
+      currentStream = $(element).attr("stream");
+
+      //<video id="videoPlayback" poster="" width="400" height="300" controls><source src="" type="video/mp4">Your browser does not support the video tag.</video>
+      var videoPlaybackElement = $(videoPlaybackHtml);
+      $("#videoModalBody").append(videoPlaybackElement);
+      $('#videoModal').modal('show');
+    }
+
+    function RefreshPlaybackVideos() {
+      //<img src="https://eu1-addpipe.s3.eu-central-1.amazonaws.com/3a607b4a17256a0676680aca650548be/1bdb381f4c5a20af312fe319a61021f2.jpg" location="eu1-addpipe.s3.eu-central-1.amazonaws.com" hash="3a607b4a17256a0676680aca650548be" stream="1bdb381f4c5a20af312fe319a61021f2" class="clip" data-toggle="tooltip" data-placement="top" title="What is your earliest childhood memory?">
+      var postUrl = "@Url.Content("~/Interview/GetVideos")";
+      $.post(postUrl, {}, function(data) {
+        if (data.length > 0) {
+          $("#videoPlaybackContainer").html("");
+          $videos = jQuery.parseJSON(data);
+          for (var iVideo = 0; iVideo < $videos.length; iVideo++) {
+            //create an image
+            var imageHtml = "<img src=\"https://";
+            imageHtml += $videos[iVideo].Location;
+            imageHtml += "/";
+            imageHtml += $videos[iVideo].Hash;
+            imageHtml += "/";
+            imageHtml += $videos[iVideo].Stream;
+            imageHtml += ".jpg\"  location=\"";
+            imageHtml += $videos[iVideo].Location;
+            imageHtml += "\" hash=\"";
+            imageHtml += $videos[iVideo].Hash;
+            imageHtml += "\" stream=\"";
+            imageHtml += $videos[iVideo].Stream;
+            imageHtml += "\"  class=\"clip\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"";
+            imageHtml += $videos[iVideo].Question;
+            imageHtml += "\" onclick=\"LoadVideo(this)\">";
+            var imgElement = $(imageHtml);
+            $("#videoPlaybackContainer").append(imgElement);
+          }
+        }
+      });
+    }
+
+    $(function() {
+
+      //$("img.clip").click(function () {
+      //  var posterImage = "https://";
+      //  posterImage += $(this).attr("location");
+      //  posterImage += "/";
+      //  posterImage += $(this).attr("hash");
+      //  posterImage += "/";
+      //  posterImage += $(this).attr("stream");
+      //  var videoSource = posterImage;
+      //  posterImage += ".jpg";
+      //  videoSource += ".mp4";
+
+      //  $("#videoPlayback").attr("poster", posterImage);
+      //  $("#videoPlayback").find("source").attr("src", videoSource);
+
+      //  $('#videoModal').modal('show');
+      //});
+
+      //$('#videoModal').on('show.bs.modal', function(event) {
+      //  var img = $(event.relatedTarget); // Img that triggered the modal
+      //  //var recipient = button.data('whatever') // Extract info from data-* attributes
+      //  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+      //  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+      //  var modal = $(this);
+      //  //modal.find('.modal-title').text('New message to ' + recipient)
+      //  //modal.find('.modal-body input').val(recipient)
+      //});
+
+      if ($("#isSignedIn").val() == "True") {
+        $("#divSidebar").hide();
+        $("#divShowSide").show();
+        $("#logoFlame").show();
+        $('.showside').click(function() {
+          if ($("#divSidebar").is(":visible")) {
+            $("#divSidebar").hide();
+          } else {
+            $("#divSidebar").show();
+          }
+        });
+      } else {
+        DeactivateMenuOptions();
+        $("#divSidebar").hide();
+        $("#logoFlame").hide();
+      }
+
+      $("#play").click(function() {
+        if ($currentQuestionId == 0) {
+          $("#noAudioAlertBody").html("<p>You must select a topic and question first.</p>");
+          $('#noAudioAlert').modal('show');
+          return false;
+        }
+        var questionAudioLocation = GetQuestionAudioLocationFromId($currentQuestionId);
+        if (questionAudioLocation.length) {
+          var newAudioPath = $("#defaultQuestionPath").val().replace("default.mp3", questionAudioLocation);
+          $("#questionAudio").attr("src", newAudioPath);
+          document.getElementById('questionAudio').play();
+          if ($(this).hasClass("activebutton")) {
+            $('#start').switchClass("disabledbutton", "activebutton");
+            //$('#play').switchClass("activebutton", "disabledbutton");
+            $("#play").find("i").switchClass("disabledicon", "runningicon");
+          }
+        } else {
+          $("#noAudioAlertBody").html("<p>The audio is not available.</p>");
+          $('#noAudioAlert').modal('show');
+        }
+        return false;
+      });
+
+      $("#start").click(function() {
+        $("#divResponse").show();
+        if ((!isFlashReady) || (!isCamReady)) {
+          alert("Your recording device is not ready. Please click on the \"Record Video\" image and allow access to your camera & microphone if necessary");
+          return false;
+        }
+        if ($(this).hasClass("activebutton")) {
+          $('#stop').switchClass("disabledbutton", "activebutton");
+          $("#stop").find("i").switchClass("disabledicon", "activeicon");
+          $('#start').switchClass("activebutton", "disabledbutton");
+          $("#start").find("i").switchClass("disabledicon", "runningicon");
+          $("#play").find("i").switchClass("runningicon", "disabledicon");
+        }
+        //Now start recording
+        document.VideoRecorder.record();
+        //Enable the stop button
+        //enableDisableStopButton(true);
+      });
+
+      $('#stop').click(function() {
+        if ($(this).hasClass("activebutton")) {
+          $('#review').switchClass("disabledbutton", "activebutton");
+          $('#redo').switchClass("disabledbutton", "activebutton");
+          $('#submit1').switchClass("disabledbutton", "activebutton");
+          $('#stop').switchClass("activebutton", "disabledbutton");
+          $("#start").find("i").switchClass("runningicon", "disabledicon");
+          $('.activeicon').switchClass("activeicon", "disabledicon");
+          document.VideoRecorder.stopVideo();
+        }
+      });
+
+      $('#review').click(function() {
+        if ($(this).hasClass("activebutton")) {
+          //$('#review').switchClass("activebutton", "disabledbutton");
+          $('#redo').switchClass("disabledbutton", "activebutton");
+          $('#submit1').switchClass("disabledbutton", "activebutton");
+          $('#start').switchClass("disabledbutton", "activebutton");
+          $("#start").find("i").switchClass("runningicon", "disabledicon");
+          document.VideoRecorder.playVideo();
+        }
+      });
+
+      $('#redo').click(function() {
+        if ($(this).hasClass("activebutton")) {
+          $('#review').switchClass("activebutton", "disabledbutton");
+          $('#redo').switchClass("activebutton", "disabledbutton");
+          $('#submit1').switchClass("activebutton", "disabledbutton");
+          $('#start').switchClass("disabledbutton", "activebutton");
+
+        }
+      });
+
+      $('#submit1').click(function() {
+        if ($(this).hasClass("activebutton")) {
+          $('#review').switchClass("activebutton", "disabledbutton");
+          $('#redo').switchClass("activebutton", "disabledbutton");
+          $('#submit1').switchClass("activebutton", "disabledbutton");
+          //Save the video for this question
+          document.VideoRecorder.save();
+          var postUrl = "@Url.Content("~/Interview/SaveVideo")";
+          $.post(postUrl, { location: currentLocation, hash: "@ViewBag.AccountHash", stream: currentStream, video: currentVideo, questionId: $currentQuestionId }, function(data) {
+            var returnData = data;
+            if (returnData == "success") {
+              //do something
+            } else {
+              //display the error
+              alert("Error: " + returnData);
+            }
+            RefreshPlaybackVideos();
+          });
+        } else {
+          //Do nothing
+        }
+      });
+
+      $("#btnDeleteVideo").click(function() {
+        if (confirm("Are you sure you wish to delete this video?")) {
+          $('#videoModal').modal('hide');
+          var postUrl = "@Url.Content("~/Interview/DeleteVideo")";
+          $.post(postUrl, { stream: currentStream }, function(data) {
+            RefreshPlaybackVideos();
+          });
+        }
+      });
+
+      //$("#responseButton").click(function() {
+      //  $("#divResponse").show();
+      //  if (!reviewButtonEnabled)
+      //  {
+      //    alert("Your recording device is not ready. Please click on the \"Record Video\" image and allow access to your camera & microphone if necessary");
+      //  }
+      //  //Now start recording
+      //  document.VideoRecorder.record();
+      //  //Enable the stop button
+      //  enableDisableStopButton(true);
+      //});
+
+      //$("#stopButton").click(function ()
+      //{
+      //  document.VideoRecorder.stopVideo();
+      //  enableDisableReviewButton(true);
+      //});
+
+      //$("#reviewButton").click(function () {
+      //  enableDisableStopButton(false);
+      //  document.VideoRecorder.playVideo();
+      //});
+
+      var getTopicsUrl = "@Url.Content("~/Interview/GetUserTopicsAndQuestions")";
+      $.get(getTopicsUrl, { "_": $.now() }, function(data) {
+        $("#NoTopicsAvailable").hide();
+        $("#topicLoadingImage").hide();
+        if (data.length > 0) {
+          var allTopics = "";
+          $topics = jQuery.parseJSON(data);
+
+          for (var iTopic = 0; iTopic < $topics.length; iTopic++) {
+            if (iTopic == 0) {
+              allTopics += "<div class=\"card\">";
+            } else {
+              allTopics += "<div class=\"card\">";
+            }
+            var headingId = "heading" + $topics[iTopic].TopicId;
+            var collapseId = "collapse" + $topics[iTopic].TopicId;
+            allTopics += "<div class=\"card-header\" role=\"tab\" id=\"" + headingId + "\">";
+            allTopics += "<h4 class=\"card-title\">";
+            allTopics += "<a class=\"collapsed\" role=\"button\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#" + collapseId + "\" aria-expanded=\"false\" aria-controls=\"" + collapseId + "\">";
+            allTopics += $topics[iTopic].TopicName;
+            allTopics += "</a>";
+            allTopics += "</h4>";
+            allTopics += "</div>";
+            allTopics += "<div id=\"" + collapseId + "\" class=\"panel-collapse collapse\" role=\"tabpanel\" aria-labelledby=\"" + headingId + "\">";
+            allTopics += "<ol class=\"list-group\">";
+            for (var iQuestion = 0; iQuestion < $topics[iTopic].TopicQuestions.length; iQuestion++) {
+              if ((iQuestion == 0) && (iTopic == 0)) {
+                allTopics += "<li class=\"questionclicked\" ";
+              } else {
+                allTopics += "<li ";
+              }
+              allTopics += "onclick=\"ClickQuestion(" + $topics[iTopic].TopicQuestions[iQuestion].QuestionId + ");\">";
+              allTopics += $topics[iTopic].TopicQuestions[iQuestion].QuestionText;
+              allTopics += "</li>";
+            }
+            allTopics += "</ol>";
+            allTopics += "</div>";
+            allTopics += "</div>";
+          }
+          //GetQuestions(topics.TopicItems[0].Name);
+          $("#accordion").html(allTopics);
+          //$("#topicHolder").show();
+        } else {
+          $("#NoTopicsAvailable").show();
+        }
+      });
+
+    });
+
+
+    $(document).ready(function() {
+      RefreshPlaybackVideos();
+      DeactivateMenuOptions();
+      ActivateMenuOption("liInterview");
+      ActivateMenuOption("liProfile");
+      $(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+      });
+      $('#redo').mouseenter(function() {
+        $('.fa-repeat').css({ 'transition': 'all .7s', 'transform': 'rotate(359deg)' });
+      });
+      $('#redo').mouseleave(function() {
+        $('.fa-repeat').css({ 'transition': 'all 0s', 'transform': 'rotate(1deg)' });
+      });
+      $('#stop').mouseenter(function() {
+        $('.fa-stop').css({ 'transition': 'all .2s', 'transform': 'scale(1.2,1.2)' });
+      });
+      $('#stop').mouseleave(function() {
+        $('.fa-stop').css('transform', 'scale(1.0,1.0)');
+      });
+      $('#review').mouseenter(function() {
+        $('.fa-pencil-square-o').css({ 'transition': 'all .2s', 'transform': 'scale(1.2,1.2)' });
+      });
+      $('#review').mouseleave(function() {
+        $('.fa-pencil-square-o').css('transform', 'scale(1.0,1.0)');
+      });
+      $('#start').mouseenter(function() {
+        $('.fa-circle').css({ 'transition': 'all .2s', 'transform': 'scale(1.2,1.2)' });
+      });
+      $('#start').mouseleave(function() {
+        $('.fa-circle').css('transform', 'scale(1.0,1.0)');
+      });
+      $('#play').mouseenter(function() {
+        $('.fa-volume-up').css({ 'transition': 'all .2s', 'transform': 'scale(1.2,1.2)' });
+      });
+      $('#play').mouseleave(function() {
+        $('.fa-volume-up').css('transform', 'scale(1.0,1.0)');
+
+      });
+      $('#submit1').mouseenter(function() {
+        $('.fa-upload').css({ 'transition': 'all .2s', 'transform': 'scale(1.2,1.2)' });
+      });
+      $('#submit1').mouseleave(function() {
+        $('.fa-upload').css('transform', 'scale(1.0,1.0)');
+      });
+
+    });
+
+
+  </script>
+}

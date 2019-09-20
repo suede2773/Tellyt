@@ -1,0 +1,224 @@
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>@ViewBag.Title - Tellyt</title>
+  <link href="@Url.Content("~/Styles/ie10-viewport-bug-workaround.css")" rel="stylesheet">
+
+  <!-- Bootstrap core CSS -->
+  <link href="@Url.Content("~/Styles/tether.min.css")" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <!--Google Font-->
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,900,300,100' rel='stylesheet' type='text/css'>
+  <!--FontAwesome-->
+  <link href="@Url.Content("~/Styles/font-awesome-4.6.3/css/font-awesome.min.css")" rel="stylesheet type='text/css'">
+  <link href="@Url.Content("~/Styles/main.css")" rel="stylesheet">
+  <link rel="stylesheet" href="//cdn.addpipe.com/2.0/pipe.css">
+  <!-- Custom styles -->
+
+
+  <style>
+    /*.modal-video {
+      width: 430px;
+    }*/
+    /*.accordionsection {
+      color: black;
+      text-decoration: none;
+    }*/
+  </style>
+
+  @*<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>*@
+  @*<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>*@
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  
+  <script type="text/javascript" src="//cdn.addpipe.com/2.0/pipe.js"></script>
+
+  <script>
+    //jQuery.fn.justtext = function () {
+    //  return $(this).clone()
+    //          .children()
+    //          .remove()
+    //          .end()
+    //          .text();
+
+    //};
+
+    function get_browser_info() {
+      var ua = navigator.userAgent, tem, M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+      if (/trident/i.test(M[1])) {
+        tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+        return { name: 'IE', version: (tem[1] || '') };
+      }
+      if (M[1] === 'Chrome') {
+        tem = ua.match(/\bOPR\/(\d+)/)
+        if (tem != null) {
+          return { name: 'Opera', version: tem[1] };
+        }
+      }
+      M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+      if ((tem = ua.match(/version\/(\d+)/i)) != null) {
+        M.splice(1, 1, tem[1]);
+      }
+      return {
+        name: M[0],
+        version: M[1]
+      };
+    }
+
+    function removeCheckBoxError(checkBox) {
+      checkBox.removeClass("parsley-error");
+      checkBox.prev("ul").remove();
+    }
+
+    function raiseCheckBoxError(checkBox) {
+      if (!checkBox.prev().length) {
+        checkBox.before("<ul class=\"parsley-errors-list filled\"><li class=\"parsley-required\">You must agree to the terms of service.</li></ul>");
+      }
+    }
+
+    function raiseTextBoxErrorWithMessage(textBox, message) {
+      textBox.addClass("parsley-error");
+      //Only add this message if it doesn't exist
+      if (!textBox.next().length) {
+        textBox.after("<ul class=\"parsley-errors-list filled\"><li class=\"parsley-required\">" + message + "</li></ul>");
+      }
+    }
+
+    function raiseTextBoxError(textBox) {
+      textBox.addClass("parsley-error");
+      //Only add this message if it doesn't exist
+      if (!textBox.next().length) {
+        textBox.after("<ul class=\"parsley-errors-list filled\" style=\"padding-top: 0px; padding-bottom: 0px\"><li class=\"parsley-required\">This value is required.</li></ul>");
+      }
+    }
+
+    function removeTextBoxError(textBox) {
+      textBox.removeClass("parsley-error");
+      textBox.next("ul").remove();
+    }
+
+    function DeactivateMenuOptions() {
+      $("#liProfile").hide();
+      $("#liInterview").hide();
+      $("#liBioplate").hide();
+      $("#liBiosphere").hide();
+      $("#liTribute").hide();
+      $("#liAccount").hide();
+    }
+
+    function ActivateMenuOption(id) {
+      $("#" + id).show();
+    }
+
+    function SetSidebarHeight() {
+      var numVisibleMenuItems = $("#divSidebar").find("li:visible").length;
+      if (numVisibleMenuItems == 0) {
+        $("#divSidebar").hide();
+        return;
+      }
+      $("#divSidebar").show();
+      var height = numVisibleMenuItems * 115;
+      $("#divSidebar").css("height", height + "px");
+    }
+
+  </script>
+
+</head>
+<body>
+  <input type="hidden" id="isSignedIn" value="@Request.IsAuthenticated.ToString()" />
+  <!--Nav Bar Top -->
+  <div class="row navbar1">
+    <div class="col-md-1">
+      <div class="showside" id="divShowSide">
+        <img src="@Url.Content("~/Images/header_menu_icon.png")">
+      </div>
+    </div>
+    <div class="col-md-2" style="margin-top: -5px">
+      <img src="@Url.Content("~/images/Tellyt-logo.png")">
+    </div>
+    <div class="col-md-1 menutext">
+      dashboard
+    </div>
+    <div class="col-md-1 menutext">
+      search
+    </div>
+    <div class="col-md-2 menutext">
+      account settings
+    </div>
+    <div class="col-md-2 menutext">
+      help center
+    </div>
+    <div class="col-md-3">
+      @Html.Partial("_LoginPartial")
+    </div>
+  </div>
+  <!-- Content Area -->
+
+      @RenderBody()
+<footer>
+  <div class="row footer2">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-2">
+      <div style="padding-bottom:10px">
+        <img src="@Url.Content("~/Images/footer_logo.png")">
+      </div>
+      <div>
+        <span>
+          Sed lacinia at massa ut mollis. Sed sit amet bibendum eros, vitae sagittis tortor. Maecenas a varius augue, sed ullamcorper lacus. Quisque feugiat eros dolor, ac bibendum odio condimentum finibus. Sed eu feugiat mauris. Cras a orci nec diam varius dignissim non at mauris. Vivamus ultricies orci ut nisi sodales porttitor. Curabitur quis massa eu nibh posuere sollicitudin nec eu tortor. Nam et laoreet mauris.
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="row navbar1">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-2">
+      <span>&copy; @DateTime.Now.Year Tellyt Corporation</span>
+    </div>
+    <div class="col-md-2">
+
+    </div>
+    <div class="col-md-1">
+
+    </div>
+    <div class="col-md-2">
+
+    </div>
+    <div class="col-md-2">
+
+    </div>
+    <div class="col-md-2" style="padding-left: 0px">
+      <img src="@Url.Content("~/Images/facebookicon.png")" style="cursor: pointer">
+      <img src="@Url.Content("~/Images/instagramicon.png")" style="cursor: pointer">
+      <img src="@Url.Content("~/Images/twittericon.png")" style="cursor: pointer">
+      <img src="@Url.Content("~/Images/youtubeicon.png")" style="cursor: pointer">
+    </div>
+  </div>
+  @*<p>>&copy; @DateTime.Now.Year Tellyt Corporation</p>
+    <a href="#">Terms of Service</a>
+    <p style="display:inline">|</p>
+    <a href="#">Privacy Policy</a>*@
+</footer>
+
+  @RenderSection("scripts", required: false)
+  <script>
+  $("#btnSignOut").click(function () {
+    var nextUrl = '@Url.Action("Logout", "Account")';
+    window.location.href = nextUrl;
+    return;
+  });
+  </script>
+
+</body>
+</html>

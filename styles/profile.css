@@ -1,0 +1,265 @@
+body {
+  background-color: white;
+}
+
+.navbar1 {
+  background-color: white;
+}
+.footer1 {
+  position:static;
+}
+.profileheader {
+  height: 200px;
+  background: -webkit-linear-gradient(#1a1a1a,grey); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#1a1a1a,grey); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#1a1a1a,grey); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#1a1a1a,grey); /* Standard syntax */
+  border-top: 1px solid #666666;
+  border-bottom: 1px solid #666666;
+}
+.profileheadertext {
+  display:inline-block;
+  width:400px;
+  color:white;
+}
+
+.profileheadertext > h3 {
+  font-weight: 300;
+  letter-spacing: 3px;
+}
+
+.profileheadertext > h2 {
+  font-weight: 300;
+  font-size: 2.3em;
+  letter-spacing: 2px;
+  position: relative;
+  top:-8px;
+}
+
+.profileheadertext > p {
+  position: relative;
+  top:-5px;
+  max-height: 80px;
+  overflow-y: auto;
+}
+.profileheaderpicture {
+  height:200px;
+  width:auto;
+  position: relative;
+  left: -45px;
+  top:-98px;
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}
+
+.profileheaderlogo {
+  width:100px;
+  position: relative;
+  top:-165px;
+  left:70px;
+  display:none;
+}
+
+.commentlog {
+  margin-top:20px;
+  margin-right:-20px;
+  padding-left: 20px;
+  padding-right: 50px;
+}
+@media (min-width:1350px) {
+  .timeline {
+    position: absolute;
+    top:140px;
+    left:60%;
+  }
+}
+@media (max-width:1349px) {
+  .timeline {
+    display:none;
+  }
+}
+.vidselection {
+  text-align: center;
+  margin-top:20px;
+  margin-left: 20px;
+  border: 2px lightgrey solid;
+  border-radius: 10px;
+  height: 650px;
+  overflow-y: scroll;
+}
+.vidselection > h4 {
+  margin-bottom: 35px;
+}
+.vidselection > ul {
+  list-style: none;
+  padding-left: 0px;
+}
+.vidselection > ul > li {
+  text-align: center;
+}
+
+.vidselection > ul > li > img {
+  width:160px;
+  border: 4px darkgrey solid;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  opacity: .8;
+  cursor: pointer;
+}
+
+.vidselection > ul > li > img:hover {
+  opacity: 1;
+}
+
+.library {
+  padding-left:30px;
+  padding-right:30px;
+  padding-bottom: 40px;
+  min-height: 650px;
+  margin-top: 20px;
+  margin-bottom:60px;
+  border: 2px lightgrey solid;
+  border-radius: 10px;
+}
+.librarytitle {
+  display:inline-block;
+}
+.profilequestion {
+  font-size: 1.5em;
+  display: inline-block;
+  margin-left:40px;
+}
+.videoholder {
+  display: inline-block;
+  background-color: white;
+  border:1px solid black;
+  border-radius: 10px;
+  padding:10px;
+  width:535px;
+  box-shadow: 0px 0px 25px #333333;
+  margin-top:30px;
+}
+.profilevideoplayer {
+  width:512px;
+  height: 384px;
+  background-color: black;
+  border-radius: 10px;
+}
+@media (max-width: 900px) {
+  .videoholder {
+    display: inline-block;
+    background-color: white;
+    border:1px solid black;
+    border-radius: 10px;
+    padding:10px;
+    width:470px;
+    box-shadow: 0px 0px 25px #333333;
+    margin-top:30px;
+  }
+  .profilevideoplayer {
+    width:448px;
+    height: 336px;
+    background-color: black;
+    border-radius: 10px;
+  }
+}
+.share {
+  display:inline-block;
+  cursor:pointer;
+  margin-top:10px;
+  margin-left:10px;
+}
+.photolog {
+  margin-top: 20px;
+  overflow-y: hidden;
+  white-space: nowrap;
+  width:100%;
+  height:150px;
+}
+.photolog > ul {
+  list-style: none;
+  overflow-x: auto;
+  padding-left: 0px;
+}
+.photolog > ul > li {
+  display:inline-block;
+}
+.photolog > ul > li > img {
+  max-width:120px;
+  border: 4px darkgrey solid;
+  border-radius: 5px;
+  margin-right:5px;
+  margin-bottom: 3px;
+  cursor: pointer;
+}
+.addphoto {
+  opacity:.8;
+  cursor:pointer;
+}
+.addphoto:hover {
+  opacity:1;
+}
+.addvideo {
+  opacity:.8;
+  cursor:pointer;
+}
+.addvideo:hover {
+  opacity:1;
+}
+.savebtn {
+  padding:5px 15px 5px 15px;
+  float:right;
+  color:orange;
+  background-color:white;
+  border:1px solid orange;
+  border-radius: 5px;
+}
+.savebtn:hover {
+  color:white;
+  background-color:orange;
+}
+
+.videocomment {
+}
+.videocomment > h6 {
+  display:inline-block;
+  cursor: pointer;
+  margin-right:5px;
+  position: relative;
+  left:55%;
+}
+.videocomment > h6:hover {
+  text-decoration: underline;
+}
+
+.comment {
+  padding:10px;
+  background-color: #e6e6e6;
+  max-height: 200px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.comment > img {
+  width:80px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+.comment > h4 {
+  margin-left: 80px;
+  padding-left:5px;
+}
+.comment > h6 {
+  margin-left: 80px;
+  padding-left: 5px;
+}
+.comment > p {
+  margin-top: 30px;
+}
+
+@media (max-width: 800px) {
+  * {
+    display:none;
+  }
+}
