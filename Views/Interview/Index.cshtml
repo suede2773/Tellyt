@@ -510,9 +510,9 @@
                 //enable the stop button, disable the record/review/redo/post buttons
                 $("#recordButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
                 $("#stopButton").addClass("enabledStopButton").removeClass("disabledStopButton");
-                $("#reviewButton").addClass("enabledReviewButton").removeClass("disabledReviewButton");
-                $("#redoButton").addClass("enabledRedoButton").removeClass("disabledRedoButton");
-                $("#postButton").addClass("enabledPostButton").removeClass("disabledPostButton");
+                $("#reviewButton").addClass("disabledReviewButton").removeClass("enabledReviewButton");
+                $("#redoButton").addClass("disabledRedoButton").removeClass("enabledRedoButton");
+                $("#postButton").addClass("disabledPostButton").removeClass("enabledPostButton");
               } else {
                 alert("Please select a topic and question before recording.");
               }
