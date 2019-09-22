@@ -154,7 +154,7 @@
         //}
       } else {
         isCamReady = false;
-      }is
+      }
     }
 
     function onSaveOk(streamName, streamDuration, userId, cameraName, micName, recorderId, audioCodec, videoCodec, fileType, videoId, audioOnly, location) {

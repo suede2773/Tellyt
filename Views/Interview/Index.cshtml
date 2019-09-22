@@ -11,20 +11,20 @@
     </div>
   </div>
   @*<div class="col-md-2">
-    <div class="vertcontent">
-      <span>Turn On Camera</span>
-    </div>
-  </div>*@
+      <div class="vertcontent">
+        <span>Turn On Camera</span>
+      </div>
+    </div>*@
   <div class="col-md-3">
     <div class="centeredcontent">
       <img src="@Url.Content("~/Images/ConnectCamera.png")">
     </div>
   </div>
   @*<div class="col-md-2">
-    <div class="vertcontent" style="margin-left: -2%">
-      <span>Connect</span>
-    </div>
-  </div>*@
+      <div class="vertcontent" style="margin-left: -2%">
+        <span>Connect</span>
+      </div>
+    </div>*@
   <div class="col-md-6"></div>
 </div>
 <div class="interviewerbody">
@@ -39,16 +39,16 @@
       <hr align="left" class="simpledivider" />
     </div>
   </div>
-  
+
   <div class="row interviewerrow" style="margin-top:25px">
     <div class="col-md-4 col-sm-12 col-xs-12">
       <span style="color: #ffa800; letter-spacing: .45px; font-size: 18px">Questions</span>
-    <img src=@Url.Content("~/Images/LargeIndicator.gif") id="topicLoadingImage" />
-    <div id="accordionoverflow">
-      <div class="accordion" id="questionAccordion">
+      <img src=@Url.Content("~/Images/LargeIndicator.gif") id="topicLoadingImage" />
+      <div id="accordionoverflow">
+        <div class="accordion" id="questionAccordion">
 
+        </div>
       </div>
-    </div>
     </div>
     <div class="col-md-4 col-sm-12 col-xs-12">
       <div><span style="color: #ffa800; letter-spacing: .45px; font-size: 18px">Review</span></div>
@@ -93,7 +93,7 @@
         <img src="@Url.Content("~/Images/samplephoto4.png")">
         <img src="@Url.Content("~/Images/samplephoto5.png")">
       </div>
-      
+
       <div id="relatedVideosHeaderContainer">
         <div id="reloadedVideosHeaderLabel">
           Related Videos
@@ -146,8 +146,8 @@
               1 week ago
             </div>
             @*<div class="overlaylatest">
-              Latest
-            </div>*@
+                Latest
+              </div>*@
           </div>
         </div>
         <div class="topicContainer">
@@ -163,8 +163,8 @@
               1 week ago
             </div>
             @*<div class="overlaylatest">
-              Latest
-            </div>*@
+                Latest
+              </div>*@
           </div>
         </div>
       </div>
@@ -193,6 +193,7 @@
     var $currentQuestionId = 0;
     var isFlashReady = false;
     var isCamReady = false;
+    var userHasCam = false;
     var reviewButtonEnabled = false;
     var responseButtonEnabled = false;
     var stopButtonEnabled = false;
@@ -209,6 +210,45 @@
     //    isCamReady = false;
     //  }
     //}
+
+    function onCamAccess(allowed, recorderId) {
+      if (allowed) {
+        isCamReady = true;
+      } else {
+        isCamReady = false;
+      }
+    }
+
+    function userHasCamMic(cam_number, mic_number, recorderId) {
+      userHasCam = ((cam_number > 0) && (mic_number > 0));
+    }
+
+    function onSaveOk(streamName, streamDuration, userId, cameraName, micName, recorderId, audioCodec, videoCodec, fileType, videoId, audioOnly, location)
+    {
+      var args = Array.prototype.slice.call(arguments);
+      currentLocation = args[11];
+      currentStream = args[0];
+      currentVideo = args[9];
+
+      var postUrl = "@Url.Content("~/Interview/SaveVideo")";
+      $.post(postUrl, { location: currentLocation, hash: "@ViewBag.AccountHash", stream: currentStream, video: currentVideo, questionId: $currentQuestionId }, function(data) {
+        var returnData = data;
+        if (returnData == "success") {
+                  //do something
+        } else {
+                  //display the error
+          alert("Error: " + returnData);
+        }
+                //Refresh the accordion to show the answered question
+        RefreshAccordion();
+                //RefreshPlaybackVideos();
+      });
+
+      //114203 - videoId : args [9]
+      //vs1470782010630_483 - streamName : args[0]
+      //<video poster="https://<location>/<hash>/<stream>.jpg" width="400" height="300" controls><source src="https://<location>/<hash>/<stream>.mp4" type="video/mp4">Your browser does not support the video tag.</video>
+
+    }
 
     function DisableAllButtons() {
       $("#recordButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
@@ -399,21 +439,74 @@
     $(function () {
 
       DisableAllButtons();
+      RefreshAccordion();
 
-      PipeSDK.insert("divRecorder", pipeParams, function(recorderObject) {
+      PipeSDK.insert("divRecorder", pipeParams, function (recorderObject)
+      {
+
+        recorderObject.userHasCamMic = function(id,camNr, micNr){
+          var args = Array.prototype.slice.call(arguments);
+          userHasCam = ((camNr > 0) && (micNr > 0));
+	      }
+
+        recorderObject.onCamAccess = function(id, allowed){
+		      var args = Array.prototype.slice.call(arguments);
+          if (allowed) {
+            isCamReady = true;
+          } else {
+            isCamReady = false;
+          }
+	      }
+
+
+        recorderObject.onSaveOk = function (recorderId, streamName, streamDuration, cameraName, micName, audioCodec, videoCodec, filetype, videoId, audioOnly, location) {
+          var args = Array.prototype.slice.call(arguments);
+          currentLocation = args[10];
+          currentStream = args[1];
+          currentVideo = args[8];
+
+          var postUrl = "@Url.Content("~/Interview/SaveVideo")";
+          $.post(postUrl, { location: currentLocation, hash: "@ViewBag.AccountHash", stream: currentStream, video: currentVideo, questionId: $currentQuestionId }, function (data) {
+            var returnData = data;
+            if (returnData == "success") {
+              //do something
+            } else {
+              //display the error
+              alert("Error: " + returnData);
+            }
+            //Refresh the accordion to show the answered question
+            RefreshAccordion();
+            //RefreshPlaybackVideos();
+          });
+        }
+
         recorderObject.onReadyToRecord()
         {
+
           $("#recordButton").click(function ()
           {
             if ($(this).hasClass("enabledRecordButton"))
             {
-              //if (!isCamReady) {
-              //  alert(
-              //    "Your recording device is not ready. Please click on the \"Record Video\" image and allow access to your camera & microphone if necessary");
-              //  return;
-              //}
-              if ($currentQuestionId > 0) {
-                recorderObject.record();
+
+              if (!isCamReady) {
+                alert(
+                  "Your recording device is not ready. Please click on the \"Record Video\" image and allow access to your camera & microphone if necessary");
+                return;
+              }
+
+              if (!userHasCam) {
+                alert("The system could not detect a camera and microphone on your device.");
+                return;
+              }
+
+                if ($currentQuestionId > 0) {
+                  if (typeof recorderObject.record === "function") {
+                    recorderObject.record();
+                  }
+                  else {
+                    document.VideoRecorder.record();
+                  }
+
                 //enable the stop button, disable the record/review/redo/post buttons
                 $("#recordButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
                 $("#stopButton").addClass("enabledStopButton").removeClass("disabledStopButton");
@@ -429,9 +522,15 @@
           $("#stopButton").click(function ()
           {
             if ($(this).hasClass("enabledStopButton")) {
-              recorderObject.stopVideo();
+              if (typeof recorderObject.stopVideo === "function") {
+                recorderObject.stopVideo();
+              }
+              else {
+                document.VideoRecorder.stopVideo();
+              }
+
               //disable the stop button, enable the review/redo/post buttons
-              $("#stopButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
+              $("#stopButton").addClass("disabledStopButton").removeClass("enabledStopButton");
               $("#reviewButton").addClass("enabledReviewButton").removeClass("disabledReviewButton");
               $("#redoButton").addClass("enabledRedoButton").removeClass("disabledRedoButton");
               $("#postButton").addClass("enabledPostButton").removeClass("disabledPostButton");
@@ -440,18 +539,25 @@
 
           $("#reviewButton").click(function () {
             if ($(this).hasClass("enabledReviewButton")) {
-              recorderObject.playVideo();
+              if (typeof recorderObject.playVideo === "function") {
+                recorderObject.playVideo();
+              }
+              else {
+                document.VideoRecorder.playVideo();
+              }
+
             }
           });
 
           $("#redoButton").click(function () {
             if ($(this).hasClass("enabledRedoButton")) {
-              if (!isCamReady) {
-                alert(
-                  "Your recording device is not ready. Please click on the \"Record Video\" image and allow access to your camera & microphone if necessary");
-              }
               if ($currentQuestionId > 0) {
-                recorderObject.record();
+                  if (typeof recorderObject.record === "function") {
+                    recorderObject.record();
+                  }
+                  else {
+                    document.VideoRecorder.record();
+                  }
                 //enable the stop button, disable the record/redo/review/post buttons
                 $("#recordButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
                 $("#stopButton").addClass("enabledStopButton").removeClass("disabledStopButton");
@@ -466,26 +572,22 @@
 
           $("#postButton").click(function () {
             if ($(this).hasClass("enabledPostButton")) {
-              recorderObject.save();
-              var postUrl = "@Url.Content("~/Interview/SaveVideo")";
-              $.post(postUrl, { location: currentLocation, hash: "@ViewBag.AccountHash", stream: currentStream, video: currentVideo, questionId: $currentQuestionId }, function(data) {
-                var returnData = data;
-                if (returnData == "success") {
-                  //do something
-                } else {
-                  //display the error
-                  alert("Error: " + returnData);
-                }
-                //Refresh the accordion to show the answered question
-                RefreshAccordion();
-                //RefreshPlaybackVideos();
-              });
+              if (typeof recorderObject.save === "function") {
+                recorderObject.save();
+              }
+              else {
+                document.VideoRecorder.save();
+              }
+                //enable the answer button, disable the stop/review/redo/post buttons
+                $("#recordButton").addClass("enabledRecordButton").removeClass("enabledRecordButton");
+                $("#stopButton").addClass("disabledStopButton").removeClass("enabledRecordButton");
+                $("#reviewButton").addClass("disabledReviewButton").removeClass("enabledRecordButton");
+                $("#redoButton").addClass("disabledRedoButton").removeClass("enabledRecordButton");
+                $("#postButton").addClass("disabledPostButton").removeClass("enabledRecordButton");
             }
           });
         }
       });
-
-      RefreshAccordion();
     });
 
     $(document).ready(function() {
@@ -515,30 +617,54 @@
         if ($(this).hasClass("enabledRecordButton")) {
           $(this).removeClass('highlightRecordButton');
           }
-    });
+      });
 
-      $("div.enabledStopButton").hover(function () {
-        $(this).addClass('highlightStopButton');
-      }, function () {
-        $(this).removeClass('highlightStopButton');
-        });
+      $("#stopButton").hover(function ()
+      {
+        if ($(this).hasClass("enabledStopButton")) {
+          $(this).addClass('highlightStopButton');
+        }
+      }, function ()
+      {
+        if ($(this).hasClass("enabledStopButton")) {
+          $(this).removeClass('highlightStopButton');
+          }
+      });
 
-      $("div.enabledReviewButton").hover(function () {
-        $(this).addClass('highlightReviewButton');
-      }, function () {
-        $(this).removeClass('highlightReviewButton');
-        });
+      $("#reviewButton").hover(function ()
+      {
+        if ($(this).hasClass("enabledReviewButton")) {
+          $(this).addClass('highlightReviewButton');
+        }
+      }, function ()
+      {
+        if ($(this).hasClass("enabledReviewButton")) {
+          $(this).removeClass('highlightReviewButton');
+          }
+      });
 
-      $("div.enabledRedoButton").hover(function () {
-        $(this).addClass('highlightRedoButton');
-      }, function () {
-        $(this).removeClass('highlightRedoButton');
-        });
+      $("#redoButton").hover(function ()
+      {
+        if ($(this).hasClass("enabledRedoButton")) {
+          $(this).addClass('highlightRedoButton');
+        }
+      }, function ()
+      {
+        if ($(this).hasClass("enabledRedoButton")) {
+          $(this).removeClass('highlightRedoButton');
+          }
+      });
 
-      $("div.enabledPostButton").hover(function () {
-        $(this).addClass('highlightPostButton');
-      }, function () {
-        $(this).removeClass('highlightPostButton');
+      $("#postButton").hover(function ()
+      {
+        if ($(this).hasClass("enabledPostButton")) {
+          $(this).addClass('highlightPostButton');
+        }
+      }, function ()
+      {
+        if ($(this).hasClass("enabledPostButton")) {
+          $(this).removeClass('highlightPostButton');
+          }
       });
 
       $("#reloadedPhotosHeaderLabel").click(function() {

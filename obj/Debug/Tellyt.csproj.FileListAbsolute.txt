@@ -169,6 +169,6 @@ C:\Users\greenc\source\repos\Tellyt\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\greenc\source\repos\Tellyt\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\greenc\source\repos\Tellyt\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\greenc\source\repos\Tellyt\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\greenc\source\repos\Tellyt\obj\Debug\Tellyt.csprojAssemblyReference.cache
 C:\Users\greenc\source\repos\Tellyt\obj\Debug\Tellyt.csproj.CoreCompileInputs.cache
 C:\Users\greenc\source\repos\Tellyt\obj\Debug\Tellyt.csproj.CopyComplete
+C:\Users\greenc\source\repos\Tellyt\obj\Debug\Tellyt.csprojAssemblyReference.cache

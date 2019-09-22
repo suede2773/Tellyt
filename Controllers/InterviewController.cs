@@ -173,7 +173,7 @@ namespace Tellyt.Controllers
 
     public string GetUserTopicsAndQuestions()
     {
-      return Session["TopicsAndQuestions"] == null ? GetTopicsAndQuestions() : JsonConvert.SerializeObject((List<Topic>)Session["TopicsAndQuestions"]);
+      return GetTopicsAndQuestions();
     }
 
   }
