@@ -231,7 +231,7 @@
       currentVideo = args[9];
 
       var postUrl = "@Url.Content("~/Interview/SaveVideo")";
-      $.post(postUrl, { location: currentLocation, hash: "@ViewBag.AccountHash", stream: currentStream, video: currentVideo, questionId: $currentQuestionId }, function(data) {
+      $.post(postUrl, { location: currentLocation, hash: "@ViewBag.AccountHash", stream: currentStream, video: currentVideo, questionId: $currentQuestionId, duration:args[1] }, function(data) {
         var returnData = data;
         if (returnData == "success") {
                   //do something
@@ -466,7 +466,7 @@
           currentVideo = args[8];
 
           var postUrl = "@Url.Content("~/Interview/SaveVideo")";
-          $.post(postUrl, { location: currentLocation, hash: "@ViewBag.AccountHash", stream: currentStream, video: currentVideo, questionId: $currentQuestionId }, function (data) {
+          $.post(postUrl, { location: currentLocation, hash: "@ViewBag.AccountHash", stream: currentStream, video: currentVideo, questionId: $currentQuestionId, duration:args[2] }, function (data) {
             var returnData = data;
             if (returnData == "success") {
               //do something

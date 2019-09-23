@@ -124,7 +124,8 @@ body {
 }
 
 .disabledRecordButton {
-  background-color: #b7cc5e;
+  /*background-color: #b7cc5e;*/
+  background-color: #D4DFA1;
   cursor: default;
 }
 
@@ -139,7 +140,8 @@ body {
 }
 
 .disabledStopButton {
-  background-color: #fb483c;
+  /*  background-color: #fb483c;*/
+  background-color: #FA8A83;
   cursor: default;
 }
 
@@ -154,7 +156,8 @@ body {
 }
 
 .disabledReviewButton {
-  background-color: #8cb9f2;
+  /*background-color: #8cb9f2;*/
+  background-color: #B9D3F4;
   cursor: default;
 }
 
@@ -169,7 +172,8 @@ body {
 }
 
 .disabledRedoButton {
-  background-color: #fd7a5b;
+  /* background-color: #fd7a5b;*/
+  background-color: #FFA995;
   cursor: default;
 }
 
@@ -184,7 +188,8 @@ body {
 }
 
 .disabledPostButton {
-  background-color: #6acf5b;
+  /* background-color: #6acf5b;*/
+  background-color: #A4DD9D;
   cursor: default;
 }
 
@@ -422,9 +427,8 @@ body {
   border: 0;
 }
 /******** Nav Top Styling **********/
-
-/******** Main Area Styling  **********/
-.main {
+  /******** Main Area Styling  **********/
+  .main {
   padding: 20px;
   padding-top: 40px;
   background-color:#e9ebee;

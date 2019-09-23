@@ -145,21 +145,25 @@ namespace Tellyt.Controllers
     }
 
     [HttpPost]
-    public string SaveVideo(string location, string hash, string stream, string video, int questionId)
+    public string SaveVideo(string location, string hash, string stream, string video, int questionId, string duration)
     {
       try
       {
+        //Transform seconds into hh:mm:ss
+        TimeSpan time = TimeSpan.FromSeconds(Convert.ToDouble(duration));
+        var recordedTime = time.ToString(@"hh\:mm\:ss");
         using (var db = new AmandaDevEntities())
         {
           var answeredQuestion = db.Questions.Where(q => q.Id == questionId).ToList();
           db.Videos.Add(new Video
-          { 
+          {
             AccountHash = hash,
             Stream = stream,
             ExternalVideoId = Convert.ToInt32(video),
             Location = location,
             Questions = answeredQuestion,
-            UserId = CommonController.GetCurrentUserId()
+            UserId = CommonController.GetCurrentUserId(),
+            RecordedTime = recordedTime
           });
           db.SaveChanges();
         }
