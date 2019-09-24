@@ -151,7 +151,7 @@ namespace Tellyt.Controllers
       {
         //Transform seconds into hh:mm:ss
         TimeSpan time = TimeSpan.FromSeconds(Convert.ToDouble(duration));
-        var recordedTime = time.ToString(@"hh\:mm\:ss");
+        var recordedTime = time.ToString(@"mm\:ss");
         using (var db = new AmandaDevEntities())
         {
           var answeredQuestion = db.Questions.Where(q => q.Id == questionId).ToList();
