@@ -173,7 +173,7 @@
 
 </div>
 
-<audio src="@Url.Content("~/Questions/E01.mp3")" id="questionAudio" onended="AudioComplete()">
+<audio src="@Url.Content("~/Questions/E01.mp3")" id="questionAudio" type="audio/mp3" onended="AudioComplete()">
   <p>
     Your browser does not support the <code>audio</code> element.
   </p>
@@ -413,6 +413,7 @@
         if (questionAudioLocation.length) {
           var newAudioPath = $("#defaultQuestionPath").val().replace("default.mp3", questionAudioLocation);
           $("#questionAudio").attr("src", newAudioPath);
+          document.getElementById('questionAudio').volume = 1;
           document.getElementById('questionAudio').play();
 
           $("img.imgquestion").attr("src", $("#defaultPlayQuestion").val());
