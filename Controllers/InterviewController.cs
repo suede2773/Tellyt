@@ -12,10 +12,13 @@ namespace Tellyt.Controllers
 {
   public class VideoDetail
   {
-    public string Stream;
-    public string Hash;
-    public string Location;
-    public string Question;
+    public string Stream { get; set; }
+    public string AccountHash { get; set; }
+    public string Location { get; set; }
+    public string Question { get; set; }
+    public string Topic { get; set; }
+    public string RecordedTime { get; set; }
+    public string LastModifiedText { get; set; }
   }
   public class Topic
   {
@@ -53,7 +56,7 @@ namespace Tellyt.Controllers
     public ActionResult Index()
     {
       ViewBag.AccountHash = "3a607b4a17256a0676680aca650548be";
-      
+
       ViewBag.UserId = CommonController.GetCurrentUserId();// "eaa747d0-60f5-40b5-8257-a25397ef2524"; //hardcode for now
       return View();
     }
@@ -90,6 +93,49 @@ namespace Tellyt.Controllers
     }
 
     [HttpPost]
+    public string GetUserVideos(int topicId, int questionId)
+    {
+      var userId = CommonController.GetCurrentUserId();
+      var userQuestions = new List<VideoDetail>();
+
+      using (var db = new AmandaDevEntities())
+      {
+        userQuestions = db.Database
+            .SqlQuery<VideoDetail>("[dbo].[GetTopicVideos] @UserId, @TopicId, @QuestionId", new SqlParameter("@UserId", userId), new SqlParameter("@TopicId", topicId), new SqlParameter("@QuestionId", questionId)).ToList();  
+      }
+      return JsonConvert.SerializeObject(userQuestions);
+    }
+
+    [HttpPost]
+    public string GetTopicVideos(string topic)
+    {
+      var videoDetails = new List<VideoDetail>();
+      var userId = CommonController.GetCurrentUserId();
+
+      using (var db = new AmandaDevEntities())
+      {
+        foreach (var video in db.Videos.Where(v => v.UserId == userId))
+        {
+          var questionText = string.Empty;
+          var firstOrDefaultQuestion = video.Questions.FirstOrDefault();
+          if (firstOrDefaultQuestion != null)
+          {
+            questionText = firstOrDefaultQuestion.QuestionText;
+          }
+          videoDetails.Add(new VideoDetail
+          {
+            AccountHash = video.AccountHash,
+            Location = video.Location,
+            Stream = video.Stream,
+            Question = questionText
+          });
+        }
+      }
+
+      return JsonConvert.SerializeObject(videoDetails);
+    }
+
+    [HttpPost]
     public string GetVideos()
     {
       var videoDetails = new List<VideoDetail>();
@@ -106,7 +152,7 @@ namespace Tellyt.Controllers
           }
             videoDetails.Add(new VideoDetail
             {
-              Hash = video.AccountHash,
+              AccountHash = video.AccountHash,
               Location = video.Location,
               Stream = video.Stream,
               Question = questionText

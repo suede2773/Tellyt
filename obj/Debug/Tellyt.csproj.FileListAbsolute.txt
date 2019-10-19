@@ -80,7 +80,6 @@ C:\Users\greenc\Documents\Visual Studio 2015\Projects\Tellyt\Tellyt\bin\Microsof
 C:\Users\greenc\Documents\Visual Studio 2015\Projects\Tellyt\Tellyt\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\greenc\Documents\Visual Studio 2015\Projects\Tellyt\Tellyt\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\greenc\Documents\Visual Studio 2015\Projects\Tellyt\Tellyt\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\greenc\Documents\Visual Studio 2015\Projects\Tellyt\Tellyt\obj\Debug\Tellyt.csprojAssemblyReference.cache
 C:\Users\greenc\Documents\Visual Studio 2015\Projects\Tellyt\Tellyt\obj\Debug\Tellyt.csproj.CoreCompileInputs.cache
 C:\Users\greenc\Documents\Visual Studio 2015\Projects\Tellyt\Tellyt\obj\Debug\Tellyt.csproj.CopyComplete
 C:\Users\greenc\Documents\Visual Studio 2015\Projects\Tellyt\Tellyt\obj\Debug\Tellyt.dll

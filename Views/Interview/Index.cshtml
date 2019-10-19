@@ -112,61 +112,10 @@
     <div class="col-md-4 col-sm-12 col-xs-12">
       <div><span style="color: #ffa800; letter-spacing: .45px; font-size: 18px">Interview</span></div>
       <div style="margin-top: 15px">
-        <span style="letter-spacing: .8px; font-size: 16px; font-weight:500">Topics > <strong>Father</strong></span>
+        <span style="letter-spacing: .8px; font-size: 16px; font-weight:500">Topics > <strong><span id="topicName"></span></strong></span>
       </div>
       <div id="interviewRecordingsContainer">
-        <div class="topicContainer">
-          <div class="videoThumbnailHolder">
-            <img class="videothumbnailimage" src="@Url.Content("~/Images/samplevideothumbnail.png")">
-            <div class="overlaytext">4:30</div>
-          </div>
-          <div class="videodescriptionholder">
-            <div class="topictext">
-              When he gave the ac...
-            </div>
-            <div class="topictiming">
-              1 week ago
-            </div>
-            <div class="overlaylatest">
-              Latest
-            </div>
-          </div>
-        </div>
 
-        <div class="topicContainer">
-          <div class="videoThumbnailHolder">
-            <img class="videothumbnailimage" src="@Url.Content("~/Images/samplevideothumbnail.png")">
-            <div class="overlaytext">7:20</div>
-          </div>
-          <div class="videodescriptionholder">
-            <div class="topictext">
-              His lifetime achievem...
-            </div>
-            <div class="topictiming">
-              1 week ago
-            </div>
-            @*<div class="overlaylatest">
-                Latest
-              </div>*@
-          </div>
-        </div>
-        <div class="topicContainer">
-          <div class="videoThumbnailHolder">
-            <img class="videothumbnailimage" src="@Url.Content("~/Images/samplevideothumbnail.png")">
-            <div class="overlaytext">1:45</div>
-          </div>
-          <div class="videodescriptionholder">
-            <div class="topictext">
-              His love for golf
-            </div>
-            <div class="topictiming">
-              1 week ago
-            </div>
-            @*<div class="overlaylatest">
-                Latest
-              </div>*@
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -191,6 +140,7 @@
     var $videos;
     var $topics;
     var $currentQuestionId = 0;
+    var $currentTopicId = 0;
     var isFlashReady = false;
     var isCamReady = false;
     var userHasCam = false;
@@ -326,6 +276,53 @@
       //}
     }
 
+    function GetInterviewQuestions(topicId, questionId) {
+      var postUrl = "@Url.Content("~/Interview/GetUserVideos")";
+      $.post(postUrl, { topicId: topicId, questionId: questionId }, function(data) {
+        if (data.length > 0) {
+          BuildInterviewSection(jQuery.parseJSON(data));
+        }
+      });
+    }
+
+    function BuildInterviewSection(InterviewQuestions)
+    {
+      //<img src="https://eu1-addpipe.s3.eu-central-1.amazonaws.com/3a607b4a17256a0676680aca650548be/1bdb381f4c5a20af312fe319a61021f2.jpg" location="eu1-addpipe.s3.eu-central-1.amazonaws.com" hash="3a607b4a17256a0676680aca650548be" stream="1bdb381f4c5a20af312fe319a61021f2" class="clip" data-toggle="tooltip" data-placement="top" title="What is your earliest childhood memory?">
+      var interviewHtml = "";
+      for (var iInterview = 0; iInterview < InterviewQuestions.length; iInterview++) {
+        var thumbnailUrl = "https://";
+            thumbnailUrl += InterviewQuestions[iInterview].Location;
+            thumbnailUrl += "/";
+            thumbnailUrl += InterviewQuestions[iInterview].AccountHash;
+            thumbnailUrl += "/";
+            thumbnailUrl += InterviewQuestions[iInterview].Stream;
+            thumbnailUrl += ".jpg";
+
+        interviewHtml += "<div class=\"topicContainer\">";
+        interviewHtml += "<div class=\"videoThumbnailHolder\">";
+        interviewHtml += "<img class=\"videothumbnailimage\" src=\"" + thumbnailUrl + "\" style=\"height:116px;width:175px\">";
+        interviewHtml += "<div class=\"overlaytext\">";
+        interviewHtml += InterviewQuestions[iInterview].RecordedTime;
+        interviewHtml += "</div>";
+        interviewHtml += "</div>";
+        interviewHtml += "<div class=\"videodescriptionholder\">";
+        interviewHtml += "<div class=\"topictext\">";
+        interviewHtml += InterviewQuestions[iInterview].Question;
+        interviewHtml += "</div>";
+        interviewHtml += "<div class=\"topictiming\">";
+        interviewHtml += InterviewQuestions[iInterview].LastModifiedText;
+        interviewHtml += "</div>";
+        if (iInterview == 0) {
+        interviewHtml += "<div class=\"overlaylatest\">";
+          interviewHtml += "Latest";
+        interviewHtml += "</div>";
+        }
+        interviewHtml += "</div>";
+        interviewHtml += "</div>";
+      }
+      $("#interviewRecordingsContainer").html(interviewHtml);
+    }
+
     function BuildAccordion() {
       var allTopics = "";
       var cardHtml =
@@ -381,7 +378,10 @@
       $("#questionAccordion").html(allTopics);
 
       $('.collapse').on('shown.bs.collapse',
-        function() {
+        function () {
+          $currentTopicId = parseInt($(this)[0].id.replace("collapse", ""));
+          //topicName
+          GetInterviewQuestions($currentTopicId, 0);
           $(this).parent().addClass('active');
           $(this).parent().find("button").addClass('activeaccordionbutton');
         });
@@ -395,6 +395,8 @@
       $(".card-item").click(function ()
       {
         $currentQuestionId = parseInt($(this)[0].id.replace("question", ""));
+        //topicName
+        GetInterviewQuestions(0, $currentQuestionId);
         SelectQuestion();
       });
 
