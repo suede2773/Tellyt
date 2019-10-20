@@ -238,6 +238,10 @@ body {
     width: 70px;
     text-align: center;
     margin-top: 5px;
+    z-index:3;
+    position:relative;
+    top:60px;
+    left:90px;
   }
 
 .videothumbnailimage {
@@ -253,9 +257,13 @@ body {
 
 .topictext {
   color: #121212;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 24px;
   padding-top: 5px;
+  overflow: hidden;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .topictiming {
@@ -267,14 +275,14 @@ body {
 }
 
 .videodescriptionholder {
-  height: 100px;
+  height: 60px;
   background-color: white;
   padding-left: 5px;
 }
 
 .topicContainer {
   width: 175px;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   cursor:pointer
 }
 

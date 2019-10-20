@@ -171,3 +171,4 @@ C:\Users\greenc\source\repos\Tellyt\bin\Microsoft.Owin.Security.MicrosoftAccount
 C:\Users\greenc\source\repos\Tellyt\obj\Debug\Tellyt.csproj.CoreCompileInputs.cache
 C:\Users\greenc\source\repos\Tellyt\obj\Debug\Tellyt.csproj.CopyComplete
 C:\Users\greenc\source\repos\Tellyt\obj\Debug\Tellyt.csprojAssemblyReference.cache
+C:\Users\greenc\Documents\Visual Studio 2015\Projects\Tellyt\Tellyt\obj\Debug\Tellyt.csprojAssemblyReference.cache
