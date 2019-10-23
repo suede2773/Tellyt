@@ -50,7 +50,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 col-sm-12 col-xs-12">
+    <div class="col-md-6 col-sm-12 col-xs-12">
       <div><span style="color: #ffa800; letter-spacing: .45px; font-size: 18px">Review</span></div>
       <div style="margin-top: 15px">
         <span id="questionShown"></span>
@@ -109,17 +109,39 @@
       </div>
 
     </div>
-    <div class="col-md-4 col-sm-12 col-xs-12">
-      <div><span style="color: #ffa800; letter-spacing: .45px; font-size: 18px">Interview</span></div>
-      <div style="margin-top: 15px">
-        <span style="letter-spacing: .8px; font-size: 16px; font-weight:500">Topics > <strong><span id="topicName"></span></strong></span>
-      </div>
-      <div id="interviewRecordingsContainer">
+    <div class="col-md-2 col-sm-12 col-xs-12">
+      <div class="interviewContainer">
+        <div><span style="color: #ffa800; letter-spacing: .45px; font-size: 18px">Interview</span></div>
+        <div class="interviewerTopic">
+          <span style="font-size: 16px; font-weight:700" id="topicName"></span>
+        </div>
+        <div id="interviewRecordingsContainer">
 
+        </div>
       </div>
     </div>
   </div>
 
+</div>
+
+<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content modal-video">
+      <div class="modal-header">
+        <h5 class="modal-title modalTitleVideo" id="videoModalLabel"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="videoModalBody" class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btnDeleteVideo">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <audio src="@Url.Content("~/Questions/E01.mp3")" id="questionAudio" type="audio/mp3" onended="AudioComplete()">
@@ -151,7 +173,7 @@
     var currentLocation = "";
     var currentVideo = "";
 
-    var pipeParams = { size: { width: 480, height: 360 }, qualityurl: "avq/480p.xml", accountHash: "3a607b4a17256a0676680aca650548be", eid: "A9hIFB", mrt: 3600, asv: 0 };
+    var pipeParams = { size: { width: 560, height: 315 }, qualityurl: "avq/480p.xml", accountHash: "3a607b4a17256a0676680aca650548be", eid: "A9hIFB", mrt: 3600, asv: 0, showMenu: 0 };
 
     //function onCamAccess(recorderId, allowed) {
     //  if (allowed) {
@@ -171,6 +193,34 @@
 
     function userHasCamMic(cam_number, mic_number, recorderId) {
       userHasCam = ((cam_number > 0) && (mic_number > 0));
+    }
+
+    function LoadVideo(element) {
+      $("#videoModalBody").html("");
+
+      var posterImage = "https://";
+      posterImage += $(element).attr("location");
+      posterImage += "/";
+      posterImage += $(element).attr("hash");
+      posterImage += "/";
+      posterImage += $(element).attr("stream");
+      var videoSource = posterImage;
+      posterImage += ".jpg";
+      videoSource += ".mp4";
+
+      var videoPlaybackHtml = "<video poster=\"";
+      videoPlaybackHtml += posterImage;
+      videoPlaybackHtml += "\" width=\"720\" height=\"405\" controls><source src=\"";
+      videoPlaybackHtml += videoSource;
+      videoPlaybackHtml += "\"  type=\"video/mp4\">Your browser does not support the video tag.</video>";
+
+      $("#videoModalLabel").html($(element).attr("question"));
+
+      currentStream = $(element).attr("stream");
+
+      var videoPlaybackElement = $(videoPlaybackHtml);
+      $("#videoModalBody").append(videoPlaybackElement);
+      $('#videoModal').modal('show');
     }
 
     function onSaveOk(streamName, streamDuration, userId, cameraName, micName, recorderId, audioCodec, videoCodec, fileType, videoId, audioOnly, location)
@@ -299,7 +349,22 @@
             thumbnailUrl += ".jpg";
 
         interviewHtml += "<div class=\"topicContainer\">";
-        interviewHtml += "<div class=\"videoThumbnailHolder\">";
+        interviewHtml += "<div class=\"videoThumbnailHolder\" ";
+        interviewHtml += "location=\"";
+        interviewHtml += InterviewQuestions[iInterview].Location;
+        interviewHtml += "\" ";
+        interviewHtml += "hash=\"";
+        interviewHtml += InterviewQuestions[iInterview].AccountHash;
+        interviewHtml += "\" ";
+        interviewHtml += "stream=\"";
+        interviewHtml += InterviewQuestions[iInterview].Stream;
+        interviewHtml += "\" ";
+        interviewHtml += "question=\"";
+        interviewHtml += InterviewQuestions[iInterview].Question;
+        interviewHtml += "\" ";
+        interviewHtml += "onclick=\"LoadVideo(this)\" ";
+        interviewHtml += "title=\"" + InterviewQuestions[iInterview].Question + "\" ";
+        interviewHtml += ">";
         interviewHtml += "<img class=\"videothumbnailimage\" src=\"" + thumbnailUrl + "\" style=\"height:116px;width:175px\">";
         interviewHtml += "<div class=\"overlaytext\">";
         interviewHtml += InterviewQuestions[iInterview].RecordedTime;
@@ -342,7 +407,7 @@
         allTopics += "</h2>";
         allTopics += "</div>";
 
-        allTopics += "<div id=\"" + collapseId + "\" class=\"collapse\" aria-labelledby=\"" + headingId + "\" data-parent=\"#questionAccordion\">";
+        allTopics += "<div id=\"" + collapseId + "\" class=\"collapse\" topicName=\"" + $topics[iTopic].TopicName + "\" aria-labelledby=\"" + headingId + "\" data-parent=\"#questionAccordion\">";
         allTopics += "<div class=\"card-body\" style=\"padding:0px\">";
 
         for (var iQuestion = 0; iQuestion < $topics[iTopic].TopicQuestions.length; iQuestion++) {
@@ -380,7 +445,7 @@
       $('.collapse').on('shown.bs.collapse',
         function () {
           $currentTopicId = parseInt($(this)[0].id.replace("collapse", ""));
-          //topicName
+          $("#topicName").html($(this)[0].attributes["topicName"].nodeValue);
           GetInterviewQuestions($currentTopicId, 0);
           $(this).parent().addClass('active');
           $(this).parent().find("button").addClass('activeaccordionbutton');
@@ -595,6 +660,15 @@
 
     $(document).ready(function() {
 
+      $("#btnDeleteVideo").click(function() {
+        if (confirm("Are you sure you wish to delete this video?")) {
+          $('#videoModal').modal('hide');
+          var postUrl = "@Url.Content("~/Interview/DeleteVideo")";
+          $.post(postUrl, { stream: currentStream }, function(data) {
+            GetInterviewQuestions($currentTopicId, $currentQuestionId);
+          });
+        }
+      });
 
       $("div.uploader").hover(function() {
           $(this).find("img").attr("src",

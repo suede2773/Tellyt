@@ -227,6 +227,16 @@ body {
   background-color: #fff0d2
 }
 
+.interviewContainer{
+  float:right;
+  padding-right:25px
+}
+
+.interviewerTopic {
+  margin-top: 10px;
+  margin-bottom: 5px
+}
+
 .unselectedCardItem {
   background-color: white
 }
@@ -249,7 +259,9 @@ body {
   z-index: 2;
 }
 
-.videoThumbnailHolder {
+.videoThumbnailHolder 
+{
+  cursor:pointer;
   position: relative;
   z-index: 1;
   height:116px;
