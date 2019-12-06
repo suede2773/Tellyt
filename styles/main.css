@@ -404,9 +404,9 @@ body {
 }
 .showside {
   padding-left: 10px;
-	z-index: 1200;
-	border: 2px solid #333;
-	cursor: pointer;
+  z-index: 1200;
+  /*border: 2px solid #333;*/
+  cursor: pointer;
 }
 .showside:hover {
 	background-color: #333;
