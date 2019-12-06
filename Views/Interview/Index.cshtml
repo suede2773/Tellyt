@@ -304,6 +304,11 @@
         interviewHtml += "<div class=\"overlaytext\">";
         interviewHtml += InterviewQuestions[iInterview].RecordedTime;
         interviewHtml += "</div>";
+        if (iInterview == 0) {
+        interviewHtml += "<div class=\"overlaylatest\">";
+          interviewHtml += "Latest";
+        interviewHtml += "</div>";
+        }
         interviewHtml += "</div>";
         interviewHtml += "<div class=\"videodescriptionholder\">";
         interviewHtml += "<div class=\"topictext\">";
@@ -312,11 +317,6 @@
         interviewHtml += "<div class=\"topictiming\">";
         interviewHtml += InterviewQuestions[iInterview].LastModifiedText;
         interviewHtml += "</div>";
-        if (iInterview == 0) {
-        interviewHtml += "<div class=\"overlaylatest\">";
-          interviewHtml += "Latest";
-        interviewHtml += "</div>";
-        }
         interviewHtml += "</div>";
         interviewHtml += "</div>";
       }
