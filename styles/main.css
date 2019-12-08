@@ -316,10 +316,19 @@ body {
   height: 40px;
 }
 
+.scrolling-wrapper-flexbox {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.scrollcard {
+  flex: 0 0 auto;
+}
+
 #relatedPhotosContainer,
 #relatedVideosContainer {
-  height: 55px;
-  overflow: hidden;
+  /*height: 55px;*/
+  /*overflow-x:auto;*/
   cursor: pointer
 }
 

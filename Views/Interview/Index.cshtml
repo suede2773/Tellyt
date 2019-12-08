@@ -83,15 +83,28 @@
           Related Photos
         </div>
         <div id="uploadPhotoButton" class="uploader" style="float: left; margin-left: 30px; cursor:pointer">
-          <img src="@Url.Content("~/Images/uploadbutton.png")">
+          <label>
+            <img src="@Url.Content("~/Images/uploadbutton.png")">
+            <input id="photoFileInput" type="file" style="visibility: hidden;" multiple="multiple" accept="image/*" />
+          </label>
         </div>
       </div>
-      <div id="relatedPhotosContainer">
-        <img src="@Url.Content("~/Images/samplephoto1.png")">
-        <img src="@Url.Content("~/Images/samplephoto2.png")">
-        <img src="@Url.Content("~/Images/samplephoto3.png")">
-        <img src="@Url.Content("~/Images/samplephoto4.png")">
-        <img src="@Url.Content("~/Images/samplephoto5.png")">
+      <div id="relatedPhotosContainer" class="scrolling-wrapper-flexbox">
+        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto1.png")"></div>
+        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto2.png")"></div>
+        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto3.png")"></div>
+        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto4.png")"></div>
+        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto5.png")"></div>
+        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto1.png")"></div>
+        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto2.png")"></div>
+        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto3.png")"></div>
+        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto4.png")"></div>
+        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto5.png")"></div>
+        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto1.png")"></div>
+        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto2.png")"></div>
+        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto3.png")"></div>
+        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto4.png")"></div>
+        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto5.png")"></div>
       </div>
 
       <div id="relatedVideosHeaderContainer">
@@ -660,6 +673,19 @@
 
     $(document).ready(function() {
 
+      document.getElementById('photoFileInput').addEventListener('change', function ()
+      {
+        if (this.files.length > 5) {
+          alert("Please only upload a maximum of 5 files at a time.");
+          return;
+        }
+        for(var i = 0; i<this.files.length; i++){
+          var file = this.files[i];
+          alert(file.name);
+        }
+        //Now go upload the files
+      }, false);
+
       $("#btnDeleteVideo").click(function() {
         if (confirm("Are you sure you wish to delete this video?")) {
           $('#videoModal').modal('hide');
@@ -744,12 +770,8 @@
           }
       });
 
-      $("#reloadedPhotosHeaderLabel").click(function() {
-        alert("Open a detailed panel showing all uploaded photos");
-      });
-
       $("#relatedPhotosContainer").click(function() {
-        alert("Open a detailed panel showing all uploaded photos");
+        alert("Open a detailed panel with a carousel showing the photo. Enable text documentation, the ability to delete, and the ability to scroll to the next photo.");
       });
 
       $("#reloadedVideosHeaderLabel").click(function() {
@@ -760,9 +782,9 @@
         alert("Open a detailed panel showing all uploaded videos");
       });
 
-      $("#uploadPhotoButton").click(function() {
-        alert("Upload a new photo");
-      });
+      //$("#uploadPhotoButton").click(function() {
+      //  alert("Upload a new photo");
+      //});
 
       $("#uploadVideoButton").click(function() {
         alert("Upload a new video");
