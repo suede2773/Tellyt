@@ -28,5 +28,6 @@ namespace Tellyt
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<Topic> Topics { get; set; }
         public virtual DbSet<Video> Videos { get; set; }
+        public virtual DbSet<ExternalMedia> ExternalMedias { get; set; }
     }
 }

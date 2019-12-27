@@ -675,15 +675,49 @@
 
       document.getElementById('photoFileInput').addEventListener('change', function ()
       {
+        var successfulUpload = true;
         if (this.files.length > 5) {
           alert("Please only upload a maximum of 5 files at a time.");
           return;
         }
         for(var i = 0; i<this.files.length; i++){
           var file = this.files[i];
-          alert(file.name);
+          var file = this.files[i];
+          //upload each file
+          var formData = new FormData();
+          formData.append("fileName", file.name);
+          formData.append("uploadFile", file);
+          $.ajax({
+            xhr: function() {
+              var xhr = new window.XMLHttpRequest();
+              return xhr;
+            },
+            url: '@Url.Content("~/Interview/UploadPhoto")',
+            type: "POST",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (result)
+            {
+              if (result.Successful == true) {
+              } else {
+                alert(result.ErrorMessage);
+                successfulUpload = false;
+              }
+            },
+            error: function (xhr, status, error)
+            {
+              alert(xhr.responseText);
+              successfulUpload = false;
+            }
+          });
         }
-        //Now go upload the files
+        //Now refresh the list
+
+
+
       }, false);
 
       $("#btnDeleteVideo").click(function() {

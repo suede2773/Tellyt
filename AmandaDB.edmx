@@ -5,6 +5,28 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AmandaDevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ExternalMedia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Bucket" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Url" Type="varchar(max)" Nullable="false" />
+          <Property Name="ThumbUrl" Type="varchar(max)" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Key" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="LastModified" Type="datetime" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ThumbKey" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ExternalMediaQuestion">
+          <Key>
+            <PropertyRef Name="ExternalMediaId" />
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="ExternalMediaId" Type="int" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Questions">
           <Key>
             <PropertyRef Name="Id" />
@@ -40,7 +62,32 @@
           <Property Name="AccountHash" Type="nvarchar" MaxLength="32" Nullable="false" />
           <Property Name="Location" Type="varchar" MaxLength="255" />
           <Property Name="RecordedTime" Type="varchar" MaxLength="12" />
+          <Property Name="LastModified" Type="datetime" Nullable="false" />
         </EntityType>
+        <Association Name="FK_ExternalMediaQuestion_Question">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+          <End Role="ExternalMediaQuestion" Type="Self.ExternalMediaQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExternalMediaQuestion">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExternalMediaQuestion_Video">
+          <End Role="ExternalMedia" Type="Self.ExternalMedia" Multiplicity="1" />
+          <End Role="ExternalMediaQuestion" Type="Self.ExternalMediaQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExternalMedia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExternalMediaQuestion">
+              <PropertyRef Name="ExternalMediaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Questions_Topic">
           <End Role="Topics" Type="Self.Topics" Multiplicity="1" />
           <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
@@ -78,10 +125,20 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="AmandaDevModelStoreContainer">
+          <EntitySet Name="ExternalMedia" EntityType="Self.ExternalMedia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExternalMediaQuestion" EntityType="Self.ExternalMediaQuestion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Topics" EntityType="Self.Topics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VideoQuestion" EntityType="Self.VideoQuestion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Videos" EntityType="Self.Videos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ExternalMediaQuestion_Question" Association="Self.FK_ExternalMediaQuestion_Question">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="ExternalMediaQuestion" EntitySet="ExternalMediaQuestion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExternalMediaQuestion_Video" Association="Self.FK_ExternalMediaQuestion_Video">
+            <End Role="ExternalMedia" EntitySet="ExternalMedia" />
+            <End Role="ExternalMediaQuestion" EntitySet="ExternalMediaQuestion" />
+          </AssociationSet>
           <AssociationSet Name="FK_Questions_Topic" Association="Self.FK_Questions_Topic">
             <End Role="Topics" EntitySet="Topics" />
             <End Role="Questions" EntitySet="Questions" />
@@ -109,6 +166,7 @@
           <Property Name="QuestionAudioLocation" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Videos" Relationship="AmandaDevModel.VideoQuestion" FromRole="Question" ToRole="Video" />
           <NavigationProperty Name="Topic" Relationship="AmandaDevModel.FK_Questions_Topic" FromRole="Question" ToRole="Topic" />
+          <NavigationProperty Name="ExternalMedias" Relationship="AmandaDevModel.ExternalMediaQuestion" FromRole="Question" ToRole="ExternalMedia" />
         </EntityType>
         <EntityType Name="Topic">
           <Key>
@@ -130,6 +188,11 @@
             <End Role="Topic" EntitySet="Topics" />
             <End Role="Question" EntitySet="Questions" />
           </AssociationSet>
+          <EntitySet Name="ExternalMedias" EntityType="AmandaDevModel.ExternalMedia" />
+          <AssociationSet Name="ExternalMediaQuestion" Association="AmandaDevModel.ExternalMediaQuestion">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="ExternalMedia" EntitySet="ExternalMedias" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Video">
           <Key>
@@ -143,6 +206,7 @@
           <Property Name="Location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="ExternalVideoId" Type="Int32" />
           <Property Name="RecordedTime" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="VideoQuestion">
           <End Type="AmandaDevModel.Question" Role="Question" Multiplicity="*" />
@@ -159,6 +223,25 @@
               <PropertyRef Name="TopicId" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ExternalMedia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Bucket" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ThumbUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ThumbKey" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Questions" Relationship="AmandaDevModel.ExternalMediaQuestion" FromRole="ExternalMedia" ToRole="Question" />
+        </EntityType>
+        <Association Name="ExternalMediaQuestion">
+          <End Type="AmandaDevModel.Question" Role="Question" Multiplicity="*" />
+          <End Type="AmandaDevModel.ExternalMedia" Role="ExternalMedia" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -187,6 +270,7 @@
           <EntitySetMapping Name="Videos">
             <EntityTypeMapping TypeName="AmandaDevModel.Video">
               <MappingFragment StoreEntitySet="Videos">
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
                 <ScalarProperty Name="RecordedTime" ColumnName="RecordedTime" />
                 <ScalarProperty Name="ExternalVideoId" ColumnName="ExternalVideoId" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
@@ -200,6 +284,29 @@
           <AssociationSetMapping Name="VideoQuestion" TypeName="AmandaDevModel.VideoQuestion" StoreEntitySet="VideoQuestion">
             <EndProperty Name="Video">
               <ScalarProperty Name="Id" ColumnName="VideoId" />
+            </EndProperty>
+            <EndProperty Name="Question">
+              <ScalarProperty Name="Id" ColumnName="QuestionId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="ExternalMedias">
+            <EntityTypeMapping TypeName="AmandaDevModel.ExternalMedia">
+              <MappingFragment StoreEntitySet="ExternalMedia">
+                <ScalarProperty Name="ThumbKey" ColumnName="ThumbKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ThumbUrl" ColumnName="ThumbUrl" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Bucket" ColumnName="Bucket" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ExternalMediaQuestion" TypeName="AmandaDevModel.ExternalMediaQuestion" StoreEntitySet="ExternalMediaQuestion">
+            <EndProperty Name="ExternalMedia">
+              <ScalarProperty Name="Id" ColumnName="ExternalMediaId" />
             </EndProperty>
             <EndProperty Name="Question">
               <ScalarProperty Name="Id" ColumnName="QuestionId" />

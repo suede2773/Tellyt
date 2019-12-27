@@ -10,6 +10,8 @@
         <EntityTypeShape EntityType="AmandaDevModel.Video" Width="1.5" PointX="5.5" PointY="3" />
         <AssociationConnector Association="AmandaDevModel.VideoQuestion" />
         <AssociationConnector Association="AmandaDevModel.FK_Questions_Topic" />
+        <EntityTypeShape EntityType="AmandaDevModel.ExternalMedia" Width="1.5" PointX="5.5" PointY="7.125" />
+        <AssociationConnector Association="AmandaDevModel.ExternalMediaQuestion" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

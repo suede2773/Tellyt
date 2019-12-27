@@ -7,6 +7,10 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using Tellyt.Utilities;
+using System.Drawing;
+using System.IO;
+using System.Configuration;
 
 namespace Tellyt.Controllers
 {
@@ -33,11 +37,11 @@ namespace Tellyt.Controllers
     public int AnsweredCount { get; set; }
   }
 
-  //public class TopicOutput
-  //{
-  //  public bool Selected { get; set; }
-  //  public string Name { get; set; }
-  //}
+  public class PhotoResult
+  {
+    public string Url { get; set; }
+    public string ThumbUrl { get; set; }
+  }
 
   public class TopicQuestion
   {
@@ -90,6 +94,109 @@ namespace Tellyt.Controllers
       }
       Session["TopicsAndQuestions"] = topics;
       return JsonConvert.SerializeObject(topics);
+    }
+
+    [HttpPost]
+    public JsonResult GetPhotos()
+    {
+      var returnList = new List<PhotoResult>();
+      var userId = CommonController.GetCurrentUserId();
+      using (var db = new AmandaDevEntities())
+      {
+        foreach(var externalMedia in db.ExternalMedias.Where(e => e.UserId == userId && e.Type == "Photo"))
+        {
+          var thumbUrlRequest = new GetPreSignedUrlRequest()
+          //var thumbUrl = 
+        }
+      }
+    }
+
+    [HttpPost]
+    public JsonResult UploadPhoto(string fileName, HttpPostedFileBase uploadFile)
+    {
+      var uploadResult = new UploadReturnResult();
+
+      int thumbHeight = 54;
+      int thumbWidth;
+      try
+      {
+        if (uploadFile.ContentLength > 0)
+        {
+          var normalMap = (Bitmap)Bitmap.FromStream(uploadFile.InputStream);
+          thumbWidth = (thumbHeight * normalMap.Width) / normalMap.Height;
+          var thumbMap = new Bitmap(normalMap, new Size(thumbWidth, thumbHeight));
+
+          var key = Guid.NewGuid().ToString();
+          var keyName = key + ".png";
+          var thumbKeyName = key + "_thumb.png";
+
+          using (MemoryStream memoryStream = new MemoryStream())
+          {
+            normalMap.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
+            
+            uploadResult = AmazonS3Uploader.UploadFile(keyName, memoryStream);
+          }
+
+          if (uploadResult.Success)
+          {
+            using (MemoryStream thumbMemoryStream = new MemoryStream())
+            {
+              thumbMap.Save(thumbMemoryStream, System.Drawing.Imaging.ImageFormat.Png);
+
+              uploadResult = AmazonS3Uploader.UploadFile(thumbKeyName, thumbMemoryStream);
+            }
+          }
+
+          if(!uploadResult.Success)
+          {
+            return Json(new
+            {
+              Successful = false,
+              ErrorMessage = uploadResult.Message
+            });
+          }
+
+          using (var db = new AmandaDevEntities())
+          {
+            var bucketName = ConfigurationManager.AppSettings["BucketName"];
+
+            db.ExternalMedias.Add(new ExternalMedia
+            {
+              Bucket = bucketName,
+              Key = keyName,
+              ThumbKey = thumbKeyName,
+              ThumbUrl = string.Empty,
+              Url = string.Empty,
+              Type = "Photo",
+              LastModified = DateTime.Now,
+              UserId = CommonController.GetCurrentUserId()
+            });
+            db.SaveChanges();
+          }
+
+          return Json(new
+          {
+            Successful = uploadResult.Success,
+            ErrorMessage = uploadResult.Message
+          });
+        }
+        else
+        {
+          return Json(new
+          {
+            Successful = false,
+            ErrorMessage = "The file you uploaded was empty."
+          });
+        }
+      }
+      catch (Exception ex)
+      {
+        return Json(new
+        {
+          Successful = false,
+          ErrorMessage = "There was an error uploading your file. Please contact technical support and provide the following error message: " + ex.Message
+        });
+      }
     }
 
     [HttpPost]

@@ -12,24 +12,25 @@ namespace Tellyt
     using System;
     using System.Collections.Generic;
     
-    public partial class Question
+    public partial class ExternalMedia
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Question()
+        public ExternalMedia()
         {
-            this.Videos = new HashSet<Video>();
-            this.ExternalMedias = new HashSet<ExternalMedia>();
+            this.Questions = new HashSet<Question>();
         }
     
         public int Id { get; set; }
-        public int TopicId { get; set; }
-        public string QuestionText { get; set; }
-        public string QuestionAudioLocation { get; set; }
+        public string Bucket { get; set; }
+        public string Url { get; set; }
+        public string ThumbUrl { get; set; }
+        public string Type { get; set; }
+        public string Key { get; set; }
+        public System.DateTime LastModified { get; set; }
+        public string UserId { get; set; }
+        public string ThumbKey { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Video> Videos { get; set; }
-        public virtual Topic Topic { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ExternalMedia> ExternalMedias { get; set; }
+        public virtual ICollection<Question> Questions { get; set; }
     }
 }
