@@ -6,128 +6,50 @@
 
 @if (Request.IsAuthenticated)
 {
-  <div class="col-sm-12 col-md-12 col-lg-12 earth">
+  @*<div class="col-sm-12 col-md-12 col-lg-12 earth">
     <div class="earthtext">
       <h2>Welcome to</h2>
       <img src="@Url.Content("~/Images/tellytlogo3.svg")" class="logo2">
     </div>
-  </div>
+  </div>*@
   <!--/main-->
 }
-else
-{
-  //Sign up form
-  <div class="row">
-    <div class="col-sm-6 col-md-6 col-lg-6" style="height: 1200px">
 
-      <div class="earthtext">
-        <h2>Welcome to</h2>
-        <img src="@Url.Content("~/Images/tellytlogo3.svg")" class="logo2">
-      </div>
+<div class="homebackground1">
 
-    </div>
-
-    <div class="col-sm-4 col-md-4 col-lg-4">
-      <div class="row" style="padding-top:200px">
-        <div class="col-md-12">
-          <div class="row" id="selectProviderRow" style="display:none">
-            <div class="row">
-              <div class="col-md-12">
-                <h1>How would you like to log in?</h1>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-3"></div>
-              <div class="col-md-6">
-                <button type="button" class="btn btn-danger btn-lg btn-block">Google</button>
-                <button type="button" class="btn btn-primary btn-lg btn-block">Facebook</button>
-                <button type="button" class="btn btn-info btn-lg btn-block" id="btnSignInEmail">Email</button>
-              </div>
-              <div class="col-md-3"></div>
-            </div>
-          </div>
-          <div class="row" id="selectJoinRow" style="display:none">
-            <div class="row">
-              <div class="col-md-12">
-                <h1>How would you like to join?</h1>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-3"></div>
-              <div class="col-md-6">
-                <button type="button" class="btn btn-danger btn-lg btn-block" id="btnJoinGoogle">Google</button>
-                <button type="button" class="btn btn-primary btn-lg btn-block" id="btnJoinFacebook">Facebook</button>
-                <button type="button" class="btn btn-info btn-lg btn-block" id="btnJoinEmail">Email</button>
-              </div>
-              <div class="col-md-3"></div>
-            </div>
-          </div>
-          <div class="row" id="createAccountRow" style="display: none">
-            <div class="row">
-              <h1>Create a new account</h1>
-            </div>
-            <div class="row">
-              <div class="form-group">
-                <div class="col-sm-6">
-                  <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name">
-
-                </div>
-                <div class="col-sm-6">
-                  <input class="form-control" id="lastName" name="lastName" placeholder="Last Name">
-                  <!-- /.col -->
-                </div>
-                <!-- /.form-group -->
-              </div>
-              <div class="form-group">
-                <div class="col-sm-12">
-
-                  <input type="text" class="form-control" id="emailAddress" name="emailAddress" placeholder="Email Address">
-
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-12">
-
-                  <input type="text" class="form-control" id="emailAddress2" name="emailAddress2" placeholder="Re-enter Email Address">
-
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-12">
-                  <input type="password" class="form-control" id="password" name="password" placeholder="Your Password">
-
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-12 clearfix">
-                  <button type="button" class="btn btn-primary btn-lg pull-right" id="btnCreateAccountEmail">Go!</button>
-
-                </div>
-              </div>
-            </div>
-          </div>
-          <div id="errorRow" style="display:none" class="row">
-            <div class="row">
-              <div class="col-md-12">
-                <span id="errorMessage" style="color: darkred; font-size: 1.1em; font-weight:bold"></span>
-              </div>
-            </div>
-          </div>
+  <div class="homebackground1buttons">
+    <div class="row">
+      <div class="col-12">
+        <div class="searchpeoplebutton">
+          <span class="home1buttontext">Search People</span>
         </div>
       </div>
     </div>
-  <div class="col-sm-2 col-md-2 col-lg-2">
+    <div class="row pt-4">
+      <div class="col-12">
+        <div class="startinterviewbutton">
+          <span class="home1buttontext">Start Your Life Interview</span>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-4">
+      <div class="col-12">
+        <div class="loginbutton">
+          <span class="home1buttontext">Login</span>
+        </div>
+      </div>
+    </div>
   </div>
+
 </div>
-}
+
 @section Scripts
 {
   <script>
 
-    $("#btnJoinFacebook").click(function () {
+    @*$("#btnJoinFacebook").click(function () {
       //Just redirect to the interview page, which will force them to log in
-      var nextUrl = '@Url.Action("Index", "Interview")';
+      var nextUrl = '@@Url.Action("Index", "Interview")';
       window.location.href = nextUrl;
       return;
     });
@@ -231,25 +153,25 @@ else
         return false;
       }
       return true;
-    }
+    }*@
 
     $(function () {
-      if ($("#isSignedIn").val() == "True") {
-        $("#divSidebar").hide();
-        $("#divShowSide").show();
-        $("#logoFlame").show();
-        $('.showside').click(function () {
-          if ($("#divSidebar").is(":visible")) {
-            $("#divSidebar").hide();
-          } else {
-            $("#divSidebar").show();
-          }
-        });
-      } else {
-        DeactivateMenuOptions();
-        $("#divSidebar").hide();
-        $("#logoFlame").hide();
-      }
+      //if ($("#isSignedIn").val() == "True") {
+      //  $("#divSidebar").hide();
+      //  $("#divShowSide").show();
+      //  $("#logoFlame").show();
+      //  $('.showside').click(function () {
+      //    if ($("#divSidebar").is(":visible")) {
+      //      $("#divSidebar").hide();
+      //    } else {
+      //      $("#divSidebar").show();
+      //    }
+      //  });
+      //} else {
+      //  DeactivateMenuOptions();
+      //  $("#divSidebar").hide();
+      //  $("#logoFlame").hide();
+      //}
 
     });
 

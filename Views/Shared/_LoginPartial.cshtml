@@ -1,22 +1,9 @@
 ﻿
 @if (Request.IsAuthenticated)
 {
-
   <form class="form-inline pull-right">
     <span>Hi @User.Identity.Name</span>&nbsp;
     <img src="@Url.Content("~/Images/header_profile_icon.png")">
   </form>
-    }
-    else
-    {
-    @*<ul class="nav navbar-nav navbar-right">*@
-    <form class="form-inline pull-right">
-      <button class="btn btn-outline-secondary" type="button" id="btnSignIn">Sign In</button>
-      <button class="btn btn-outline-primary" type="button" id="btnJoin">Join</button>
-    </form>
-    @*<li>@Html.ActionLink("Sign in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
-    @*<li>
-        @Html.ActionLink("Reset Password", "ResetPassword", "Account")
-      </li>*@
-    @*</ul>*@
-    }
+
+}

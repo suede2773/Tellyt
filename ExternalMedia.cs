@@ -21,14 +21,15 @@ namespace Tellyt
         }
     
         public int Id { get; set; }
-        public string Bucket { get; set; }
         public string Url { get; set; }
         public string ThumbUrl { get; set; }
         public string Type { get; set; }
-        public string Key { get; set; }
         public System.DateTime LastModified { get; set; }
         public string UserId { get; set; }
         public string ThumbKey { get; set; }
+        public string Key { get; set; }
+        public string Name { get; set; }
+        public string MediaType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Question> Questions { get; set; }

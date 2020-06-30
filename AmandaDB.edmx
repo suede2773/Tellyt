@@ -10,14 +10,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Bucket" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="Url" Type="varchar(max)" Nullable="false" />
           <Property Name="ThumbUrl" Type="varchar(max)" Nullable="false" />
           <Property Name="Type" Type="varchar" MaxLength="25" Nullable="false" />
-          <Property Name="Key" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="LastModified" Type="datetime" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="ThumbKey" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Key" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="MediaType" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <EntityType Name="ExternalMediaQuestion">
           <Key>
@@ -62,7 +63,8 @@
           <Property Name="AccountHash" Type="nvarchar" MaxLength="32" Nullable="false" />
           <Property Name="Location" Type="varchar" MaxLength="255" />
           <Property Name="RecordedTime" Type="varchar" MaxLength="12" />
-          <Property Name="LastModified" Type="datetime" Nullable="false" />
+          <Property Name="LastModified" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="25" />
         </EntityType>
         <Association Name="FK_ExternalMediaQuestion_Question">
           <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
@@ -206,7 +208,8 @@
           <Property Name="Location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="ExternalVideoId" Type="Int32" />
           <Property Name="RecordedTime" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="type" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="VideoQuestion">
           <End Type="AmandaDevModel.Question" Role="Question" Multiplicity="*" />
@@ -229,15 +232,16 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Bucket" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="Url" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ThumbUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Type" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Key" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ThumbKey" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Questions" Relationship="AmandaDevModel.ExternalMediaQuestion" FromRole="ExternalMedia" ToRole="Question" />
+          <Property Name="MediaType" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="ExternalMediaQuestion">
           <End Type="AmandaDevModel.Question" Role="Question" Multiplicity="*" />
@@ -270,6 +274,7 @@
           <EntitySetMapping Name="Videos">
             <EntityTypeMapping TypeName="AmandaDevModel.Video">
               <MappingFragment StoreEntitySet="Videos">
+                <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="LastModified" ColumnName="LastModified" />
                 <ScalarProperty Name="RecordedTime" ColumnName="RecordedTime" />
                 <ScalarProperty Name="ExternalVideoId" ColumnName="ExternalVideoId" />
@@ -292,14 +297,15 @@
           <EntitySetMapping Name="ExternalMedias">
             <EntityTypeMapping TypeName="AmandaDevModel.ExternalMedia">
               <MappingFragment StoreEntitySet="ExternalMedia">
+                <ScalarProperty Name="MediaType" ColumnName="MediaType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
                 <ScalarProperty Name="ThumbKey" ColumnName="ThumbKey" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="LastModified" ColumnName="LastModified" />
-                <ScalarProperty Name="Key" ColumnName="Key" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="ThumbUrl" ColumnName="ThumbUrl" />
                 <ScalarProperty Name="Url" ColumnName="Url" />
-                <ScalarProperty Name="Bucket" ColumnName="Bucket" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -312,7 +318,7 @@
               <ScalarProperty Name="Id" ColumnName="QuestionId" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

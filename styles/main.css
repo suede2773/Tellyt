@@ -4,13 +4,55 @@ body {
   overflow-y: scroll;
   overflow-x: hidden;
 }
+
+.photoItem {
+  height: 500px;
+  background-color: lightgrey;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.photoSpanHelper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+  .photoItem img {
+    /*height: !important;
+    width: !important;*/
+    vertical-align: middle;
+    max-height: 500px;
+    max-width: 500px;
+  }
 /******** Nav Top Styling *********/
+
+.homebackground1 {
+  /* The image used */
+  background-image: url("../images/HomeBackground1.png");
+  /* Full height */
+  height: 100%;
+  min-height: 606px;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Extra Small Viewports - Below 767px */
+@media only screen and (max-width: 767px) {
+  .navbar1 { display: none }
+  /*.navbar1 {
+    display: none;
+  }*/
+}
+
 .navbar1 {
-	padding: 10px;
-	background-color: black;
+  padding: 10px;
+  background-color: black;
   color: white;
   height: 55px;
-  font-size:12px;
+  font-size: 12px;
   padding-top: 15px
 }
 .interviewerheader {
@@ -111,6 +153,46 @@ body {
 
 .topicCardHeader {
 
+}
+
+.loginbutton {
+  background-image: url("../images/loginbuttonbackground.png");
+  height: 54px;
+  width: 76px;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+}
+
+.startinterviewbutton {
+  background-image: url("../images/searchbuttonbackground.png");
+  height: 56px;
+  width: 242px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchpeoplebutton {
+  background-image: url("../images/searchpeoplebackground.png");
+  height: 55px;
+  width: 155px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homebackground1buttons {
+  padding-top: 300px;
+  padding-left: 50px;
+}
+
+.home1buttontext {
+  color: #ffffff;
+  font-size: 18px;
+  letter-spacing: 0.65px;
+  line-height: 27px;
+  font-weight: 700;
 }
 
 .enabledRecordButton {
@@ -345,9 +427,16 @@ body {
 }
 
 #recorderButtonContainer {
-  margin-top:20px;
+  margin-top: 20px;
   height: 45px;
   overflow: hidden;
+}
+
+#photoButtonContainer {
+  margin-top: 10px;
+  height: 45px;
+  overflow: hidden;
+  width:100%
 }
 
   #recorderButtonContainer div {
@@ -357,6 +446,15 @@ body {
     max-width: 92px;
     border-radius: calc(.5rem - 1px);
     margin-left:1%
+  }
+
+#photoButtonContainer div {
+    float: left;
+    height: 42px;
+    width: 19%;
+    max-width: 92px;
+    border-radius: calc(.5rem - 1px);
+    margin-left: 1%
   }
 
 .centeredcontent {
@@ -462,12 +560,7 @@ body {
   padding-top: 40px;
   background-color:#e9ebee;
 }
-@media (min-width: 768px) {
-  .main {
-    padding-right: 40px;
-    padding-left: 40px;
-  }
-}
+
 .main .page-header {
   margin-top: 0;
   border-bottom: 1px solid #d9d9d9;
@@ -665,8 +758,8 @@ body {
   		border-color: #e5e6e9 #dfe0e4 #d0d1d5;
   		border-radius: 3px;
   		background-color: black;
-  		height: 336px;
-  		width: 449px;
+  		height: 315px;
+  		width: 560px;
   	}
   	.videoplayer {
   		width:448px;
@@ -1414,9 +1507,11 @@ body {
     color: white;
 }
 
-/* Extra Small Viewports - Below 767px */
-@media (max-width: 767px) {
-	* {
-			display:none;
-		}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
 }
+
+

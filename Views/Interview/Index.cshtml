@@ -55,7 +55,11 @@
       <div style="margin-top: 15px">
         <span id="questionShown"></span>
       </div>
-      <div class="player" id="divRecorder">
+      <div class="player">
+        <video id="videoRecorder" playsinline autoplay muted style="width:560px; height:315px"></video>
+        <video id="videoReviewer" style="display: none; width:560px; height:315px" playsinline onended="RevertRecorder()"></video>
+      </div>
+      <div class="player" id="divRecorder" style="display:none">
 
       </div>
 
@@ -70,12 +74,18 @@
         <div id="reviewButton" class="enabledReviewButton">
           <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 25%; width:75%">Review</div>
         </div>
-        <div id="redoButton" class="enabledRedoButton">
+        <div id="redoButton" class="enabledRedoButton" style="display:none">
           <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 30%; width:70%">Redo/</div>
           <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 25%; width:75%">Record</div>
         </div>
         <div id="postButton" class="enabledPostButton">
-          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 30%; width:70%">Post</div>
+          <div id="postButtonStyle" style="height: 16px;
+    color: rgb(255, 255, 255);
+    letter-spacing: 0.66px;
+    font-size: 13px;
+    margin-top: calc(.5rem);
+    margin-left: 30%;
+    width: 70%"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loadingPost" style="margin-right: 4px"></span>Post</div>
         </div>
       </div>
       <div id="relatedPhotosHeaderContainer">
@@ -90,21 +100,7 @@
         </div>
       </div>
       <div id="relatedPhotosContainer" class="scrolling-wrapper-flexbox">
-        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto1.png")"></div>
-        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto2.png")"></div>
-        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto3.png")"></div>
-        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto4.png")"></div>
-        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto5.png")"></div>
-        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto1.png")"></div>
-        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto2.png")"></div>
-        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto3.png")"></div>
-        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto4.png")"></div>
-        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto5.png")"></div>
-        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto1.png")"></div>
-        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto2.png")"></div>
-        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto3.png")"></div>
-        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto4.png")"></div>
-        <div class="scrollcard"><img src="@Url.Content("~/Images/samplephoto5.png")"></div>
+
       </div>
 
       <div id="relatedVideosHeaderContainer">
@@ -137,6 +133,44 @@
 
 </div>
 
+<div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Your Uploaded Photos</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
+
+      </div>
+
+      <div id="photoModalBody" class="modal-body">
+
+        <div id="photoCarousel" class="carousel slide" data-ride="carousel">
+
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <div id="photoButtonContainer">
+          <div id="recordPhotoButton" class="enabledRecordButton">
+            <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 1em; margin-top: calc(.5rem); margin-left: 21%; width: 75%">Record</div>
+          </div>
+          <div id="stopPhotoButton" class="enabledStopButton">
+            <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 1em; margin-top: calc(.5rem); margin-left: 30%; width: 70%">Stop</div>
+          </div>
+          <div id="deletePhotoButton" class="enabledRedoButton">
+            <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 1em; margin-top: calc(.5rem); margin-left: 25%; width: 75%">Delete</div>
+          </div>
+          <div id="closePhotoButton" class="enabledPostButton">
+            <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 1em; margin-top: calc(.5rem); margin-left: 30%; width: 70%">Close</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content modal-video">
@@ -163,6 +197,8 @@
   </p>
 </audio>
 
+
+
 <input type="hidden" id="defaultQuestionPath" value="@Url.Content("~/Questions/default.mp3")" />
 <input type="hidden" id="defaultPlayQuestion" value="@Url.Content("~/Images/sm_play_icon.png")" />
 <input type="hidden" id="defaultPauseQuestion" value="@Url.Content("~/Images/sm_pause_icon.png")" />
@@ -174,6 +210,7 @@
 
     var $videos;
     var $topics;
+    var $relatedPhotos;
     var $currentQuestionId = 0;
     var $currentTopicId = 0;
     var isFlashReady = false;
@@ -186,15 +223,18 @@
     var currentLocation = "";
     var currentVideo = "";
 
-    var pipeParams = { size: { width: 560, height: 315 }, qualityurl: "avq/480p.xml", accountHash: "3a607b4a17256a0676680aca650548be", eid: "A9hIFB", mrt: 3600, asv: 0, showMenu: 0 };
+    function RevertPlayer() {
+      $("#videoRecorder").hide();
+      $("#videoReviewer").show();
+    }
 
-    //function onCamAccess(recorderId, allowed) {
-    //  if (allowed) {
-    //    isCamReady = true;
-    //  } else {
-    //    isCamReady = false;
-    //  }
-    //}
+    function RevertRecorder() {
+      $("#videoRecorder").show();
+      $("#videoReviewer").hide();
+      EnableInitialButtons();
+    }
+
+    var pipeParams = { size: { width: 560, height: 315 }, qualityurl: "avq/480p.xml", accountHash: "3a607b4a17256a0676680aca650548be", eid: "A9hIFB", mrt: 3600, asv: 0, showMenu: 0 };
 
     function onCamAccess(allowed, recorderId) {
       if (allowed) {
@@ -218,14 +258,16 @@
       posterImage += "/";
       posterImage += $(element).attr("stream");
       var videoSource = posterImage;
-      posterImage += ".jpg";
-      videoSource += ".mp4";
+      posterImage += ($(element).attr("type") == "WEBM") ? ".png" : ".jpg";
+      videoSource += ($(element).attr("type") == "WEBM") ? ".webm" : "mp4";
 
       var videoPlaybackHtml = "<video poster=\"";
       videoPlaybackHtml += posterImage;
       videoPlaybackHtml += "\" width=\"720\" height=\"405\" controls><source src=\"";
       videoPlaybackHtml += videoSource;
-      videoPlaybackHtml += "\"  type=\"video/mp4\">Your browser does not support the video tag.</video>";
+      videoPlaybackHtml += "\" ";
+      videoPlaybackHtml += ($(element).attr("type") == "WEBM") ? "type =\"video/webm\"" : "type =\"video/mp4\"";
+      videoPlaybackHtml += "> Your browser does not support the video tag.</video > ";
 
       $("#videoModalLabel").html($(element).attr("question"));
 
@@ -257,9 +299,6 @@
                 //RefreshPlaybackVideos();
       });
 
-      //114203 - videoId : args [9]
-      //vs1470782010630_483 - streamName : args[0]
-      //<video poster="https://<location>/<hash>/<stream>.jpg" width="400" height="300" controls><source src="https://<location>/<hash>/<stream>.mp4" type="video/mp4">Your browser does not support the video tag.</video>
 
     }
 
@@ -272,16 +311,25 @@
     }
 
 
+    function EnableInitialPhotoButtons() {
+      $("#recordPhotoButton").addClass("enabledRecordButton").removeClass("disabledRecordButton");
+      $("#stopPhotoButton").addClass("disabledStopButton").removeClass("enabledStopButton");
+      $("#stopPhotoButton").addClass("enabledRedoButton").removeClass("disabledRedoButton");
+      $("#closePhotoButton").addClass("enabledPostButton").removeClass("disabledPostButton");
+    }
+
     function EnableInitialButtons() {
       $("#recordButton").addClass("enabledRecordButton").removeClass("disabledRecordButton");
       $("#stopButton").addClass("disabledStopButton").removeClass("enabledStopButton");
       $("#reviewButton").addClass("disabledReviewButton").removeClass("enabledReviewButton");
-      $("#redoButton").addClass("disabledReviewButton").removeClass("enabledReviewButton");
+      $("#redoButton").addClass("disabledRedoButton").removeClass("enabledRedoButton");
       $("#postButton").addClass("disabledPostButton").removeClass("enabledPostButton");
     }
 
     function AudioComplete() {
       $("img.imgquestion").attr("src", $("#defaultPlayQuestion").val());
+      //Auto record
+      $("#recordButton").click();
     }
 
     function GetQuestionAudioLocationFromId() {
@@ -348,6 +396,66 @@
       });
     }
 
+    function GetRelatedPhotos() {
+      var postUrl = "@Url.Content("~/Interview/GetUserRelatedPhotos")";
+      $.post(postUrl, { }, function(data) {
+        if (data.length > 0)
+        {
+          $relatedPhotos = jQuery.parseJSON(data);
+          BuildRelatedPhotoSection();
+          BuildPhotoCarousel();
+        }
+      });
+    }
+
+    function uuidv4() {
+      return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+      );
+    }
+
+    function BuildRelatedPhotoSection()
+    {
+      var relatedPhotoHtml = "";
+      for (var iPhoto = 0; iPhoto < $relatedPhotos.length; iPhoto++) {
+        relatedPhotoHtml += "<div class=\"scrollcard\"><img src=\"" + $relatedPhotos[iPhoto].ThumbUrl + "\"></div>";
+      }
+      $("#relatedPhotosContainer").html(relatedPhotoHtml);
+      }
+
+      function BuildPhotoCarousel() {
+        if ($relatedPhotos.length == 0) {
+          $("#btnDeletePhoto").hide();
+          $("#photoCarousel").html("<span>You have no uploaded photos. Please upload a photo in the \"Related Photos\" section.</span>");
+          return;
+        }
+
+        var photoCarouselHtml = "<div class=\"carousel-inner\">";
+        var carouselIndicatorsHtml = "<ul class=\"carousel-indicators\">";
+        for (var iPhoto = 0; iPhoto < $relatedPhotos.length; iPhoto++) {
+          carouselIndicatorsHtml += (iPhoto == 0) ? "<li data-target=\"#photoCarousel\" data-slide-to=\"0\" class=\"active\"></li>" : "<li data-target=\"#photoCarousel\" data-slide-to=\"" + iPhoto + "\"></li>"
+
+          photoCarouselHtml += (iPhoto == 0) ? "<div class=\"carousel-item active\">" : "<div class=\"carousel-item\">";
+          photoCarouselHtml += " <div class=\"photoItem\">";
+          photoCarouselHtml += "<span class=\"photoSpanHelper\"></span>";
+          photoCarouselHtml += "<img src=\"" + $relatedPhotos[iPhoto].Url + "\" alt=\"your photo\">";
+          photoCarouselHtml += " </div>";
+          photoCarouselHtml += " </div>";
+        }
+        carouselIndicatorsHtml += "</ul>";
+        photoCarouselHtml += "</div>";
+
+        var carouselControlsHtml = "<a class=\"carousel-control-prev\" href=\"#photoCarousel\" data-slide=\"prev\">";
+        carouselControlsHtml += "<span class=\"carousel-control-prev-icon\"></span>";
+        carouselControlsHtml += "</a>";
+        carouselControlsHtml += "<a class=\"carousel-control-next\" href=\"#photoCarousel\" data-slide=\"next\">";
+        carouselControlsHtml += "<span class=\"carousel-control-next-icon\"></span>";
+        carouselControlsHtml += "</a>";
+
+        $("#photoCarousel").html(carouselIndicatorsHtml + photoCarouselHtml + carouselControlsHtml);
+        $("#btnDeletePhoto").show();
+      }
+
     function BuildInterviewSection(InterviewQuestions)
     {
       //<img src="https://eu1-addpipe.s3.eu-central-1.amazonaws.com/3a607b4a17256a0676680aca650548be/1bdb381f4c5a20af312fe319a61021f2.jpg" location="eu1-addpipe.s3.eu-central-1.amazonaws.com" hash="3a607b4a17256a0676680aca650548be" stream="1bdb381f4c5a20af312fe319a61021f2" class="clip" data-toggle="tooltip" data-placement="top" title="What is your earliest childhood memory?">
@@ -358,8 +466,8 @@
             thumbnailUrl += "/";
             thumbnailUrl += InterviewQuestions[iInterview].AccountHash;
             thumbnailUrl += "/";
-            thumbnailUrl += InterviewQuestions[iInterview].Stream;
-            thumbnailUrl += ".jpg";
+        thumbnailUrl += InterviewQuestions[iInterview].Stream;
+        thumbnailUrl += (InterviewQuestions[iInterview].Type.toLowerCase() == "webm") ? ".png" : ".jpg";
 
         interviewHtml += "<div class=\"topicContainer\">";
         interviewHtml += "<div class=\"videoThumbnailHolder\" ";
@@ -368,6 +476,9 @@
         interviewHtml += "\" ";
         interviewHtml += "hash=\"";
         interviewHtml += InterviewQuestions[iInterview].AccountHash;
+        interviewHtml += "\" ";
+        interviewHtml += "type=\"";
+        interviewHtml += InterviewQuestions[iInterview].Type;
         interviewHtml += "\" ";
         interviewHtml += "stream=\"";
         interviewHtml += InterviewQuestions[iInterview].Stream;
@@ -378,7 +489,7 @@
         interviewHtml += "onclick=\"LoadVideo(this)\" ";
         interviewHtml += "title=\"" + InterviewQuestions[iInterview].Question + "\" ";
         interviewHtml += ">";
-        interviewHtml += "<img class=\"videothumbnailimage\" src=\"" + thumbnailUrl + "\" style=\"height:116px;width:175px\">";
+        interviewHtml += "<img class=\"videothumbnailimage\" src=\"" + thumbnailUrl + "\" style=\"height:99px;width:176px\">";
         interviewHtml += "<div class=\"overlaytext\">";
         interviewHtml += InterviewQuestions[iInterview].RecordedTime;
         interviewHtml += "</div>";
@@ -515,12 +626,217 @@
             BuildAccordion(data);
           }
         });
+      }
+
+    function str_pad_left(string, pad, length) {
+      return (new Array(length + 1).join(pad) + string).slice(-length);
     }
 
     $(function () {
 
+      var mediaSource = new MediaSource();
+      mediaSource.addEventListener('sourceopen', handleSourceOpen, false);
+
+      var mediaRecorder;
+      var recordedBlobs;
+      var sourceBuffer;
+      var mimeType;
+      var recordedVideo = document.querySelector('video#videoReviewer');
+
+      function handleSuccess(stream) {
+        console.log('getUserMedia() got stream:', stream);
+        window.stream = stream;
+
+        const gumVideo = document.querySelector('video#videoRecorder');
+        gumVideo.srcObject = stream;
+        isCamReady = true;
+      }
+
+      function handleSourceOpen(event) {
+        console.log('MediaSource opened');
+        sourceBuffer = mediaSource.addSourceBuffer(mimeType);
+        console.log('Source buffer: ', sourceBuffer);
+      }
+
+      async function init(constraints) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia(constraints);
+          handleSuccess(stream);
+        } catch (e) {
+          console.error('navigator.getUserMedia error:', e);
+        }
+      }
+
+      (async () => {
+        const constraints = {
+          audio: {
+            echoCancellation: { exact: true }
+          },
+          video: {
+            width: 1280, height: 720
+          }
+        };
+        await wait(1000);
+        await init(constraints);
+      })()
+
+      async function wait(ms) {
+        return new Promise(resolve => {
+          setTimeout(resolve, ms);
+        });
+      }
+
+      function startRecording() {
+        recordedBlobs = [];
+
+        mimeType = 'video/webm;codecs=vp9';
+        let options = { mimeType: mimeType };
+        recordedBlobs = [];
+        try {
+          mediaRecorder = new MediaRecorder(window.stream, options);
+        } catch (e0) {
+          console.log('Unable to create MediaRecorder with options Object: ', options, e0);
+          try {
+            mimeType = 'video/webm';
+            options = { mimeType: mimeType };
+            mediaRecorder = new MediaRecorder(window.stream, options);
+          } catch (e1) {
+            console.log('Unable to create MediaRecorder with options Object: ', options, e1);
+            try {
+              mimeType = 'video/mp4';
+              options = mimeType;
+              mediaRecorder = new MediaRecorder(window.stream, options);
+            } catch (e2) {
+              alert('MediaRecorder is not supported by this browser.');
+              console.error('Exception while creating MediaRecorder:', e2);
+              return;
+            }
+          }
+        }
+
+        console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
+        mediaRecorder.onstop = (event) => {
+          console.log('Recorder stopped: ', event);
+          console.log('Recorded Blobs: ', recordedBlobs);
+        };
+        mediaRecorder.ondataavailable = handleDataAvailable;
+        mediaRecorder.start(10); // collect 10ms of data
+        console.log('MediaRecorder started', mediaRecorder);
+      }
+
+      function stopRecording() {
+        mediaRecorder.stop();
+      }
+
+      function handleDataAvailable(event) {
+        console.log('handleDataAvailable', event);
+        if (event.data && event.data.size > 0) {
+          recordedBlobs.push(event.data);
+        }
+      }
+
+      function recordedBlobsToFile(filename) {
+        let fileBuffer = new Blob(recordedBlobs, { type: mimeType });
+        fileBuffer.lastModifiedDate = new Date();
+        fileBuffer.name = filename;
+        return fileBuffer;
+      }
+
       DisableAllButtons();
       RefreshAccordion();
+      GetRelatedPhotos();
+
+      document.querySelector('#recordButton').addEventListener('click', async () => {
+
+        if ($("#recordButton").hasClass("enabledRecordButton")) {
+
+          if (!isCamReady) {
+            const constraints = {
+              audio: {
+                echoCancellation: { exact: true }
+              },
+              video: {
+                width: 1280, height: 720
+              }
+            };
+            console.log('Using media constraints:', constraints);
+            await init(constraints);
+            if (!isCamReady) {
+              alert(
+                "Your recording device is not ready. Please allow access to your camera & microphone if necessary.");
+              return;
+            }
+          }
+
+          if ($currentQuestionId > 0) {
+            startRecording();
+
+            //enable the stop button, disable the record/review/redo/post buttons
+            $("#recordButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
+            $("#stopButton").addClass("enabledStopButton").removeClass("disabledStopButton");
+            $("#reviewButton").addClass("disabledReviewButton").removeClass("enabledReviewButton");
+            $("#redoButton").addClass("disabledRedoButton").removeClass("enabledRedoButton");
+            $("#postButton").addClass("disabledPostButton").removeClass("enabledPostButton");
+          } else {
+            alert("Please select a topic and question before recording.");
+          }
+        }
+      });
+
+      document.querySelector('#stopButton').addEventListener('click', async () => {
+
+        if ($("#stopButton").hasClass("enabledStopButton")) {
+
+          stopRecording();
+
+          //disable the stop button, enable the review/redo/post buttons
+          $("#stopButton").addClass("disabledStopButton").removeClass("enabledStopButton");
+          $("#reviewButton").addClass("enabledReviewButton").removeClass("disabledReviewButton");
+          $("#redoButton").addClass("enabledRedoButton").removeClass("disabledRedoButton");
+          $("#postButton").addClass("enabledPostButton").removeClass("disabledPostButton");
+        }
+      });
+
+      document.querySelector('#reviewButton').addEventListener('click', async () => {
+        if ($("#reviewButton").hasClass("enabledReviewButton")) {
+          $("#videoReviewer").show();
+          $("#videoRecorder").hide();
+          const superBuffer = new Blob(recordedBlobs, { type: mimeType });
+          recordedVideo.src = null;
+          recordedVideo.srcObject = null;
+          recordedVideo.src = window.URL.createObjectURL(superBuffer);
+          recordedVideo.controls = true;
+          recordedVideo.play();
+        }
+      });
+
+      window.addEventListener('keydown', function(e) {
+        if(e.keyCode == 32 && e.target == document.body) {
+          e.preventDefault();
+        }
+      });
+
+      $('body').keyup(function (e) {
+        var code;
+        if (e.keyCode) {
+         code = e.keyCode;
+        } else if (e.which) {
+         code = e.which;
+        }
+        if (code == 32) {
+          // user has pressed space
+          $("#stopButton").click();
+        }
+        if (code == 82) {
+          // user has pressed space
+          $("#reviewButton").click();
+        }
+        if (code == 80) {
+          // user has pressed space
+          $("#postButton").click();
+         }
+        });
+
 
       PipeSDK.insert("divRecorder", pipeParams, function (recorderObject)
       {
@@ -564,71 +880,37 @@
         recorderObject.onReadyToRecord()
         {
 
-          $("#recordButton").click(function ()
-          {
-            if ($(this).hasClass("enabledRecordButton"))
-            {
+          //$("#recordButton").click(function ()
+          //{
 
-              if (!isCamReady) {
-                alert(
-                  "Your recording device is not ready. Please click on the \"Record Video\" image and allow access to your camera & microphone if necessary");
-                return;
-              }
+          //});
 
-              if (!userHasCam) {
-                alert("The system could not detect a camera and microphone on your device.");
-                return;
-              }
+          //$("#stopButton").click(function ()
+          //{
+          //  if ($("#stopButton").hasClass("enabledStopButton")) {
+          //    //recorderObject.stopVideo();
+          //    //if (typeof recorderObject.stopVideo === "function") {
+          //    //  recorderObject.stopVideo();
+          //    //}
+          //    //else {
+          //    //  document.VideoRecorder.stopVideo();
+          //    //}
+          //    stopRecording();
 
-                if ($currentQuestionId > 0) {
-                  if (typeof recorderObject.record === "function") {
-                    recorderObject.record();
-                  }
-                  else {
-                    document.VideoRecorder.record();
-                  }
+          //    //disable the stop button, enable the review/redo/post buttons
+          //    $("#stopButton").addClass("disabledStopButton").removeClass("enabledStopButton");
+          //    $("#reviewButton").addClass("enabledReviewButton").removeClass("disabledReviewButton");
+          //    $("#redoButton").addClass("enabledRedoButton").removeClass("disabledRedoButton");
+          //    $("#postButton").addClass("enabledPostButton").removeClass("disabledPostButton");
+          //  }
+          //});
 
-                //enable the stop button, disable the record/review/redo/post buttons
-                $("#recordButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
-                $("#stopButton").addClass("enabledStopButton").removeClass("disabledStopButton");
-                $("#reviewButton").addClass("disabledReviewButton").removeClass("enabledReviewButton");
-                $("#redoButton").addClass("disabledRedoButton").removeClass("enabledRedoButton");
-                $("#postButton").addClass("disabledPostButton").removeClass("enabledPostButton");
-              } else {
-                alert("Please select a topic and question before recording.");
-              }
-            }
-          });
+          //$("#reviewButton").click(function () {
+          //  if ($("#reviewButton").hasClass("enabledReviewButton")) {
 
-          $("#stopButton").click(function ()
-          {
-            if ($(this).hasClass("enabledStopButton")) {
-              if (typeof recorderObject.stopVideo === "function") {
-                recorderObject.stopVideo();
-              }
-              else {
-                document.VideoRecorder.stopVideo();
-              }
 
-              //disable the stop button, enable the review/redo/post buttons
-              $("#stopButton").addClass("disabledStopButton").removeClass("enabledStopButton");
-              $("#reviewButton").addClass("enabledReviewButton").removeClass("disabledReviewButton");
-              $("#redoButton").addClass("enabledRedoButton").removeClass("disabledRedoButton");
-              $("#postButton").addClass("enabledPostButton").removeClass("disabledPostButton");
-            }
-          });
-
-          $("#reviewButton").click(function () {
-            if ($(this).hasClass("enabledReviewButton")) {
-              if (typeof recorderObject.playVideo === "function") {
-                recorderObject.playVideo();
-              }
-              else {
-                document.VideoRecorder.playVideo();
-              }
-
-            }
-          });
+          //  }
+          //});
 
           $("#redoButton").click(function () {
             if ($(this).hasClass("enabledRedoButton")) {
@@ -653,12 +935,59 @@
 
           $("#postButton").click(function () {
             if ($(this).hasClass("enabledPostButton")) {
-              if (typeof recorderObject.save === "function") {
-                recorderObject.save();
-              }
-              else {
-                document.VideoRecorder.save();
-              }
+
+              $("#postButtonStyle").css("margin-left", "20%");
+              $("#loadingPost").show();
+
+              var fileName = uuidv4();
+              var file = recordedBlobsToFile(fileName);
+
+              var time = (recordedBlobs.length * 3) / 100;  //1.88
+              var minutes = Math.floor(time / 60); //0
+              var seconds = Math.round(time - minutes); 
+              var duration = str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2);
+
+              var formData = new FormData();
+              let dataValues = {};
+              dataValues.questionId = $currentQuestionId;
+              dataValues.duration = duration;
+              dataValues.fileName = fileName;
+
+              formData.append("formValues", JSON.stringify(dataValues));
+              formData.append("uploadFile", file);
+
+              $.ajax({
+                xhr: function() {
+                  var xhr = new window.XMLHttpRequest();
+                  return xhr;
+                },
+                url: '@Url.Content("~/Interview/SaveWebcamVideo")',
+                type: "POST",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function (result)
+                {
+                  $("#postButtonStyle").css("margin-left", "30%");
+                  $("#loadingPost").hide();
+                  if (result.Successful == true) {
+                    RefreshAccordion();
+                  } else {
+                    alert(result.ErrorMessage);
+                    successfulUpload = false;
+                  }
+                },
+                error: function (xhr, status, error)
+                {
+                  $("#postButtonStyle").css("margin-left", "30%");
+                  $("#loadingPost").hide();
+                  alert(xhr.responseText);
+                  successfulUpload = false;
+                }
+              });
+
                 //enable the answer button, disable the stop/review/redo/post buttons
                 $("#recordButton").addClass("enabledRecordButton").removeClass("enabledRecordButton");
                 $("#stopButton").addClass("disabledStopButton").removeClass("enabledRecordButton");
@@ -672,6 +1001,13 @@
     });
 
     $(document).ready(function() {
+
+      $("#loadingPost").hide();
+
+      //$('#carousel-modal').carousel();
+      $('.carousel').carousel({
+        interval: false
+      })
 
       document.getElementById('photoFileInput').addEventListener('change', function ()
       {
@@ -702,6 +1038,7 @@
             success: function (result)
             {
               if (result.Successful == true) {
+                GetRelatedPhotos();
               } else {
                 alert(result.ErrorMessage);
                 successfulUpload = false;
@@ -743,7 +1080,6 @@
             });
         });
 
-
       $("#recordButton").hover(function ()
       {
         if ($(this).hasClass("enabledRecordButton")) {
@@ -756,7 +1092,32 @@
           }
       });
 
+
+      $("#recordPhotoButton").hover(function ()
+      {
+        if ($(this).hasClass("enabledRecordButton")) {
+          $(this).addClass('highlightRecordButton');
+        }
+      }, function ()
+      {
+        if ($(this).hasClass("enabledRecordButton")) {
+          $(this).removeClass('highlightRecordButton');
+          }
+      });
+
       $("#stopButton").hover(function ()
+      {
+        if ($(this).hasClass("enabledStopButton")) {
+          $(this).addClass('highlightStopButton');
+        }
+      }, function ()
+      {
+        if ($(this).hasClass("enabledStopButton")) {
+          $(this).removeClass('highlightStopButton');
+          }
+      });
+
+      $("#stopPhotoButton").hover(function ()
       {
         if ($(this).hasClass("enabledStopButton")) {
           $(this).addClass('highlightStopButton');
@@ -792,6 +1153,18 @@
           }
       });
 
+      $("#deletePhotoButton").hover(function ()
+      {
+        if ($(this).hasClass("enabledRedoButton")) {
+          $(this).addClass('highlightRedoButton');
+        }
+      }, function ()
+      {
+        if ($(this).hasClass("enabledRedoButton")) {
+          $(this).removeClass('highlightRedoButton');
+          }
+      });
+
       $("#postButton").hover(function ()
       {
         if ($(this).hasClass("enabledPostButton")) {
@@ -804,21 +1177,33 @@
           }
       });
 
-      $("#relatedPhotosContainer").click(function() {
-        alert("Open a detailed panel with a carousel showing the photo. Enable text documentation, the ability to delete, and the ability to scroll to the next photo.");
+      $("#closePhotoButton").hover(function ()
+      {
+        if ($(this).hasClass("enabledPostButton")) {
+          $(this).addClass('highlightPostButton');
+        }
+      }, function ()
+      {
+        if ($(this).hasClass("enabledPostButton")) {
+          $(this).removeClass('highlightPostButton');
+          }
+      });
+
+      $("#relatedPhotosContainer").click(function ()
+      {
+        BuildPhotoCarousel();
+        $('#photoModal').modal()
+        //alert("Open a detailed panel with a carousel showing the photo. Enable text documentation, the ability to delete, and the ability to scroll to the next photo.");
       });
 
       $("#reloadedVideosHeaderLabel").click(function() {
-        alert("Open a detailed panel showing all uploaded videos");
+        alert("Open a panel that plays the video");
       });
 
       $("#relatedVideosContainer").click(function() {
         alert("Open a detailed panel showing all uploaded videos");
       });
 
-      //$("#uploadPhotoButton").click(function() {
-      //  alert("Upload a new photo");
-      //});
 
       $("#uploadVideoButton").click(function() {
         alert("Upload a new video");

@@ -1,0 +1,568 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+<style>
+  .hidden {
+    display: none;
+  }
+
+  .highlight {
+    background-color: #eee;
+    font-size: 1.2em;
+    margin: 0 0 30px 0;
+    padding: 0.2em 1.5em;
+  }
+
+  .warning {
+    color: red;
+    font-weight: 400;
+  }
+
+  @media screen and (min-width: 1000px) {
+    /* hack! to detect non-touch devices */
+    div#links a {
+      line-height: 0.8em;
+    }
+  }
+
+  audio {
+    max-width: 100%;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    margin: 0;
+    padding: 1em;
+    word-break: break-word;
+  }
+
+  button {
+    background-color: #d84a38;
+    border: none;
+    border-radius: 2px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.8em;
+    margin: 0 0 1em 0;
+    padding: 0.5em 0.7em 0.6em 0.7em;
+  }
+
+  button:active {
+    background-color: #cf402f;
+  }
+
+  button:hover {
+    background-color: #cf402f;
+  }
+
+  button[disabled] {
+    color: #ccc;
+  }
+
+  button[disabled]:hover {
+    background-color: #d84a38;
+  }
+
+  canvas {
+    background-color: #ccc;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  code {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+  }
+
+  div#container {
+    margin: 0 auto 0 auto;
+    max-width: 60em;
+    padding: 1em 1.5em 1.3em 1.5em;
+  }
+
+  div#links {
+    padding: 0.5em 0 0 0;
+  }
+
+  h1 {
+    border-bottom: 1px solid #ccc;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    margin: 0 0 0.8em 0;
+    padding: 0 0 0.2em 0;
+  }
+
+  h2 {
+    color: #444;
+    font-weight: 500;
+  }
+
+  h3 {
+    border-top: 1px solid #eee;
+    color: #666;
+    font-weight: 500;
+    margin: 10px 0 10px 0;
+    white-space: nowrap;
+  }
+
+  li {
+    margin: 0 0 0.4em 0;
+  }
+
+  html {
+    /* avoid annoying page width change
+  when moving from the home page */
+    overflow-y: scroll;
+  }
+
+  img {
+    border: none;
+    max-width: 100%;
+  }
+
+  input[type=radio] {
+    position: relative;
+    top: -1px;
+  }
+
+  p {
+    color: #444;
+    font-weight: 300;
+  }
+
+  p#data {
+    border-top: 1px dotted #666;
+    font-family: Courier New, monospace;
+    line-height: 1.3em;
+    max-height: 1000px;
+    overflow-y: auto;
+    padding: 1em 0 0 0;
+  }
+
+  p.borderBelow {
+    border-bottom: 1px solid #aaa;
+    padding: 0 0 20px 0;
+  }
+
+  section p:last-of-type {
+    margin: 0;
+  }
+
+  section {
+    border-bottom: 1px solid #eee;
+    margin: 0 0 30px 0;
+    padding: 0 0 20px 0;
+  }
+
+  section:last-of-type {
+    border-bottom: none;
+    padding: 0 0 1em 0;
+  }
+
+  select {
+    margin: 0 1em 1em 0;
+    position: relative;
+    top: -1px;
+  }
+
+  h1 span {
+    white-space: nowrap;
+  }
+
+  a {
+    color: #6fa8dc;
+    font-weight: 300;
+    text-decoration: none;
+  }
+
+  h1 a {
+    font-weight: 300;
+    margin: 0 10px 0 0;
+    white-space: nowrap;
+  }
+
+  a:hover {
+    color: #3d85c6;
+    text-decoration: underline;
+  }
+
+  a#viewSource {
+    display: block;
+    margin: 1.3em 0 0 0;
+    border-top: 1px solid #999;
+    padding: 1em 0 0 0;
+  }
+
+  div#errorMsg p {
+    color: #F00;
+  }
+
+  div#links a {
+    display: block;
+    line-height: 1.3em;
+    margin: 0 0 1.5em 0;
+  }
+
+  div.outputSelector {
+    margin: -1.3em 0 2em 0;
+  }
+
+  p.description {
+    margin: 0 0 0.5em 0;
+  }
+
+  strong {
+    font-weight: 500;
+  }
+
+  textarea {
+    resize: none;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  video {
+    background: #222;
+    margin: 0 0 20px 0;
+    --width: 100%;
+    width: var(--width);
+    height: calc(var(--width) * 0.75);
+  }
+
+  ul {
+    margin: 0 0 0.5em 0;
+  }
+
+  @media screen and (max-width: 650px) {
+    .highlight {
+      font-size: 1em;
+      margin: 0 0 20px 0;
+      padding: 0.2em 1em;
+    }
+
+    h1 {
+      font-size: 24px;
+    }
+  }
+
+  @media screen and (max-width: 550px) {
+    button:active {
+      background-color: darkRed;
+    }
+
+    h1 {
+      font-size: 22px;
+    }
+  }
+
+  @media screen and (max-width: 450px) {
+    h1 {
+      font-size: 20px;
+    }
+  }
+
+  button {
+    margin: 0 3px 10px 0;
+    padding-left: 2px;
+    padding-right: 2px;
+    width: 99px;
+  }
+
+  button:last-of-type {
+    margin: 0;
+  }
+
+  p.borderBelow {
+    margin: 0 0 20px 0;
+    padding: 0 0 20px 0;
+  }
+
+  video {
+    vertical-align: top;
+    --width: 25vw;
+    width: var(--width);
+    height: calc(var(--width) * 0.5625);
+  }
+
+  video:last-of-type {
+    margin: 0 0 20px 0;
+  }
+
+  video#gumVideo {
+    margin: 0 20px 20px 0;
+  }
+</style>  
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script>
+    'use strict';
+    //var myHeaders = new Headers();
+    //myHeaders.set('camera', 'self');
+    //myHeaders.set('microphone', 'self');
+
+  var videoNoAudioStream;
+  var videoWithAudioStream;
+
+    function RevertPlayer() {
+      $("#recorded").hide();
+      $("#gum").show();
+    }
+
+  $(document).ready(function () {
+
+
+    const mediaSource = new MediaSource();
+    mediaSource.addEventListener('sourceopen', handleSourceOpen, false);
+
+    let mediaRecorderNoAudio;
+    let mediaRecorderWithAudio;
+    let recordedBlobsWithAudio;
+    let recordedBlobsNoAudio;
+    let recordedBlobs;
+    let sourceBuffer;
+    let mimeType;
+
+    const errorMsgElement = document.querySelector('span#errorMsg');
+    const recordedVideo = document.querySelector('video#recorded');
+    const recordButton = document.querySelector('button#record');
+    recordButton.addEventListener('click', () => {
+      if (recordButton.textContent === 'Start Recording') {
+        startRecording();
+      } else {
+        stopRecording();
+        recordButton.textContent = 'Start Recording';
+        playButton.disabled = false;
+        downloadButton.disabled = false;
+      }
+    });
+
+    const playButton = document.querySelector('button#play');
+    playButton.addEventListener('click', () => {
+      //var slicedNoAudio = (recordedBlobsNoAudio.length > 20) ? recordedBlobsNoAudio.slice(0, 20) : recordedBlobsNoAudio;
+      //var slicedAudio = (recordedBlobsWithAudio.length > 20) ? recordedBlobsWithAudio.slice(20) : recordedBlobsWithAudio;
+      recordedBlobs = recordedBlobsNoAudio.concat(recordedBlobsWithAudio);
+      $("#recorded").show();
+      $("#gum").hide();
+      const superBuffer = new Blob(recordedBlobs, { type: mimeType });
+      recordedVideo.src = null;
+      recordedVideo.srcObject = null;
+      recordedVideo.src = window.URL.createObjectURL(superBuffer);
+      recordedVideo.controls = true;
+      recordedVideo.play();
+
+    });
+
+
+
+    const downloadButton = document.querySelector('button#download');
+    downloadButton.addEventListener('click', () => {
+      let slicedNoAudio = (recordedBlobsNoAudio.length > 20) ? recordedBlobsNoAudio.slice(0, 20) : recordedBlobsNoAudio;
+      let slicedAudio = (recordedBlobsWithAudio.length > 20) ? recordedBlobsWithAudio.slice(20) : recordedBlobsWithAudio;
+      recordedBlobs = slicedNoAudio.concat(slicedAudio);
+      const blob = new Blob(recordedBlobs, { type: mimeType });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = 'test.webm';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 100);
+    });
+
+    function handleSourceOpen(event) {
+      console.log('MediaSource opened');
+      sourceBuffer = mediaSource.addSourceBuffer(mimeType);
+      console.log('Source buffer: ', sourceBuffer);
+    }
+
+    function handleNoAudioDataAvailable(event) {
+      console.log('handleNoAudioDataAvailable', event);
+      if (event.data && event.data.size > 0) {
+        recordedBlobsNoAudio.push(event.data);
+      }
+    }
+
+    function handleWithAudioDataAvailable(event) {
+      console.log('handleWithAudioDataAvailable', event);
+      if (event.data && event.data.size > 0) {
+        recordedBlobsWithAudio.push(event.data);
+      }
+    }
+
+    function startRecording() {
+      recordedBlobsWithAudio = [];
+      recordedBlobsNoAudio = [];
+
+      mimeType = 'video/webm;codecs=vp9';
+      let options = { mimeType: mimeType };
+      recordedBlobs = [];
+      try {
+        mediaRecorderWithAudio = new MediaRecorder(videoWithAudioStream, options);
+        mediaRecorderNoAudio = new MediaRecorder(videoNoAudioStream, options);
+      } catch (e0) {
+        console.log('Unable to create MediaRecorder with options Object: ', options, e0);
+        try {
+          mimeType = 'video/webm';
+          options = { mimeType: mimeType };
+          mediaRecorderWithAudio = new MediaRecorder(videoWithAudioStream, options);
+          mediaRecorderNoAudio = new MediaRecorder(videoNoAudioStream, options);
+        } catch (e1) {
+          console.log('Unable to create MediaRecorder with options Object: ', options, e1);
+          try {
+            mimeType = 'video/mp4';
+            options = mimeType;
+            mediaRecorderWithAudio = new MediaRecorder(videoWithAudioStream, options);
+            mediaRecorderNoAudio = new MediaRecorder(videoNoAudioStream, options);
+          } catch (e2) {
+            alert('MediaRecorder is not supported by this browser.');
+            console.error('Exception while creating MediaRecorder:', e2);
+            return;
+          }
+        }
+      }
+
+
+      console.log('Created MediaRecorder', mediaRecorderNoAudio, 'with options', options);
+      console.log('Created MediaRecorder', mediaRecorderWithAudio, 'with options', options);
+      recordButton.textContent = 'Stop Recording';
+      playButton.disabled = true;
+      downloadButton.disabled = true;
+      mediaRecorderWithAudio.onstop = (event) => {
+        console.log('Media Recorder With Audio stopped: ', event);
+      };
+      mediaRecorderNoAudio.onstop = (event) => {
+        console.log('Media Recorder No Audio stopped: ', event);
+      };
+      mediaRecorderWithAudio.ondataavailable = handleWithAudioDataAvailable;
+      mediaRecorderNoAudio.ondataavailable = handleNoAudioDataAvailable;
+      mediaRecorderWithAudio.start(100); // collect 10ms of data
+      console.log('MediaRecorder with audio started', mediaRecorderWithAudio);
+      mediaRecorderNoAudio.start(100);
+      console.log('MediaRecorder no audio started', mediaRecorderNoAudio);
+    }
+
+    function stopRecording() {
+      mediaRecorderNoAudio.stop();
+      mediaRecorderWithAudio.stop();
+    }
+
+
+
+    function handleNoAudioSuccess(stream) {
+      recordButton.disabled = false;
+      console.log('getUserMedia() got stream:', stream);
+      videoNoAudioStream = stream;
+
+      const gumVideo = document.querySelector('video#gum');
+      gumVideo.srcObject = stream;
+    }
+
+    function handleWithAudioSuccess(stream) {
+      console.log('getUserMedia() got stream:', stream);
+      videoWithAudioStream = stream;
+    }
+
+
+    async function init(constraints) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        if (!constraints.audio)
+          handleNoAudioSuccess(stream);
+        else
+          handleWithAudioSuccess(stream);
+      } catch (e) {
+        console.error('navigator.getUserMedia error:', e);
+        errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
+      }
+    }
+
+    (async () => {
+      let constraints = {
+        audio: false,
+        video: {
+          width: 1280, height: 720
+        }
+      };
+      await wait(500);
+      await init(constraints);
+      constraints = {
+        audio: {
+          echoCancellation: { exact: true }
+        },
+        video: {
+          width: 1280, height: 720
+        }
+      };
+      await wait(500);
+      await init(constraints);
+    })()
+
+    async function wait(ms) {
+      return new Promise(resolve => {
+      setTimeout(resolve, ms);
+      });
+    }
+
+    document.querySelector('button#start').addEventListener('click', async () => {
+      const constraints = {
+        audio: {
+          echoCancellation: { exact: true }
+        },
+        video: {
+          width: 1280, height: 720
+        }
+      };
+      console.log('Using media constraints:', constraints);
+      await init(constraints);
+    });
+
+    //alert("doc loaded");
+      $('body').keyup(function (e) {
+        var code;
+        if (e.keyCode) {
+         code = e.keyCode;
+        } else if (e.which) {
+         code = e.which;
+        }
+        if (code == 80) {
+          // user has pressed space
+          $("#record").click();
+         }
+        });
+
+  });
+
+  </script>
+</head>
+<body>
+  <h3>Testing the HTML5 Recorder</h3>
+  <p>
+    <div id="container">
+
+
+      <video id="gum" playsinline autoplay muted></video>
+      <video id="recorded" style="display:none" playsinline onended="RevertPlayer()"></video>
+
+      <div>
+        <button id="start" style="display:none">Start camera</button>
+        <button id="record" disabled>Start Recording</button>
+        <button id="play" disabled>Review</button>
+        <button id="download" disabled>Download</button>
+      </div>
+
+      <div>
+        <span id="errorMsg"></span>
+      </div>
+
+
+    </div>
+  </p>
+</body>
+</html>
