@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Dashboard Start";
+  ViewBag.Title = "Home";
 }
 
 
@@ -7,21 +7,22 @@
 @if (Request.IsAuthenticated)
 {
   @*<div class="col-sm-12 col-md-12 col-lg-12 earth">
-    <div class="earthtext">
-      <h2>Welcome to</h2>
-      <img src="@Url.Content("~/Images/tellytlogo3.svg")" class="logo2">
-    </div>
-  </div>*@
+      <div class="earthtext">
+        <h2>Welcome to</h2>
+        <img src="@Url.Content("~/Images/tellytlogo3.svg")" class="logo2">
+      </div>
+    </div>*@
   <!--/main-->
 }
+<div class="splashBackground1">
+  <div class="splashTellytLogo"></div>
+  <div class="timeOnEarth">Your Time on Earth</div>
 
-<div class="homebackground1">
-
-  <div class="homebackground1buttons">
+  <div class="splashbackground1buttons">
     <div class="row">
       <div class="col-12">
         <div class="searchpeoplebutton">
-          <span class="home1buttontext">Search People</span>
+          <span class="searchpeopletext">Search People</span>
         </div>
       </div>
     </div>
@@ -33,7 +34,12 @@
       </div>
     </div>
     <div class="row pt-4">
-      <div class="col-12">
+      <div class="col-12 col-xs-3 col-sm-3 col-md-2 col-lg-2 col-xl-1">
+        <div class="signupbutton">
+          <span class="home1buttontext">Signup</span>
+        </div>
+      </div>
+      <div class="col-12 col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-1">
         <div class="loginbutton">
           <span class="home1buttontext">Login</span>
         </div>
@@ -43,38 +49,434 @@
 
 </div>
 
+<div class="splashBackground2">
+  <div class="row">
+    <div class="col-12 col-sm-5"></div>
+    <div class="col-12 col-sm-6">
+      <div class="row pt-5 justify-content-center splashTextBold">
+        The Greatest Story Ever Told...
+      </div>
+      <div class="row pt-4 justify-content-center splashTextBold">
+        Yours.
+      </div>
+      <div class="row pt-5 justify-content-center splashText">
+        Imagine searching a genealogical media library and discovering that your great grandparents left you a series of video interviews talking about life and love, friendships and family, good times and hardships, and everything in between.
+      </div>
+      <div class="row pt-4 justify-content-center splashText">
+        Wouldn’t a library like this be priceless to you?
+      </div>
+      <div class="row pt-4 justify-content-center splashText">
+        Tellyt is that online, genealogical media library dedicated to preserving the stories of people’s lives on Earth.  What makes Tellyt so special is that it includes a self-administered video interviewing system to capture these stories.  With dozens of topics and hundreds of questions to choose from, Tellyt makes it easy for you to tell your story.
+      </div>
+      <div class="row pt-4 justify-content-center splashText">
+        This is your chance to preserve your memories for the enjoyment of your family and friends hundreds of years from today.
+      </div>
+      <div class="row pt-4 justify-content-center">
+
+        <div class="col-12">
+          <div class="whiteboxButton container">
+            <div class="splashText whiteboxText">
+              See More
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-1">
+    </div>
+  </div>
+</div>
+
+<div class="splashBackground3">
+  <div class="col-12">
+    <div class="row pt-5 justify-content-center splashTextBold">
+      The Greatest Story Ever Told...
+    </div>
+    <div class="row pt-4 justify-content-center splashTextBold">
+      Yours.
+    </div>
+    <div class="row pt-5 justify-content-center splashText">
+      Imagine searching a genealogical media library and discovering that your great grandparents left you a series of video interviews talking about life and love, friendships and family, good times and hardships, and everything in between.
+    </div>
+    <div class="row pt-4 justify-content-center splashText">
+      Wouldn’t a library like this be priceless to you?
+    </div>
+    <div class="row pt-4 justify-content-center splashText">
+      Tellyt is that online, genealogical media library dedicated to preserving the stories of people’s lives on Earth.  What makes Tellyt so special is that it includes a self-administered video interviewing system to capture these stories.  With dozens of topics and hundreds of questions to choose from, Tellyt makes it easy for you to tell your story.
+    </div>
+    <div class="row pt-4 justify-content-center splashText">
+      This is your chance to preserve your memories for the enjoyment of your family and friends hundreds of years from today.
+    </div>
+    <div class="row pt-4 justify-content-center">
+      <div class="col-12">
+        <div class="whiteboxButton container">
+          <div class="splashText whiteboxText">
+            See More
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="splashBackgroundInterview">
+  <div class="row">
+    <div class="col-12 col-sm-5"></div>
+    <div class="col-12 col-sm-6">
+      <div class="row pt-5">
+      </div>
+      <div class="row pt-5 justify-content-center splashTextBold">
+        The Tellyt Interview
+      </div>
+      <div class="row pt-5 justify-content-center splashText">
+        With hundreds of questions for you to choose from in over a dozen of languages, you can tell your story the way that you want it to be told.  All of your answers are captured in HD Video, and you can add photos and documents to further enhance you viewer’s experience.  Edit, redo, or submit your responses as often as you like.  This is your story and you know how to tell it best.
+      </div>
+      <div class="row pt-5 justify-content-center">
+
+        <div class="col-12">
+          <div class="blackboxButton container">
+            <div class="splashText blackboxText">
+              See More
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-1">
+    </div>
+  </div>
+</div>
+
+<div class="splashBackground4">
+  <div class="col-12">
+    <div class="row pt-5 justify-content-center splashTextBold">
+      The Tellyt Interview
+    </div>
+    <div class="row pt-5 justify-content-center splashText">
+      With hundreds of questions for you to choose from in over a dozen of languages, you can tell your story the way that you want it to be told.  All of your answers are captured in HD Video, and you can add photos and documents to further enhance you viewer’s experience.  Edit, redo, or submit your responses as often as you like.  This is your story and you know how to tell it best.
+    </div>
+    <div class="row pt-5 justify-content-center">
+
+      <div class="col-12">
+        <div class="blackboxButton container">
+          <div class="splashText blackboxText">
+            See More
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="splashBackgroundTribute">
+
+  <div class="row vertical-row">
+    <div class="col-12 col-sm-1"></div>
+    <div class="col-12 col-sm-5">
+      <div class="row pt-5 justify-content-center splashTextBold">
+        The Tellyt Tribute
+      </div>
+      <div class="row pt-5 justify-content-center splashText">
+        Create a Tribute for a family member or friend that is no longer with us.
+      </div>
+      <div class="row pt-5 justify-content-center splashText">
+        A Tellyt account can be set up as a tribute to anyone. Once set up, many contributors can be invited to come in and be interviewed on their memories of that person. They can also upload and narrate photos, documents, and videos which pertain to that person’s legacy.
+      </div>
+      <div class="row pt-5 justify-content-center">
+
+        <div class="col-12">
+          <div class="whiteboxButton container">
+            <div class="splashText whiteboxText">
+              See More
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 tellyt_tribute_demo_image">
+
+    </div>
+  </div>
+</div>
+
+<div class="splashBackground5">
+  <div class="col-12">
+    <div class="row pt-5 justify-content-center splashTextBold">
+      The Tellyt Tribute
+    </div>
+    <div class="row pt-5 justify-content-center splashText">
+      Create a Tribute for a family member or friend that is no longer with us.
+    </div>
+    <div class="row pt-5 justify-content-center splashText">
+      A Tellyt account can be set up as a tribute to anyone.  Once set up, many contributors can be invited to come in and be interviewed on their memories of that person.  They can also upload and narrate photos, documents, and videos which pertain to that person’s legacy.
+    </div>
+    <div class="row pt-5 justify-content-center">
+
+      <div class="col-12">
+        <div class="whiteboxButton container">
+          <div class="splashText whiteboxText">
+            See More
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="splashBackgroundChild">
+
+  <div class="row vertical-row">
+    <div class="col-12 col-sm-6 tellyt_child_story_image">
+
+    </div>
+    <div class="col-12 col-sm-1"></div>
+    <div class="col-12 col-sm-4">
+      <div class="row pt-5 justify-content-center splashTextBold">
+        Tell your child’s story from their birth until they can Tell it themselves..
+      </div>
+      <div class="row pt-5 justify-content-center splashText">
+        The Ultimate Digital Diary.  With Tellyt you can start an account for your new born, document their journey, post videos, narrate photos and answer video interviews of the entire experience.  Over time they can take over the account and continue telling their story in the life interviews.
+      </div>
+      <div class="row pt-5 justify-content-center">
+
+        <div class="col-12">
+          <div class="blackboxButton container">
+            <div class="splashText blackboxText">
+              See More
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-1"></div>
+  </div>
+</div>
+
+<div class="splashBackground6">
+  <div class="col-12">
+    <div class="row pt-5 justify-content-center splashTextBold">
+      Tell your child’s story from their birth until they can Tell it themselves..
+    </div>
+    <div class="row pt-5 justify-content-center splashText">
+      The Ultimate Digital Diary.  With Tellyt you can start an account for your new born, document their journey, post videos, narrate photos and answer video interviews of the entire experience.  Over time they can take over the account and continue telling their story in the life interviews.
+    </div>
+    <div class="row pt-5 justify-content-center">
+
+      <div class="col-12">
+        <div class="blackboxButton container">
+          <div class="splashText blackboxText">
+            See More
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="splashBackgroundMobile">
+
+  <div class="row vertical-row">
+    <div class="col-12 col-sm-1"></div>
+    <div class="col-12 col-sm-5">
+      <div class="row pt-5 justify-content-center splashText">
+        Have a loved one who doesn’t use the computer?
+      </div>
+      <div class="row pt-5 justify-content-center splashTextBold">
+        Tellyt Mobile
+      </div>
+      <div class="row pt-5 justify-content-center splashText">
+        Tellyt Mobile turns you into a professional interviewer, posing the question for you to ask, right from your cell phone.  Simply login through your loved one’s Tellyt Account, and start interviewing them!  We’ll provide the questions, you provide the voice.  Once submitted, all of your interviews will be uploaded directly into the user account securely.
+      </div>
+      <div class="row pt-5 justify-content-center">
+
+        <div class="col-12">
+          <div class="whiteboxButton container">
+            <div class="splashText whiteboxText">
+              See More
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 tellyt_mobile_image">
+
+    </div>
+  </div>
+</div>
+
+<div class="splashBackground7">
+  <div class="col-12">
+    <div class="row pt-5 justify-content-center splashTextBold">
+      Tellyt Mobile
+    </div>
+    <div class="row pt-5 justify-content-center splashText">
+      Tellyt Mobile turns you into a professional interviewer, posing the question for you to ask, right from your cell phone.  Simply login through your loved one’s Tellyt Account, and start interviewing them!  We’ll provide the questions, you provide the voice.  Once submitted, all of your interviews will be uploaded directly into the user account securely.
+    </div>
+    <div class="row pt-5 justify-content-center">
+
+      <div class="col-12">
+        <div class="blackboxButton container">
+          <div class="splashText blackboxText">
+            See More
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        @*<div class="container pt-3">
+        <div class="row" id="selectProviderRow">
+          <div class="row">
+            <div class="col-md-12">
+              <h1>How would you like to log in?</h1>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <button type="button" class="btn btn-danger btn-lg btn-block">Google</button>
+              <button type="button" class="btn btn-primary btn-lg btn-block">Facebook</button>
+              <button type="button" class="btn btn-info btn-lg btn-block" id="btnSignInEmail">Email</button>
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+        </div>
+      </div>*@
+
+        <div class="container" id="selectJoinRow">
+          <div class="row">
+            <div class="col-md-12">
+              <h6>How would you like to join?</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <button type="button" class="btn btn-danger btn-lg btn-block" id="btnJoinGoogle">Google</button>
+              <button type="button" class="btn btn-primary btn-lg btn-block" id="btnJoinFacebook">Facebook</button>
+              <button type="button" class="btn btn-info btn-lg btn-block" id="btnJoinEmail">Email</button>
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+        </div>
+        <!--</form>-->
+
+        <div class="container" id="createAccountRow" style="display: none">
+          <div class="row">
+            <h6>Create a new account</h6>
+          </div>
+          <div class="form-group row">
+            <div class="col-12 col-sm-6">
+              <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name">
+
+            </div>
+            <div class="col-12 col-sm-6">
+              <input class="form-control" id="lastName" name="lastName" placeholder="Last Name">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-12">
+
+              <input type="text" class="form-control" id="emailAddress" name="emailAddress" placeholder="Email Address">
+
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-12">
+
+              <input type="text" class="form-control" id="emailAddress2" name="emailAddress2" placeholder="Re-enter Email Address">
+
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-12">
+              <input type="password" class="form-control" id="password" name="password" placeholder="Your Password">
+
+            </div>
+          </div>
+
+          @*<div class="form-group row">
+            <div class="col-md-5 col-12 pt-1">
+              <button id="btnCancel" class="btn btn-primary btn-block">Cancel</button>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5 col-12 pt-1">
+              <button id="btnCreateAccountEmail" class="btn btn-primary btn-block">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loadingSignIn"></span>
+                Go!
+              </button>
+            </div>
+          </div>*@
+
+          @*<div class="form-group">
+          <div class="col-sm-12 clearfix">
+            <button type="button" class="btn btn-primary btn-lg pull-right" id="btnCreateAccountEmail">Go!</button>
+
+          </div>
+        </div>*@
+        </div>
+        <div id="errorRow" style="display:none" class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <span id="errorMessage" style="color: darkred; font-size: 1.1em; font-weight:bold"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" id="signupFooter">
+        <button type="button" id="btnCancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" id="btnCreateAccountEmail" class="btn btn-primary">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loadingSignUp"></span>
+          Sign Up
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @section Scripts
 {
   <script>
-
-    @*$("#btnJoinFacebook").click(function () {
+    $("#btnJoinFacebook").click(function () {
       //Just redirect to the interview page, which will force them to log in
-      var nextUrl = '@@Url.Action("Index", "Interview")';
+      var nextUrl = '@Url.Action("Index", "Dashboard")';
       window.location.href = nextUrl;
       return;
     });
 
     $("#btnJoinGoogle").click(function () {
       //Just redirect to the interview page, which will force them to log in
-      var nextUrl = '@Url.Action("Index", "Interview")';
+      var nextUrl = '@Url.Action("Index", "Dashboard")';
       window.location.href = nextUrl;
       return;
     });
 
     $("#btnJoinEmail").click(function () {
+      $("#createAccountRow").show();
+      $("#signupFooter").show();
       if ($("#selectJoinRow").is(":visible")) {
-        //$("#selectJoinRow").hide("slow");
         $("#selectJoinRow").hide();
-        $("#createAccountRow").fadeIn(1000);
-      } else {
-        $("#createAccountRow").fadeIn(1000);
       }
     });
 
     $("#btnSignIn").click(function () {
       ClearValidation();
       //Just redirect to the interview page, which will force them to log in
-      var nextUrl = '@Url.Action("Index", "Interview")';
+      var nextUrl = '@Url.Action("Index", "Dashboard")';
       window.location.href = nextUrl;
       return;
 
@@ -93,29 +495,50 @@
       }
     });
 
-    $("#btnCreateAccountEmail").click(function() {
+    $("#btnCancel").click(function () {
+      $('#signupModal').modal('hide');
+    });
+
+    $("#btnCreateAccountEmail").click(function () {
+      $("#loadingSignUp").show();
       if (ValidateJoinFields()) {
-        //Sign me up!
-        $.post("@Url.Content("~/Account/CreateUserAccount")", { firstName: $("#firstName").val(), lastName: $("#lastName").val(), email: $("#emailAddress").val(), password: $("#password").val() }, function (data) {
-          var returnData = data;
-          var returnUserData = jQuery.parseJSON(data);
-          if (!returnUserData.IsValid) {
-            $("#errorMessage").html(returnUserData.Error);
-            $("#errorRow").show();
-            return;
-          }
-
-          //alert("user created! go to the next page");
-          var nextUrl = '@Url.Action("Index", "Interview")';
-          window.location.href = nextUrl;
-          return;
-        });
-
+        ProcessNewAccount();
       }
-      }
-    );
+      $("#loadingSignUp").hide();
+    });
 
-    function ClearValidation() {
+    function ResetSignUpModal() {
+      $("#selectJoinRow").show();
+      $("#createAccountRow").hide();
+      $("#signupFooter").hide();
+      $("#loadingSignUp").hide();
+    }
+
+    async function ProcessNewAccount() {
+      const postNewAccountData = {
+        firstName: $("#firstName").val(), lastName: $("#lastName").val(), email: $("#emailAddress").val(), password: $("#password").val()
+      };
+      const postNewAccountUrl = "@Url.Content("~/Account/CreateUserAccount")";
+      const rawNewAccountResponse = await fetch(postNewAccountUrl, {
+        referrerPolicy: 'origin',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postNewAccountData)
+      });
+      const returnNewAccountData = await rawNewAccountResponse.json();
+      if (!returnNewAccountData.IsValid) {
+        $("#errorMessage").html(returnUserData.Error);
+        $("#errorRow").show();
+      }
+      else {
+        var nextUrl = '@Url.Action("Index", "Dashboard")';
+        window.location.href = nextUrl;
+      }
+    }
+
+    async function ClearValidation() {
       removeTextBoxError($("#firstName"));
       removeTextBoxError($("#lastName"));
       removeTextBoxError($("#emailAddress"));
@@ -153,29 +576,34 @@
         return false;
       }
       return true;
-    }*@
+    }
 
     $(function () {
-      //if ($("#isSignedIn").val() == "True") {
-      //  $("#divSidebar").hide();
-      //  $("#divShowSide").show();
-      //  $("#logoFlame").show();
-      //  $('.showside').click(function () {
-      //    if ($("#divSidebar").is(":visible")) {
-      //      $("#divSidebar").hide();
-      //    } else {
-      //      $("#divSidebar").show();
-      //    }
-      //  });
-      //} else {
-      //  DeactivateMenuOptions();
-      //  $("#divSidebar").hide();
-      //  $("#logoFlame").hide();
-      //}
+      $("#divHeader").hide();
+
+      $(".signupbutton").click(function () {
+        ResetSignUpModal();
+        //Place a modal form for local sign ups. If they choose FB or Google, just send them on to the dashboard and it will require a sign in
+        $('#signupModal').modal('show');
+        @*var signupUrl = '@Url.Content("~/Sales")';
+        window.location.href = signupUrl;*@
+      });
+
+      $(".loginbutton").click(function () {
+        var nextUrl = '@Url.Action("Index", "Dashboard")';
+        window.location.href = nextUrl;
+      });
+
+      $(".startinterviewbutton").click(function () {
+        var signupUrl = '@Url.Content("~/Sales")';
+        window.location.href = signupUrl;
+      });
+
 
     });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
+      $('#checkPasswordModal').modal('hide');
       //if ($("#isSignedIn").val() == "True") {
       //  $("#divSidebar").hide();
       //  $("#divShowSide").show();
@@ -195,5 +623,8 @@
       //  $('.earthtext').delay(500).fadeTo(1000, 1);
       //}
     });
+
+
+
   </script>
 }

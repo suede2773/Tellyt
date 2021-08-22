@@ -36,8 +36,10 @@ namespace Tellyt.Utilities
         var container = blobClient.GetContainerReference("videos");
         var videoBlob = container.GetBlockBlobReference(keyName + ".webm");
         videoBlob.Properties.ContentType = "video/webm";
+       // videoBlob.UploadFromStream(stream);
         videoBlob.UploadFromStream(stream);
         uploadReturnResult.Success = true;
+
       }
       catch (Exception e)
       {

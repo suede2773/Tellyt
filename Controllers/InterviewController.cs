@@ -17,7 +17,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using Microsoft.Win32.SafeHandles;
 using Tellyt.Utilities;
-
+using System.Threading.Tasks;
 
 namespace Tellyt.Controllers
 {
@@ -60,10 +60,28 @@ namespace Tellyt.Controllers
     public string thumbnailSize { get; set; }
   }
 
+  public class ConvertVideoInput
+  {
+    public string keyName { get; set; }
+    public string inputFileType { get; set; }
+    public string thumbnailSize { get; set; }
+    public string outputFileType { get; set; }
+  }
+
+  public class VideoInput
+  {
+    public string keyName { get; set; }
+    public string inputFileType { get; set; }
+    public string outputFileType { get; set; }
+    public string thumbnailSize { get; set; }
+  }
+
   public class ValidationResult
   {
-    public bool Valid { get; set; }
-    public string Message { get; set; }
+    public string duration { get; set; }
+    public bool valid { get; set; }
+    public string message { get; set; }
+    public string keyName { get; set; }
   }
 
   public class UploadDataValuesModel
@@ -153,6 +171,10 @@ namespace Tellyt.Controllers
       var uploadResult = new UploadReturnResult();
       var azureUploader = new AzureUploader();
       var thumbnailCreationSuccess = false;
+      var videoConvertSuccess = false;
+      try
+      {
+
       if (uploadFile.ContentLength > 0)
       {
         var uploadFormValues = JsonConvert.DeserializeObject<UploadDataValuesModel>(formValues);
@@ -175,7 +197,7 @@ namespace Tellyt.Controllers
         }
 
         //create the thumbnail
-        var videoEncoderUrl = ConfigurationManager.AppSettings["VideoEncoderUrl"] + "/thumbnail";
+        var videoEncoderUrl = ConfigurationManager.AppSettings["VideoEncoderUrl"] + "/convertvideo";
         var httpClient = new HttpClient();
 
         httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -183,44 +205,71 @@ namespace Tellyt.Controllers
         ServicePointManager.SecurityProtocol =
           SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
-        var thumbnailInput = new ThumbnailInput
-          {inputFileType = "webm", keyName = uploadFormValues.fileName, thumbnailSize = "176x99"};
-        var postBody = JsonConvert.SerializeObject(thumbnailInput);
+        var convertVideoInput = new ConvertVideoInput
+        { inputFileType = "webm", outputFileType = "mp4", keyName = uploadFormValues.fileName, thumbnailSize = "176x99" };
+        var postBody = JsonConvert.SerializeObject(convertVideoInput);
 
-        var videoEncoderResponse = httpClient.PostAsync(videoEncoderUrl, new StringContent(postBody, Encoding.UTF8, "application/json")).Result;
-        if (videoEncoderResponse.IsSuccessStatusCode)
+        var createThumbnailResponse = httpClient.PostAsync(videoEncoderUrl, new StringContent(postBody, Encoding.UTF8, "application/json")).Result;
+
+        if (createThumbnailResponse.IsSuccessStatusCode)
         {
-          var result = JsonConvert.DeserializeObject<ValidationResult>(videoEncoderResponse.Content.ReadAsStringAsync().Result);
-          thumbnailCreationSuccess = result.Valid;
-        }
+          var resultString = createThumbnailResponse.Content.ReadAsStringAsync().Result; //JsonConvert.DeserializeObject<ValidationResult>(createThumbnailResponse.Content.ReadAsStringAsync().Result);
+          var result = JsonConvert.DeserializeObject<ValidationResult>(resultString);
+          thumbnailCreationSuccess = result.valid;
 
-        var questionNumber = Convert.ToInt32(uploadFormValues.questionId);
-
-        using (var db = new AmandaDevEntities())
-        {
-          var answeredQuestion = db.Questions.Where(q => q.Id == questionNumber).ToList();
-          db.Videos.Add(new Video
+          if (thumbnailCreationSuccess)
           {
-            AccountHash = "videos",
-            Stream = uploadFormValues.fileName,
-            ExternalVideoId = 0,
-            Location = "tellyt.blob.core.windows.net",
-            Questions = answeredQuestion,
-            UserId = CommonController.GetCurrentUserId(),
-            RecordedTime = uploadFormValues.duration,
-            type = "WEBM",
-            LastModified = DateTime.Now
-          });
-          db.SaveChanges();
+            var durationSeconds = Convert.ToDouble(result.duration);
+            //Convert to hours:minutes:seconds
+            TimeSpan time = TimeSpan.FromSeconds(durationSeconds);
+            var recordedTime = time.ToString(@"mm\:ss");
+
+            var questionNumber = Convert.ToInt32(uploadFormValues.questionId);
+
+            using (var db = new AmandaDevEntities())
+            {
+              var answeredQuestion = db.Questions.Where(q => q.Id == questionNumber).ToList();
+              db.Videos.Add(new Video
+              {
+                AccountHash = "videos",
+                Stream = uploadFormValues.fileName,
+                ExternalVideoId = 0,
+                Location = "tellyt.blob.core.windows.net",
+                Questions = answeredQuestion,
+                UserId = CommonController.GetCurrentUserId(),
+                RecordedTime = recordedTime,
+                type = "MP4",
+                LastModified = DateTime.Now
+              });
+              db.SaveChanges();
+            }
+
+            return Json(new
+            {
+              Successful = uploadResult.Success,
+              ErrorMessage = uploadResult.Message
+            });
+
+          }
+          else
+          {
+            return Json(new
+            {
+              Successful = false,
+              ErrorMessage = "There was an error saving your video."
+            });
+          }
         }
-
-        return Json(new
+        else
         {
-          Successful = uploadResult.Success,
-          ErrorMessage = uploadResult.Message
-        });
-
+          return Json(new
+          {
+            Successful = false,
+            ErrorMessage = "There was an error saving your video."
+          });
+        }
       }
+
       else
       {
         return Json(new
@@ -229,10 +278,17 @@ namespace Tellyt.Controllers
           ErrorMessage = "The video you saved was empty."
         });
       }
+      }
+      catch (Exception e)
+      {
+        var errorMessage = e.Message;
+        Console.WriteLine(e);
+        throw;
+      }
     }
 
     [HttpPost]
-    public JsonResult UploadPhoto(string fileName, HttpPostedFileBase uploadFile)
+    public JsonResult UploadPhoto(string formValues, HttpPostedFileBase uploadFile)
     {
       var uploadResult = new UploadReturnResult();
       var azureUploader = new AzureUploader();
@@ -242,6 +298,8 @@ namespace Tellyt.Controllers
       int fullWidth;
       try
       {
+        var uploadFormValues = JsonConvert.DeserializeObject<UploadDataValuesModel>(formValues);
+
         if (uploadFile.ContentLength > 0)
         {
           var normalMap = (Bitmap)Bitmap.FromStream(uploadFile.InputStream);
@@ -286,7 +344,7 @@ namespace Tellyt.Controllers
 
           using (var db = new AmandaDevEntities())
           {
-
+            var questions = new List<Question> {new Question {Id = Convert.ToInt32(uploadFormValues.questionId)}};
             db.ExternalMedias.Add(new ExternalMedia
             {
               Key = keyName,
@@ -297,7 +355,7 @@ namespace Tellyt.Controllers
               LastModified = DateTime.Now,
               UserId = CommonController.GetCurrentUserId(),
               MediaType = "Image",
-              Questions = new List<Question>(),
+              Questions = questions,
               Name = keyName
             });
             db.SaveChanges();
@@ -329,17 +387,17 @@ namespace Tellyt.Controllers
     }
 
     [HttpPost]
-    public string GetUserRelatedPhotos()
+    public string GetUserRelatedPhotos(int topicId, int questionId)
     {
       var userId = CommonController.GetCurrentUserId();
       var relatedPhotoList = new List<RelatedPhotoDetail>();
 
       using (var db = new AmandaDevEntities())
       {
-        foreach (var externalMedia in db.ExternalMedias.Where(m => m.MediaType == "image" && m.UserId == userId))
-        {
-          relatedPhotoList.Add(new RelatedPhotoDetail {Id = externalMedia.Id, ThumbUrl = externalMedia.ThumbUrl, Url = externalMedia.Url});
-        }
+        relatedPhotoList = db.Database
+          .SqlQuery<RelatedPhotoDetail>("[dbo].[GetTopicPhotos] @UserId, @TopicId, @QuestionId",
+            new SqlParameter("@UserId", userId), new SqlParameter("@TopicId", topicId),
+            new SqlParameter("@QuestionId", questionId)).ToList();
       }
 
       return JsonConvert.SerializeObject(relatedPhotoList);
@@ -446,37 +504,37 @@ namespace Tellyt.Controllers
     //[HttpPost]
     //public string SaveWebcamVideo()
 
-    [HttpPost]
-    public string SaveVideo(string location, string hash, string stream, string video, int questionId, string duration)
-    {
-      try
-      {
-        //Transform seconds into hh:mm:ss
-        TimeSpan time = TimeSpan.FromSeconds(Convert.ToDouble(duration));
-        var recordedTime = time.ToString(@"mm\:ss");
-        using (var db = new AmandaDevEntities())
-        {
-          var answeredQuestion = db.Questions.Where(q => q.Id == questionId).ToList();
-          db.Videos.Add(new Video
-          {
-            AccountHash = hash,
-            Stream = stream,
-            ExternalVideoId = 0,
-            Location = location,
-            Questions = answeredQuestion,
-            UserId = CommonController.GetCurrentUserId(),
-            RecordedTime = recordedTime,
-            LastModified = DateTime.Now
-          });
-          db.SaveChanges();
-        }
-      }
-      catch (Exception ex)
-      {
-        return ex.Message;
-      }
-      return "success";
-    }
+    //[HttpPost]
+    //public string SaveVideo(string location, string hash, string stream, string video, int questionId, string duration)
+    //{
+    //  try
+    //  {
+    //    //Transform seconds into hh:mm:ss
+    //    TimeSpan time = TimeSpan.FromSeconds(Convert.ToDouble(duration));
+    //    var recordedTime = time.ToString(@"mm\:ss");
+    //    using (var db = new AmandaDevEntities())
+    //    {
+    //      var answeredQuestion = db.Questions.Where(q => q.Id == questionId).ToList();
+    //      db.Videos.Add(new Video
+    //      {
+    //        AccountHash = hash,
+    //        Stream = stream,
+    //        ExternalVideoId = 0,
+    //        Location = location,
+    //        Questions = answeredQuestion,
+    //        UserId = CommonController.GetCurrentUserId(),
+    //        RecordedTime = recordedTime,
+    //        LastModified = DateTime.Now
+    //      });
+    //      db.SaveChanges();
+    //    }
+    //  }
+    //  catch (Exception ex)
+    //  {
+    //    return ex.Message;
+    //  }
+    //  return "success";
+    //}
 
     public string GetUserTopicsAndQuestions()
     {

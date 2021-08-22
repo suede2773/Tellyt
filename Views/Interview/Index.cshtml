@@ -64,40 +64,37 @@
       </div>
 
       <div id="recorderButtonContainer">
+        <div id="recordingIcon" class="recorder_off" style="width: 20px">
+        </div>
         <div id="recordButton" class="enabledRecordButton">
-          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 20%; width:80%">Answer/</div>
-          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 22%; width:78%">Record</div>
+          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 20%; width: 80%">Answer/</div>
+          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 22%; width: 78%">Record</div>
         </div>
         <div id="stopButton" class="enabledStopButton">
-          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 30%; width:70%">Stop</div>
+          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 30%; width: 70%">Stop</div>
         </div>
         <div id="reviewButton" class="enabledReviewButton">
-          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 25%; width:75%">Review</div>
+          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 25%; width: 75%">Review</div>
         </div>
-        <div id="redoButton" class="enabledRedoButton" style="display:none">
-          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 30%; width:70%">Redo/</div>
-          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 25%; width:75%">Record</div>
+        <div id="redoButton" class="enabledRedoButton">
+          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 30%; width: 70%">Redo/</div>
+          <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 25%; width: 75%">Record</div>
         </div>
         <div id="postButton" class="enabledPostButton">
-          <div id="postButtonStyle" style="height: 16px;
-    color: rgb(255, 255, 255);
-    letter-spacing: 0.66px;
-    font-size: 13px;
-    margin-top: calc(.5rem);
-    margin-left: 30%;
-    width: 70%"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loadingPost" style="margin-right: 4px"></span>Post</div>
+          <div id="postButtonStyle" style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 30%; width: 70%"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loadingPost" style="margin-right: 4px"></span>Post</div>
         </div>
       </div>
       <div id="relatedPhotosHeaderContainer">
         <div id="reloadedPhotosHeaderLabel">
           Related Photos
         </div>
-        <div id="uploadPhotoButton" class="uploader" style="float: left; margin-left: 30px; cursor:pointer">
+        <div id="uploadPhotoButton" class="uploader" style="float: left; margin-left: 30px; width:100px; cursor:pointer">
           <label>
             <img src="@Url.Content("~/Images/uploadbutton.png")">
             <input id="photoFileInput" type="file" style="visibility: hidden;" multiple="multiple" accept="image/*" />
           </label>
         </div>
+        <div id="loadingPhoto" style="float: left; margin-left: 10px;margin-top: 6px"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></div>
       </div>
       <div id="relatedPhotosContainer" class="scrolling-wrapper-flexbox">
 
@@ -181,7 +178,7 @@
         </button>
       </div>
       <div id="videoModalBody" class="modal-body">
-
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" id="btnDeleteVideo">Delete</button>
@@ -205,7 +202,7 @@
 
 @section Scripts
 {
-
+  <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
   <script>
 
     var $videos;
@@ -231,7 +228,7 @@
     function RevertRecorder() {
       $("#videoRecorder").show();
       $("#videoReviewer").hide();
-      EnableInitialButtons();
+      EnableReviewButtons();
     }
 
     var pipeParams = { size: { width: 560, height: 315 }, qualityurl: "avq/480p.xml", accountHash: "3a607b4a17256a0676680aca650548be", eid: "A9hIFB", mrt: 3600, asv: 0, showMenu: 0 };
@@ -242,6 +239,10 @@
       } else {
         isCamReady = false;
       }
+    }
+
+    function pauseAllVideos() {
+      $(".vjs-default-skin").trigger('pause');
     }
 
     function userHasCamMic(cam_number, mic_number, recorderId) {
@@ -257,17 +258,18 @@
       posterImage += $(element).attr("hash");
       posterImage += "/";
       posterImage += $(element).attr("stream");
-      var videoSource = posterImage;
-      posterImage += ($(element).attr("type") == "WEBM") ? ".png" : ".jpg";
-      videoSource += ($(element).attr("type") == "WEBM") ? ".webm" : "mp4";
+      posterImage += ".png";
+      var videoSource = "https://sqps.onstreamsecure.com/origin/lmskew/tellytdev/";
+      videoSource += $(element).attr("stream");
+      videoSource += ($(element).attr("type") == "WEBM") ? ".webm" : ".mp4";
 
-      var videoPlaybackHtml = "<video poster=\"";
-      videoPlaybackHtml += posterImage;
-      videoPlaybackHtml += "\" width=\"720\" height=\"405\" controls><source src=\"";
-      videoPlaybackHtml += videoSource;
-      videoPlaybackHtml += "\" ";
-      videoPlaybackHtml += ($(element).attr("type") == "WEBM") ? "type =\"video/webm\"" : "type =\"video/mp4\"";
-      videoPlaybackHtml += "> Your browser does not support the video tag.</video > ";
+      var videoType = ($(element).attr("type") == "WEBM") ? "video/webm" : "video/mp4";
+
+      var videoPlaybackHtml = "<video id=\"vid" + $(element).attr("stream") + "\" class=\"vjs-default-skin vjs-16-9 vjs-big-play-centered\" controls preload=\"auto\" width=\"720\" height=\"405\" ";
+      videoPlaybackHtml += "poster=\"" + posterImage + "\" data-setup=\"{}\">";
+      videoPlaybackHtml += "<source src=\"" + videoSource + "\" type=\"" + videoType + "\" />";
+      videoPlaybackHtml += "<p class=\"vjs-no-js\">To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video</p>";
+      videoPlaybackHtml += "</video>";
 
       $("#videoModalLabel").html($(element).attr("question"));
 
@@ -276,9 +278,17 @@
       var videoPlaybackElement = $(videoPlaybackHtml);
       $("#videoModalBody").append(videoPlaybackElement);
       $('#videoModal').modal('show');
+
+      $("#videoModal").on('hide.bs.modal', function () {
+        pauseAllVideos();
+      });
+
+      //$('#videoModal').on('hide.bs.modal', function (e) {
+      //  
+      //})
     }
 
-    function onSaveOk(streamName, streamDuration, userId, cameraName, micName, recorderId, audioCodec, videoCodec, fileType, videoId, audioOnly, location)
+    @*function onSaveOk(streamName, streamDuration, userId, cameraName, micName, recorderId, audioCodec, videoCodec, fileType, videoId, audioOnly, location)
     {
       var args = Array.prototype.slice.call(arguments);
       currentLocation = args[11];
@@ -300,7 +310,7 @@
       });
 
 
-    }
+    }*@
 
     function DisableAllButtons() {
       $("#recordButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
@@ -324,6 +334,14 @@
       $("#reviewButton").addClass("disabledReviewButton").removeClass("enabledReviewButton");
       $("#redoButton").addClass("disabledRedoButton").removeClass("enabledRedoButton");
       $("#postButton").addClass("disabledPostButton").removeClass("enabledPostButton");
+    }
+
+    function EnableReviewButtons() {
+      $("#recordButton").addClass("enabledRecordButton").removeClass("disabledRecordButton");
+      $("#stopButton").addClass("disabledStopButton").removeClass("enabledStopButton");
+      $("#reviewButton").addClass("enabledReviewButton").removeClass("disabledReviewButton");
+      $("#redoButton").addClass("enabledRedoButton").removeClass("disabledRedoButton");
+      $("#postButton").addClass("enabledPostButton").removeClass("disabledPostButton");
     }
 
     function AudioComplete() {
@@ -366,6 +384,15 @@
     }
 
     function SelectQuestion() {
+      //turn off the recording icon
+      $("#recordingIcon").addClass("recorder_off").removeClass("recorder_on");
+
+      if ($("#postButton").hasClass("enabledPostButton")) {
+        if (confirm("You have an unsaved video recording. Do you want to post it first?")) {
+          $("#postButton").click();
+          return;
+        }
+      }
       $("span.question").removeClass("selectedQuestion");
       $("span.recordedTime").removeClass("selectedQuestion");
       $("div.card-item").addClass("unselectedCardItem").removeClass("selectedCardItem");
@@ -396,14 +423,19 @@
       });
     }
 
-    function GetRelatedPhotos() {
+    function GetRelatedPhotos(topicId, questionId) {
+      $("#loadingPhoto").show();
       var postUrl = "@Url.Content("~/Interview/GetUserRelatedPhotos")";
-      $.post(postUrl, { }, function(data) {
-        if (data.length > 0)
-        {
+      $.post(postUrl, { topicId: topicId, questionId: questionId }, function (data) {
+        $("#uploadPhotoButton").show();
+        $("#loadingPhoto").hide();
+        if (data.length > 0) {
           $relatedPhotos = jQuery.parseJSON(data);
           BuildRelatedPhotoSection();
-          BuildPhotoCarousel();
+          //BuildPhotoCarousel();
+        }
+        else {
+          $("#relatedPhotosContainer").html("");
         }
       });
     }
@@ -421,44 +453,10 @@
         relatedPhotoHtml += "<div class=\"scrollcard\"><img src=\"" + $relatedPhotos[iPhoto].ThumbUrl + "\"></div>";
       }
       $("#relatedPhotosContainer").html(relatedPhotoHtml);
-      }
-
-      function BuildPhotoCarousel() {
-        if ($relatedPhotos.length == 0) {
-          $("#btnDeletePhoto").hide();
-          $("#photoCarousel").html("<span>You have no uploaded photos. Please upload a photo in the \"Related Photos\" section.</span>");
-          return;
-        }
-
-        var photoCarouselHtml = "<div class=\"carousel-inner\">";
-        var carouselIndicatorsHtml = "<ul class=\"carousel-indicators\">";
-        for (var iPhoto = 0; iPhoto < $relatedPhotos.length; iPhoto++) {
-          carouselIndicatorsHtml += (iPhoto == 0) ? "<li data-target=\"#photoCarousel\" data-slide-to=\"0\" class=\"active\"></li>" : "<li data-target=\"#photoCarousel\" data-slide-to=\"" + iPhoto + "\"></li>"
-
-          photoCarouselHtml += (iPhoto == 0) ? "<div class=\"carousel-item active\">" : "<div class=\"carousel-item\">";
-          photoCarouselHtml += " <div class=\"photoItem\">";
-          photoCarouselHtml += "<span class=\"photoSpanHelper\"></span>";
-          photoCarouselHtml += "<img src=\"" + $relatedPhotos[iPhoto].Url + "\" alt=\"your photo\">";
-          photoCarouselHtml += " </div>";
-          photoCarouselHtml += " </div>";
-        }
-        carouselIndicatorsHtml += "</ul>";
-        photoCarouselHtml += "</div>";
-
-        var carouselControlsHtml = "<a class=\"carousel-control-prev\" href=\"#photoCarousel\" data-slide=\"prev\">";
-        carouselControlsHtml += "<span class=\"carousel-control-prev-icon\"></span>";
-        carouselControlsHtml += "</a>";
-        carouselControlsHtml += "<a class=\"carousel-control-next\" href=\"#photoCarousel\" data-slide=\"next\">";
-        carouselControlsHtml += "<span class=\"carousel-control-next-icon\"></span>";
-        carouselControlsHtml += "</a>";
-
-        $("#photoCarousel").html(carouselIndicatorsHtml + photoCarouselHtml + carouselControlsHtml);
-        $("#btnDeletePhoto").show();
-      }
+    }
 
     function BuildInterviewSection(InterviewQuestions)
     {
-      //<img src="https://eu1-addpipe.s3.eu-central-1.amazonaws.com/3a607b4a17256a0676680aca650548be/1bdb381f4c5a20af312fe319a61021f2.jpg" location="eu1-addpipe.s3.eu-central-1.amazonaws.com" hash="3a607b4a17256a0676680aca650548be" stream="1bdb381f4c5a20af312fe319a61021f2" class="clip" data-toggle="tooltip" data-placement="top" title="What is your earliest childhood memory?">
       var interviewHtml = "";
       for (var iInterview = 0; iInterview < InterviewQuestions.length; iInterview++) {
         var thumbnailUrl = "https://";
@@ -467,7 +465,7 @@
             thumbnailUrl += InterviewQuestions[iInterview].AccountHash;
             thumbnailUrl += "/";
         thumbnailUrl += InterviewQuestions[iInterview].Stream;
-        thumbnailUrl += (InterviewQuestions[iInterview].Type.toLowerCase() == "webm") ? ".png" : ".jpg";
+        thumbnailUrl += ".png";
 
         interviewHtml += "<div class=\"topicContainer\">";
         interviewHtml += "<div class=\"videoThumbnailHolder\" ";
@@ -689,22 +687,38 @@
       function startRecording() {
         recordedBlobs = [];
 
-        mimeType = 'video/webm;codecs=vp9';
-        let options = { mimeType: mimeType };
+        const optionsWEBM = {
+          audioBitsPerSecond: 128000,
+          videoBitsPerSecond: 2500000,
+          mimeType: 'video/webm;codecs=vp9'
+        }
+
+        const optionsWEBMGeneric = {
+          audioBitsPerSecond: 128000,
+          videoBitsPerSecond: 2500000,
+          mimeType: 'video/webm;codecs=vp9'
+        }
+
+        const optionsMP4 = {
+          audioBitsPerSecond: 128000,
+          videoBitsPerSecond: 2500000,
+          mimeType: 'video/mp4'
+        }
+
+        let options = optionsWEBM;
+
         recordedBlobs = [];
         try {
           mediaRecorder = new MediaRecorder(window.stream, options);
         } catch (e0) {
           console.log('Unable to create MediaRecorder with options Object: ', options, e0);
           try {
-            mimeType = 'video/webm';
-            options = { mimeType: mimeType };
+            options = optionsWEBMGeneric;
             mediaRecorder = new MediaRecorder(window.stream, options);
           } catch (e1) {
             console.log('Unable to create MediaRecorder with options Object: ', options, e1);
             try {
-              mimeType = 'video/mp4';
-              options = mimeType;
+              options = optionsMP4;
               mediaRecorder = new MediaRecorder(window.stream, options);
             } catch (e2) {
               alert('MediaRecorder is not supported by this browser.');
@@ -748,7 +762,7 @@
 
       document.querySelector('#recordButton').addEventListener('click', async () => {
 
-        if ($("#recordButton").hasClass("enabledRecordButton")) {
+        if (($("#recordButton").hasClass("enabledRecordButton")) || ($("#redoButton").hasClass("enabledRedoButton"))) {
 
           if (!isCamReady) {
             const constraints = {
@@ -759,7 +773,6 @@
                 width: 1280, height: 720
               }
             };
-            console.log('Using media constraints:', constraints);
             await init(constraints);
             if (!isCamReady) {
               alert(
@@ -770,7 +783,8 @@
 
           if ($currentQuestionId > 0) {
             startRecording();
-
+            //turn on the recording icon
+            $("#recordingIcon").addClass("recorder_on").removeClass("recorder_off");
             //enable the stop button, disable the record/review/redo/post buttons
             $("#recordButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
             $("#stopButton").addClass("enabledStopButton").removeClass("disabledStopButton");
@@ -783,12 +797,17 @@
         }
       });
 
+      document.querySelector('#redoButton').addEventListener('click', async () => {
+        $("#recordButton").click();
+      });
+
       document.querySelector('#stopButton').addEventListener('click', async () => {
 
         if ($("#stopButton").hasClass("enabledStopButton")) {
 
           stopRecording();
-
+          //turn off the recording icon
+          $("#recordingIcon").addClass("recorder_off").removeClass("recorder_on");
           //disable the stop button, enable the review/redo/post buttons
           $("#stopButton").addClass("disabledStopButton").removeClass("enabledStopButton");
           $("#reviewButton").addClass("enabledReviewButton").removeClass("disabledReviewButton");
@@ -837,8 +856,76 @@
          }
         });
 
+          $("#postButton").click(function () {
+            if ($(this).hasClass("enabledPostButton")) {
 
-      PipeSDK.insert("divRecorder", pipeParams, function (recorderObject)
+              $("#postButtonStyle").css("margin-left", "20%");
+              $("#loadingPost").show();
+
+              var fileName = uuidv4();
+              var file = recordedBlobsToFile(fileName);
+
+              //window.console.log("Recorded Blobs length: " + recordedBlobs.length);
+              var time = (recordedBlobs.length * 10) / 100;  //1.88
+              var minutes = Math.floor(time / 60); //0
+              var seconds = Math.round(time - minutes);
+              console.log("time: " + time);
+              var duration = str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2);
+
+              var formData = new FormData();
+              let dataValues = {};
+              dataValues.questionId = $currentQuestionId;
+              dataValues.duration = duration;
+              dataValues.fileName = fileName;
+
+              formData.append("formValues", JSON.stringify(dataValues));
+              formData.append("uploadFile", file);
+
+              $.ajax({
+                xhr: function() {
+                  var xhr = new window.XMLHttpRequest();
+                  return xhr;
+                },
+                url: '@Url.Content("~/Interview/SaveWebcamVideo")',
+                type: "POST",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function (result)
+                {
+                  $("#postButtonStyle").css("margin-left", "30%");
+                  $("#loadingPost").hide();
+                  if (result.Successful == true) {
+                    alert("Your video has been posted and will be available soon!");
+                    RefreshAccordion();
+                  } else {
+                    alert(result.ErrorMessage);
+                    successfulUpload = false;
+                  }
+                },
+                error: function (xhr, status, error)
+                {
+                  $("#postButtonStyle").css("margin-left", "30%");
+                  $("#loadingPost").hide();
+                  console.log(xhr.responseText);
+                  alert(xhr.responseText);
+                  successfulUpload = false;
+                }
+              });
+
+                //enable the answer button, disable the stop/review/redo/post buttons
+                $("#recordButton").addClass("enabledRecordButton").removeClass("enabledRecordButton");
+                $("#stopButton").addClass("disabledStopButton").removeClass("enabledRecordButton");
+                $("#reviewButton").addClass("disabledReviewButton").removeClass("enabledRecordButton");
+                $("#redoButton").addClass("disabledRedoButton").removeClass("enabledRecordButton");
+                $("#postButton").addClass("disabledPostButton").removeClass("enabledPostButton");
+            }
+          });
+
+
+      @*PipeSDK.insert("divRecorder", pipeParams, function (recorderObject)
       {
 
         recorderObject.userHasCamMic = function(id,camNr, micNr){
@@ -933,76 +1020,17 @@
             }
           });
 
-          $("#postButton").click(function () {
-            if ($(this).hasClass("enabledPostButton")) {
 
-              $("#postButtonStyle").css("margin-left", "20%");
-              $("#loadingPost").show();
-
-              var fileName = uuidv4();
-              var file = recordedBlobsToFile(fileName);
-
-              var time = (recordedBlobs.length * 3) / 100;  //1.88
-              var minutes = Math.floor(time / 60); //0
-              var seconds = Math.round(time - minutes); 
-              var duration = str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2);
-
-              var formData = new FormData();
-              let dataValues = {};
-              dataValues.questionId = $currentQuestionId;
-              dataValues.duration = duration;
-              dataValues.fileName = fileName;
-
-              formData.append("formValues", JSON.stringify(dataValues));
-              formData.append("uploadFile", file);
-
-              $.ajax({
-                xhr: function() {
-                  var xhr = new window.XMLHttpRequest();
-                  return xhr;
-                },
-                url: '@Url.Content("~/Interview/SaveWebcamVideo")',
-                type: "POST",
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                dataType: "json",
-                success: function (result)
-                {
-                  $("#postButtonStyle").css("margin-left", "30%");
-                  $("#loadingPost").hide();
-                  if (result.Successful == true) {
-                    RefreshAccordion();
-                  } else {
-                    alert(result.ErrorMessage);
-                    successfulUpload = false;
-                  }
-                },
-                error: function (xhr, status, error)
-                {
-                  $("#postButtonStyle").css("margin-left", "30%");
-                  $("#loadingPost").hide();
-                  alert(xhr.responseText);
-                  successfulUpload = false;
-                }
-              });
-
-                //enable the answer button, disable the stop/review/redo/post buttons
-                $("#recordButton").addClass("enabledRecordButton").removeClass("enabledRecordButton");
-                $("#stopButton").addClass("disabledStopButton").removeClass("enabledRecordButton");
-                $("#reviewButton").addClass("disabledReviewButton").removeClass("enabledRecordButton");
-                $("#redoButton").addClass("disabledRedoButton").removeClass("enabledRecordButton");
-                $("#postButton").addClass("disabledPostButton").removeClass("enabledRecordButton");
-            }
-          });
         }
-      });
+      });*@
     });
 
     $(document).ready(function() {
 
       $("#loadingPost").hide();
+      $("#loadingPhoto").hide();
+      $("#uploadPhotoButton").hide();
+      $("#recordingIcon").addClass("recorder_off").removeClass("recorder_on");;
 
       //$('#carousel-modal').carousel();
       $('.carousel').carousel({
@@ -1012,16 +1040,20 @@
       document.getElementById('photoFileInput').addEventListener('change', function ()
       {
         var successfulUpload = true;
-        if (this.files.length > 5) {
-          alert("Please only upload a maximum of 5 files at a time.");
+        if (this.files.length > 10) {
+          alert("Please only upload a maximum of 10 files at a time.");
           return;
         }
         for(var i = 0; i<this.files.length; i++){
           var file = this.files[i];
-          var file = this.files[i];
           //upload each file
+
           var formData = new FormData();
-          formData.append("fileName", file.name);
+          let dataValues = {};
+          dataValues.questionId = $currentQuestionId;
+          dataValues.fileName = file.name;
+
+          formData.append("formValues", JSON.stringify(dataValues));
           formData.append("uploadFile", file);
           $.ajax({
             xhr: function() {

@@ -1,0 +1,140 @@
+﻿
+@{
+  ViewBag.Title = "Index";
+}
+
+<section class="dashboard_banner sub_image_dashboard">
+</section>
+
+<section class="dashboard_main" id="main">
+  <div class="container-fluid">
+
+    <div class="row pt-5">
+      <div class="col-12 mx-auto">
+        <div class="dashboard_header text-center">Dashboard</div>
+      </div>
+    </div>
+
+    <div class="row vertical-row pt-5">
+      <div class="col-12 col-sm-1 dashboard-col-pull-right">
+        <div class="dashboard_profile_editor_image"></div>
+      </div>
+      <div class="col-12 col-sm-2">
+        <div class="dashboard_section_header">Profile Editor</div>
+        <div class="dashboard_section_text">Quickly make changes to your profile, add content or create a special section. </div>
+      </div>
+
+      <div class="col-12 col-sm-1 dashboard-col-pull-right">
+        <div class="dashboard_interviewer_image"></div>
+      </div>
+      <div class="col-12 col-sm-2">
+        <div class="dashboard_section_header">Interviewer</div>
+        <div class="dashboard_section_text">Lights, camera, action!  Answer questions, record your responses, review and post your legacy.</div>
+      </div>
+
+      <div class="col-12 col-sm-1 dashboard-col-pull-right">
+        <div class="dashboard_public_profile_image"></div>
+      </div>
+      <div class="col-12 col-sm-2">
+        <div class="dashboard_section_header">Public Profile Page</div>
+        <div class="dashboard_section_text">Showtime!  This is where it all gets shared with a world wide audience.</div>
+      </div>
+
+      <div class="col-12 col-sm-1 dashboard-col-pull-right">
+        <div class="dashboard_search_page_image"></div>
+      </div>
+      <div class="col-12 col-sm-2">
+        <div class="dashboard_section_header">Search Page</div>
+        <div class="dashboard_section_text">They’re out there somewhere!  Fill out a few text fields and you never know who you might find! </div>
+      </div>
+
+    </div>
+    
+    <div class="row vertical-row pt-5 pb-5">
+      <div class="col-12 col-sm-1 dashboard-col-pull-right">
+        <div class="dashboard_personal_info_image"></div>
+      </div>
+      <div class="col-12 col-sm-2">
+        <div class="dashboard_section_header">Personal Info</div>
+        <div class="dashboard_section_text">Member profile page contains all the information about the member, including member type, name, address and more.
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-1 dashboard-col-pull-right">
+        <div class="dashboard_guest_permissions_image"></div>
+      </div>
+      <div class="col-12 col-sm-2">
+        <div class="dashboard_section_header">Guest Permissions</div>
+        <div class="dashboard_section_text">Customize who can interact with you and what they can see.</div>
+      </div>
+
+      <div class="col-12 col-sm-1 dashboard-col-pull-right">
+        <div class="dashboard_tribute_image"></div>
+      </div>
+      <div class="col-12 col-sm-2">
+        <div class="dashboard_section_header">Tribute</div>
+        <div class="dashboard_section_text">Create a space to honor friends or family. Share memories and post photos and stories.</div>
+      </div>
+
+      <div class="col-12 col-sm-1 dashboard-col-pull-right">
+        <div class="dashboard_dna_match_image"></div>
+      </div>
+      <div class="col-12 col-sm-2">
+        <div class="dashboard_section_header">DNA Match</div>
+        <div class="dashboard_section_text">Are you related to someone?  Upload your DNA or have your DNA mapped.</div>
+      </div>
+
+    </div> 
+    
+    
+
+
+  </div>
+</section>
+
+<section class="dashboard_insights">
+  <div class="row vertical-row pt-5 pb-5">
+    <div class="col-12 col-sm-1">
+    </div>
+    <div class="col-12 col-sm-2">
+      <div class="dashboard_section_header">Insights</div>
+      <div class="dashboard_page_insights_image">
+      </div>
+    </div>
+    <div class="col-12 col-sm-1">
+    </div>
+    <div class="col-12 col-sm-8">
+      <div class="dashboard_globe_insights_image">
+      </div>
+    </div>
+
+  </div> 
+</section>
+
+@section Scripts
+{
+  <script>
+
+
+    $("div.dashboard_profile_editor_image").click(function () {
+      alert("Coming Soon");
+    });
+
+    $("div.dashboard_interviewer_image").click(function () {
+      var interviewUrl = '@Url.Action("Index", "Interview")';
+      window.location.href = interviewUrl;
+    });
+
+    $(function () {
+
+
+    });
+
+    $(document).ready(function () {
+
+    });
+
+
+
+  </script>
+}
