@@ -26,7 +26,7 @@ namespace Tellyt.Utilities
     private const string connectionString =
       "DefaultEndpointsProtocol=https;AccountName=tellyt;AccountKey=tpmgk/PVSzZ2qm8IZcA5/1QsMFcc++wWICOXiXFT2/oa9hLaj0BXbSWxIrW05MobconSfk5k+y9l1z/s5n9p7A==;EndpointSuffix=core.windows.net";
 
-    public UploadReturnResult UploadWebcamVideo(string keyName, MemoryStream stream)
+    public async Task<UploadReturnResult> UploadWebcamVideo(string keyName, MemoryStream stream)
     {
       var uploadReturnResult = new UploadReturnResult { Message = string.Empty, Success = false };
       try
@@ -36,7 +36,6 @@ namespace Tellyt.Utilities
         var container = blobClient.GetContainerReference("videos");
         var videoBlob = container.GetBlockBlobReference(keyName + ".webm");
         videoBlob.Properties.ContentType = "video/webm";
-       // videoBlob.UploadFromStream(stream);
         videoBlob.UploadFromStream(stream);
         uploadReturnResult.Success = true;
 

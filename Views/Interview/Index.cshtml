@@ -895,25 +895,31 @@
                 dataType: "json",
                 success: function (result)
                 {
-                  $("#postButtonStyle").css("margin-left", "30%");
-                  $("#loadingPost").hide();
-                  if (result.Successful == true) {
-                    alert("Your video has been posted and will be available soon!");
-                    RefreshAccordion();
-                  } else {
-                    alert(result.ErrorMessage);
-                    successfulUpload = false;
-                  }
+                  
+                  //$("#loadingPost").hide();
+                  //if (result.Successful == true) {
+
+                  //} else {
+                  //  alert(result.ErrorMessage);
+                  //  successfulUpload = false;
+                  //}
+                  return;
                 },
                 error: function (xhr, status, error)
                 {
-                  $("#postButtonStyle").css("margin-left", "30%");
-                  $("#loadingPost").hide();
-                  console.log(xhr.responseText);
-                  alert(xhr.responseText);
-                  successfulUpload = false;
+                  //$("#postButtonStyle").css("margin-left", "30%");
+                  
+                  //console.log(xhr.responseText);
+                  //alert(xhr.responseText);
+                  //successfulUpload = false;
+                  return;
                 }
               });
+
+              $("#postButtonStyle").css("margin-left", "30%");
+              $("#loadingPost").hide();
+              alert("Your video has been posted and will be available soon!");
+              RefreshAccordion();
 
                 //enable the answer button, disable the stop/review/redo/post buttons
                 $("#recordButton").addClass("enabledRecordButton").removeClass("enabledRecordButton");

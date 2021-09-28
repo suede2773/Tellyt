@@ -165,111 +165,86 @@ namespace Tellyt.Controllers
     //  }
     //}
 
-    [HttpPost]
-    public JsonResult SaveWebcamVideo(string formValues, HttpPostedFileBase uploadFile)
+    private async Task SaveVideo(string formValues, HttpPostedFileBase uploadFile)
     {
       var uploadResult = new UploadReturnResult();
+
       var azureUploader = new AzureUploader();
-      var thumbnailCreationSuccess = false;
-      var videoConvertSuccess = false;
-      try
+      var videoCreationSuccess = false;
+
+      var uploadFormValues = JsonConvert.DeserializeObject<UploadDataValuesModel>(formValues);
+      var b = new BinaryReader(uploadFile.InputStream);
+      var byteData = b.ReadBytes(uploadFile.ContentLength);
+      var memoryStream = new MemoryStream(byteData);
+      memoryStream.Seek(0, SeekOrigin.Begin);
+
+      using (var fileStream = memoryStream)
       {
-
-      if (uploadFile.ContentLength > 0)
-      {
-        var uploadFormValues = JsonConvert.DeserializeObject<UploadDataValuesModel>(formValues);
-        var b = new BinaryReader(uploadFile.InputStream);
-        var byteData = b.ReadBytes(uploadFile.ContentLength);
-        var memoryStream = new MemoryStream(byteData);
-        memoryStream.Seek(0, SeekOrigin.Begin);
-        using (var fileStream = memoryStream)
+        uploadResult = await azureUploader.UploadWebcamVideo(uploadFormValues.fileName, fileStream);
+        if (uploadResult.Success)
         {
-          uploadResult = azureUploader.UploadWebcamVideo(uploadFormValues.fileName, fileStream);
-        }
+          var videoEncoderUrl = ConfigurationManager.AppSettings["VideoEncoderUrl"] + "/convertvideo";
+          var httpClient = new HttpClient();
+          httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-        if (!uploadResult.Success)
-        {
-          return Json(new
+          ServicePointManager.SecurityProtocol =
+            SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+
+          var convertVideoInput = new ConvertVideoInput
+          { inputFileType = "webm", outputFileType = "mp4", keyName = uploadFormValues.fileName, thumbnailSize = "720x405" };
+          var postBody = JsonConvert.SerializeObject(convertVideoInput);
+
+          var convertVideoResponse = httpClient.PostAsync(videoEncoderUrl, new StringContent(postBody, Encoding.UTF8, "application/json")).Result;
+          if (convertVideoResponse.IsSuccessStatusCode)
           {
-            Successful = false,
-            ErrorMessage = uploadResult.Message
-          });
-        }
+            var resultString = convertVideoResponse.Content.ReadAsStringAsync().Result;
+            var result = JsonConvert.DeserializeObject<ValidationResult>(resultString);
 
-        //create the thumbnail
-        var videoEncoderUrl = ConfigurationManager.AppSettings["VideoEncoderUrl"] + "/convertvideo";
-        var httpClient = new HttpClient();
-
-        httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        ServicePointManager.SecurityProtocol =
-          SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-
-        var convertVideoInput = new ConvertVideoInput
-        { inputFileType = "webm", outputFileType = "mp4", keyName = uploadFormValues.fileName, thumbnailSize = "176x99" };
-        var postBody = JsonConvert.SerializeObject(convertVideoInput);
-
-        var createThumbnailResponse = httpClient.PostAsync(videoEncoderUrl, new StringContent(postBody, Encoding.UTF8, "application/json")).Result;
-
-        if (createThumbnailResponse.IsSuccessStatusCode)
-        {
-          var resultString = createThumbnailResponse.Content.ReadAsStringAsync().Result; //JsonConvert.DeserializeObject<ValidationResult>(createThumbnailResponse.Content.ReadAsStringAsync().Result);
-          var result = JsonConvert.DeserializeObject<ValidationResult>(resultString);
-          thumbnailCreationSuccess = result.valid;
-
-          if (thumbnailCreationSuccess)
-          {
-            var durationSeconds = Convert.ToDouble(result.duration);
-            //Convert to hours:minutes:seconds
-            TimeSpan time = TimeSpan.FromSeconds(durationSeconds);
-            var recordedTime = time.ToString(@"mm\:ss");
-
-            var questionNumber = Convert.ToInt32(uploadFormValues.questionId);
-
-            using (var db = new AmandaDevEntities())
+            if (result.valid)
             {
-              var answeredQuestion = db.Questions.Where(q => q.Id == questionNumber).ToList();
-              db.Videos.Add(new Video
+              var durationSeconds = Convert.ToDouble(result.duration);
+              //Convert to hours:minutes:seconds
+              TimeSpan time = TimeSpan.FromSeconds(durationSeconds);
+              var recordedTime = time.ToString(@"mm\:ss");
+
+              var questionNumber = Convert.ToInt32(uploadFormValues.questionId);
+
+              using (var db = new AmandaDevEntities())
               {
-                AccountHash = "videos",
-                Stream = uploadFormValues.fileName,
-                ExternalVideoId = 0,
-                Location = "tellyt.blob.core.windows.net",
-                Questions = answeredQuestion,
-                UserId = CommonController.GetCurrentUserId(),
-                RecordedTime = recordedTime,
-                type = "MP4",
-                LastModified = DateTime.Now
-              });
-              db.SaveChanges();
+                var answeredQuestion = db.Questions.Where(q => q.Id == questionNumber).ToList();
+                db.Videos.Add(new Video
+                {
+                  AccountHash = "videos",
+                  Stream = uploadFormValues.fileName,
+                  ExternalVideoId = 0,
+                  Location = "tellyt.blob.core.windows.net",
+                  Questions = answeredQuestion,
+                  UserId = CommonController.GetCurrentUserId(),
+                  RecordedTime = recordedTime,
+                  type = "MP4",
+                  LastModified = DateTime.Now
+                });
+                db.SaveChanges();
+              }
             }
-
-            return Json(new
-            {
-              Successful = uploadResult.Success,
-              ErrorMessage = uploadResult.Message
-            });
-
           }
-          else
-          {
-            return Json(new
-            {
-              Successful = false,
-              ErrorMessage = "There was an error saving your video."
-            });
-          }
-        }
-        else
-        {
-          return Json(new
-          {
-            Successful = false,
-            ErrorMessage = "There was an error saving your video."
-          });
         }
       }
+    }
 
+    [HttpPost]
+    public async Task<JsonResult> SaveWebcamVideo(string formValues, HttpPostedFileBase uploadFile)
+    {
+      if (uploadFile.ContentLength > 0)
+      {
+        SaveVideo(formValues, uploadFile);
+
+        return Json(new
+        {
+          Successful = true,
+          ErrorMessage = ""
+        });
+      }
       else
       {
         return Json(new
@@ -278,14 +253,10 @@ namespace Tellyt.Controllers
           ErrorMessage = "The video you saved was empty."
         });
       }
-      }
-      catch (Exception e)
-      {
-        var errorMessage = e.Message;
-        Console.WriteLine(e);
-        throw;
-      }
     }
+
+
+
 
     [HttpPost]
     public JsonResult UploadPhoto(string formValues, HttpPostedFileBase uploadFile)
