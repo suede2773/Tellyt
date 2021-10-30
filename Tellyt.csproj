@@ -231,6 +231,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BetaController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1707,8 +1708,10 @@
     <Content Include="skin_white_presets\load\thumbnails\Thumbs.db" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Beta\Index.cshtml" />
     <None Include="Views\Interview\Index.bak" />
     <Content Include="Views\Sales\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout_beta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
