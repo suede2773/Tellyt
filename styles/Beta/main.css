@@ -1,0 +1,24 @@
+body {
+    background-color: #eeecec;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.content_area_ctn {
+    margin-top: 68px;
+}
+
+.no-padding {
+    padding: 0px;
+}
+
+#your-life-story {
+    /*background-image: url(/images/Beta/curved_gallery-no_line.png);*/
+    /*height: 703px;*/
+}
+
+.hero-image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

@@ -289,6 +289,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="images\Background_Header.png" />
     <Content Include="images\banana.jpg" />
+    <Content Include="images\Beta\curved_gallery-no_line.jpg" />
     <Content Include="images\blackboxbutton.png" />
     <Content Include="images\check.png" />
     <Content Include="images\checkbox_empty.png" />
@@ -1638,6 +1639,7 @@
     <Content Include="skin_white_presets\start_responsive_or_fixed_preset6.html" />
     <Content Include="skin_white_presets\start_responsive_or_fixed_preset7.html" />
     <Content Include="skin_white_presets\start_responsive_or_fixed_preset8.html" />
+    <Content Include="styles\Beta\main.css" />
     <Content Include="styles\bootstrap.min.css" />
     <Content Include="styles\font-awesome-4.6.3\css\font-awesome.css" />
     <Content Include="styles\font-awesome-4.6.3\css\font-awesome.min.css" />
