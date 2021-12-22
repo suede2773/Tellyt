@@ -178,7 +178,7 @@
         </button>
       </div>
       <div id="videoModalBody" class="modal-body">
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" id="btnDeleteVideo">Delete</button>
@@ -195,7 +195,7 @@
 </audio>
 
 
-
+<input type="hidden" id="defaultCountdownPath" value="@Url.Content("~/media/3SecondCountdown3.mp4")" />
 <input type="hidden" id="defaultQuestionPath" value="@Url.Content("~/Questions/default.mp3")" />
 <input type="hidden" id="defaultPlayQuestion" value="@Url.Content("~/Images/sm_play_icon.png")" />
 <input type="hidden" id="defaultPauseQuestion" value="@Url.Content("~/Images/sm_pause_icon.png")" />
@@ -219,6 +219,7 @@
     var currentStream = "";
     var currentLocation = "";
     var currentVideo = "";
+    var enableReviewButtons = true;
 
     function RevertPlayer() {
       $("#videoRecorder").hide();
@@ -228,7 +229,9 @@
     function RevertRecorder() {
       $("#videoRecorder").show();
       $("#videoReviewer").hide();
-      EnableReviewButtons();
+      if (enableReviewButtons) {
+        EnableReviewButtons();
+      }
     }
 
     var pipeParams = { size: { width: 560, height: 315 }, qualityurl: "avq/480p.xml", accountHash: "3a607b4a17256a0676680aca650548be", eid: "A9hIFB", mrt: 3600, asv: 0, showMenu: 0 };
@@ -284,7 +287,7 @@
       });
 
       //$('#videoModal').on('hide.bs.modal', function (e) {
-      //  
+      //
       //})
     }
 
@@ -575,7 +578,7 @@
 
       $('.collapse').on('hidden.bs.collapse',
         function() {
-          $(this).parent().removeClass('active');
+          $(this).parent().removeClass('active');defau
           $(this).parent().find("button").removeClass('activeaccordionbutton');
         });
 
@@ -782,15 +785,24 @@
           }
 
           if ($currentQuestionId > 0) {
-            startRecording();
-            //turn on the recording icon
-            $("#recordingIcon").addClass("recorder_on").removeClass("recorder_off");
-            //enable the stop button, disable the record/review/redo/post buttons
-            $("#recordButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
-            $("#stopButton").addClass("enabledStopButton").removeClass("disabledStopButton");
-            $("#reviewButton").addClass("disabledReviewButton").removeClass("enabledReviewButton");
-            $("#redoButton").addClass("disabledRedoButton").removeClass("enabledRedoButton");
-            $("#postButton").addClass("disabledPostButton").removeClass("enabledPostButton");
+            recordedVideo.src = null;
+            recordedVideo.srcObject = null;
+            $("#videoReviewer").show();
+            $("#videoRecorder").hide();
+            recordedVideo.src = $("#defaultCountdownPath").val();
+            recordedVideo.play();
+            enableReviewButtons = false;
+            setTimeout(function () {
+              startRecording();
+              //turn on the recording icon
+              $("#recordingIcon").addClass("recorder_on").removeClass("recorder_off");
+              //enable the stop button, disable the record/review/redo/post buttons
+              $("#recordButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
+              $("#stopButton").addClass("enabledStopButton").removeClass("disabledStopButton");
+              $("#reviewButton").addClass("disabledReviewButton").removeClass("enabledReviewButton");
+              $("#redoButton").addClass("disabledRedoButton").removeClass("enabledRedoButton");
+              $("#postButton").addClass("disabledPostButton").removeClass("enabledPostButton");
+            }, 3000);
           } else {
             alert("Please select a topic and question before recording.");
           }
@@ -802,7 +814,7 @@
       });
 
       document.querySelector('#stopButton').addEventListener('click', async () => {
-
+        enableReviewButtons = true;
         if ($("#stopButton").hasClass("enabledStopButton")) {
 
           stopRecording();
@@ -817,6 +829,7 @@
       });
 
       document.querySelector('#reviewButton').addEventListener('click', async () => {
+        enableReviewButtons = true;
         if ($("#reviewButton").hasClass("enabledReviewButton")) {
           $("#videoReviewer").show();
           $("#videoRecorder").hide();
@@ -828,6 +841,8 @@
           recordedVideo.play();
         }
       });
+
+
 
       window.addEventListener('keydown', function(e) {
         if(e.keyCode == 32 && e.target == document.body) {
@@ -856,7 +871,8 @@
          }
         });
 
-          $("#postButton").click(function () {
+      $("#postButton").click(function () {
+        enableReviewButtons = true;
             if ($(this).hasClass("enabledPostButton")) {
 
               $("#postButtonStyle").css("margin-left", "20%");
@@ -895,7 +911,7 @@
                 dataType: "json",
                 success: function (result)
                 {
-                  
+
                   //$("#loadingPost").hide();
                   //if (result.Successful == true) {
 
@@ -908,7 +924,7 @@
                 error: function (xhr, status, error)
                 {
                   //$("#postButtonStyle").css("margin-left", "30%");
-                  
+
                   //console.log(xhr.responseText);
                   //alert(xhr.responseText);
                   //successfulUpload = false;
