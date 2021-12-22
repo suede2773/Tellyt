@@ -519,7 +519,9 @@
     <Content Include="load\thumbnails\8.jpg" />
     <Content Include="load\thumbnails\9.jpg" />
     <Content Include="MediaRecorderTest.html" />
-    <Content Include="media\3SecondCountdown3.mp4" />
+    <Content Include="media\3SecondCountdown3.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="profile.html" />
     <Content Include="Questions\E01.mp3" />
     <Content Include="Questions\E02.mp3" />
