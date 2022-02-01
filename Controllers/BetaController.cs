@@ -13,5 +13,15 @@ namespace Tellyt.Controllers
         {
             return View();
         }
+
+        public ActionResult About()
+        {
+            return View();
+        }
+
+        public ActionResult AboutThankYou()
+        {
+            return View();
+        }
     }
 }

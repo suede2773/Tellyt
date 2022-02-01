@@ -289,7 +289,16 @@
     <Content Include="Content\Site.css" />
     <Content Include="images\Background_Header.png" />
     <Content Include="images\banana.jpg" />
+    <Content Include="images\Beta\beta_2200.png" />
     <Content Include="images\Beta\curved_gallery-no_line.jpg" />
+    <Content Include="images\Beta\curved_gallery-no_line.png" />
+    <Content Include="images\Beta\curved_gallery-no_line_bottom_2200.png" />
+    <Content Include="images\Beta\curved_gallery-no_line_top_2200.png" />
+    <Content Include="images\Beta\greatest-story-background_2200x1356.png" />
+    <Content Include="images\Beta\greatest_story.png" />
+    <Content Include="images\Beta\interview.png" />
+    <Content Include="images\Beta\interview_2200x1468.png" />
+    <Content Include="images\Beta\interview_2200x1468_2.png" />
     <Content Include="images\blackboxbutton.png" />
     <Content Include="images\check.png" />
     <Content Include="images\checkbox_empty.png" />
@@ -1711,6 +1720,9 @@
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Beta\Index.cshtml" />
+    <Content Include="Views\Beta\Home.cshtml" />
+    <Content Include="Views\Beta\About.cshtml" />
+    <Content Include="Views\Beta\AboutThankYou.cshtml" />
     <None Include="Views\Interview\Index.bak" />
     <Content Include="Views\Sales\Index.cshtml" />
     <Content Include="Views\Shared\_Layout_beta.cshtml" />
