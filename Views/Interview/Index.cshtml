@@ -88,7 +88,8 @@
         <div id="reloadedPhotosHeaderLabel">
           Related Photos
         </div>
-        <div id="uploadPhotoButton" class="uploader" style="float: left; margin-left: 30px; width:100px; cursor:pointer">
+
+        <div id="uploadPhotoButton" class="uploader" style="float: left; margin-left: 30px; cursor: pointer">
           <label>
             <img src="@Url.Content("~/Images/uploadbutton.png")">
             <input id="photoFileInput" type="file" style="visibility: hidden;" multiple="multiple" accept="image/*" />
@@ -426,12 +427,12 @@
       });
     }
 
-    function GetRelatedPhotos(topicId, questionId) {
+    function GetRelatedPhotos() {
       $("#loadingPhoto").show();
       var postUrl = "@Url.Content("~/Interview/GetUserRelatedPhotos")";
-      $.post(postUrl, { topicId: topicId, questionId: questionId }, function (data) {
-        $("#uploadPhotoButton").show();
+      $.post(postUrl, { topicId: $currentTopicId, questionId: $currentQuestionId }, function (data) {
         $("#loadingPhoto").hide();
+        $("#uploadPhotoButton").show();
         if (data.length > 0) {
           $relatedPhotos = jQuery.parseJSON(data);
           BuildRelatedPhotoSection();
@@ -970,7 +971,7 @@
         for(var i = 0; i<this.files.length; i++){
           var file = this.files[i];
           //upload each file
-
+          $("#loadingPhoto").show();
           var formData = new FormData();
           let dataValues = {};
           dataValues.questionId = $currentQuestionId;
@@ -997,19 +998,17 @@
               } else {
                 alert(result.ErrorMessage);
                 successfulUpload = false;
+                GetRelatedPhotos();
               }
             },
             error: function (xhr, status, error)
             {
+              GetRelatedPhotos();
               alert(xhr.responseText);
               successfulUpload = false;
             }
           });
         }
-        //Now refresh the list
-
-
-
       }, false);
 
       $("#btnDeleteVideo").click(function() {

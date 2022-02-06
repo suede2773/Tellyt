@@ -315,7 +315,11 @@ namespace Tellyt.Controllers
 
           using (var db = new AmandaDevEntities())
           {
-            var questions = new List<Question> {new Question {Id = Convert.ToInt32(uploadFormValues.questionId)}};
+            var questions = new List<Question>();
+            if (uploadFormValues.questionId != "0")
+            {
+              questions = new List<Question> { new Question { Id = Convert.ToInt32(uploadFormValues.questionId) } };
+            }
             db.ExternalMedias.Add(new ExternalMedia
             {
               Key = keyName,
