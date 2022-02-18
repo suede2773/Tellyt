@@ -1,70 +1,143 @@
 ﻿
 @{
-    ViewBag.Title = "About";
-    Layout = "~/Views/Shared/_Layout_beta.cshtml";
+  ViewBag.Title = "About";
+  Layout = "~/Views/Shared/_Layout_beta.cshtml";
 }
 
 <div id="about-ctn" class="container">
-    <div id="about-beta-image-ctn" class="row" title="Beta">
-        <img src="~/images/Beta/beta_2200.png" title="Beta" alt="Beta" />
+  <div id="about-beta-image-ctn" class="row" title="Beta">
+    <img src="~/images/Beta/beta_2200.png" title="Beta" alt="Beta" />
+  </div>
+  <div id="about-text-ctn">
+    <div id="about-thanks-for-helping-ctn" class="row" title="Thanks for Helping!">
+      <h2 id="about-thanks-for-helping-h2">Thanks for Helping!</h2>
+      <div>
+        Hi Guys
+        <br />
+        If you have gotten this far its because you are a friend and have been invited to our Beta.
+        The Tellyt project has been an Idea I have been working on for many years and only now have decided the world is ready for it.  While the actual Tellyt site will include many cool features including talking photos and narrated family trees etc , we first need to get the Self Interviewer buttoned up, as its the heart of the product. I truly appreciate you taking the time to try it out and give me your feedback, which will be invaluable to us in getting this right.
+        <br />
+        The goal is to have an Interviewer that is simple and intuitive for anyone to use.
+        Note that while there will be a charge for a Tellyt membership, you of course will be free lifetime members.
+        All of your recordings will be private to your account.  Have fun and  I look forward to your reviews.
+        <br />
+        Best,
+        <br />
+        Alan
+      </div>
     </div>
-    <div id="about-text-ctn">
-        <div id="about-thanks-for-helping-ctn" class="row" title="Thanks for Helping!">
-            <h2 id="about-thanks-for-helping-h2">Thanks for Helping!</h2>
-            <div>
-                Hi Guys
-                <br />
-                If you have gotten this far its because you are a friend and have been invited to our Beta.
-                The Tellyt project has been an Idea I have been working on for many years and only now have decided the world is ready for it.  While the actual Tellyt site will include many cool features including talking photos and narrated family trees etc , we first need to get the Self Interviewer buttoned up, as its the heart of the product. I truly appreciate you taking the time to try it out and give me your feedback, which will be invaluable to us in getting this right.
-                <br />
-                The goal is to have an Interviewer that is simple and intuitive for anyone to use.
-                Note that while there will be a charge for a Tellyt membership, you of course will be free lifetime members.
-                All of your recordings will be private to your account.  Have fun and  I look forward to your reviews.
-                <br />
-                Best,
-                <br />
-                Alan
-            </div>
-        </div>
 
-        <div id="about-tellyt-beta-ctn" class="row" title="Tellyt Beta">
-            <h2 id="about-tellyt-beta-h2">Tellyt Beta</h2>
-            <div>
-                Working together to build an awesome product
-            </div>
-        </div>
-
-        <div id="about-tellyt-beta-form-ctn" title="Tellyt Beta">
-            <div class="row about-tellyt-beta-form-row">
-                <div class="col-md-6 about-tellyt-beta-form-col"><label>First Name</label><br /><input id="firstName" class="about-tellyt-beta-form-input" title="First Name" alt="First Name" /></div>
-                <div class="col-md-6 about-tellyt-beta-form-col"><label>Enter Invite Code*</label><br /><input id="enterInviteCode" class="about-tellyt-beta-form-input" title="Enter Invite Code" alt="Enter Invite Code" /></div>
-            </div>
-            <div class="row about-tellyt-beta-form-row">
-                <div class="col-md-6 about-tellyt-beta-form-col"><label>Last Name</label><br /><input id="lastName" class="about-tellyt-beta-form-input" title="Last Name" alt="Last Name" /></div>
-                <div class="col-md-6 about-tellyt-beta-form-col"><br /><input id="enterPassword1" class="about-tellyt-beta-form-input bold" title="Enter a Password" alt="Enter a Password" placeholder="Enter a Password" /></div>
-            </div>
-            <div class="row about-tellyt-beta-form-row">
-                <div class="col-md-6 about-tellyt-beta-form-col"><label>Email*</label><br /><input id="email" class="about-tellyt-beta-form-input" title="Email" alt="Email" /></div>
-                <div class="col-md-6 about-tellyt-beta-form-col"><br /><input id="enterPassword2" class="about-tellyt-beta-form-input bold" title="Enter a Password" alt="Enter a Password" placeholder="Enter a Password" /></div>
-            </div>
-            <div class="row about-tellyt-beta-form-row">
-                <div id="about-tellyt-beta-form-col-thanks-for-submitting" class="col-md-6 about-tellyt-beta-form-col"><br />Thanks for submitting!</div>
-                <div id="about-tellyt-beta-form-col-send" class="col-md-6 about-tellyt-beta-form-col"><button id="about-tellyt-beta-form-send-btn" title="Send">Send</button><br />Check your email for your link</div>
-            </div>
-        </div>
+    <div id="about-tellyt-beta-ctn" class="row" title="Tellyt Beta">
+      <h2 id="about-tellyt-beta-h2">Tellyt Beta</h2>
+      <div>
+        Working together to build an awesome product
+      </div>
     </div>
+
+    <div id="about-tellyt-beta-form-ctn" title="Tellyt Beta">
+      <div class="row about-tellyt-beta-form-row">
+        <div class="col-md-6 about-tellyt-beta-form-col"><label>First Name</label><br /><input id="firstName" class="about-tellyt-beta-form-input form-control" title="First Name" alt="First Name" /></div>
+        <div class="col-md-6 about-tellyt-beta-form-col"><label>Enter Invite Code*</label><br /><input id="enterInviteCode" class="about-tellyt-beta-form-input form-control" title="Enter Invite Code" alt="Enter Invite Code" /></div>
+      </div>
+      <div class="row about-tellyt-beta-form-row">
+        <div class="col-md-6 about-tellyt-beta-form-col"><label>Last Name</label><br /><input id="lastName" class="about-tellyt-beta-form-input form-control" title="Last Name" alt="Last Name" /></div>
+        <div class="col-md-6 about-tellyt-beta-form-col"><br /><input id="enterPassword1" class="about-tellyt-beta-form-input bold form-control" title="Enter a Password" alt="Enter a Password" placeholder="Enter a Password" /></div>
+      </div>
+      <div class="row about-tellyt-beta-form-row">
+        <div class="col-md-6 about-tellyt-beta-form-col"><label>Email*</label><br /><input id="email" class="about-tellyt-beta-form-input form-control " title="Email" alt="Email" /></div>
+        <div class="col-md-6 about-tellyt-beta-form-col"><br /><input id="enterPassword2" class="about-tellyt-beta-form-input bold form-control" title="Enter a Password" alt="Enter a Password" placeholder="Confirm Your Password" /></div>
+      </div>
+      <div class="row about-tellyt-beta-form-row">
+        <div id="about-tellyt-beta-form-col-thanks-for-submitting" class="col-md-6 about-tellyt-beta-form-col"><br />Thanks for submitting!</div>
+        <div id="about-tellyt-beta-form-col-send" class="col-md-6 about-tellyt-beta-form-col"><button id="about-tellyt-beta-form-send-btn" title="Send">Send</button><br />
+          <span id="invalidInput" class="invalid-feedback">There was an error!</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-    @section Scripts
+@section Scripts
     {
-        <script>
-            $("#about-tellyt-beta-form-send-btn").click(function () {
-            var aboutThankYouUrl = '@Url.Action("AboutThankYou", "Beta")';
-                window.location.href = aboutThankYouUrl;
-        });
+  <script>
 
-            $(document).ready(function () {
-
-            });
-        </script>
+    resetForm = () => {
+      $("#email").removeClass("is-invalid");
+      $("#enterPassword1").removeClass("is-invalid");
+      $("#enterPassword2").removeClass("is-invalid");
+      $("#enterInviteCode").removeClass("is-invalid");
+      $("#invalidInput").hide();
     }
+
+    validateEmail = (input) => {
+      var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      if (input.match(validRegex)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    validateForm = () => {
+      let validationResult = {
+        valid: true,
+        message: ""
+      };
+
+      if ($("#enterPassword1").val() != $("#enterPassword2").val()) {
+        validationResult.message = "Your password values do not match";
+        validationResult.valid = false;
+        $("#enterPassword1").addClass("is-invalid");
+        $("#enterPassword2").addClass("is-invalid");
+      }
+
+      if ($("#enterPassword2").val().length == 0) {
+        validationResult.message = "Please enter a confirmation password";
+        validationResult.valid = false;
+        $("#enterPassword2").addClass("is-invalid");
+      }
+
+      if ($("#enterPassword1").val().length == 0) {
+        validationResult.message = "Please enter a password";
+        validationResult.valid = false;
+        $("#enterPassword1").addClass("is-invalid");
+      }
+
+      if ($("#enterInviteCode").val().length == 0) {
+        validationResult.message = "Please enter an invite code";
+        validationResult.valid = false;
+        $("#enterInviteCode").addClass("is-invalid");
+      }
+
+      if (!validateEmail($("#email").val())) {
+        validationResult.message = "Your email address is not valid";
+        validationResult.valid = false;
+        $("#email").addClass("is-invalid");
+      }
+      
+      return validationResult;
+    }
+
+    ProcessUser = async () => {
+
+    }
+
+    $("#about-tellyt-beta-form-send-btn").click(function () {
+      resetForm();
+      const validationResult = validateForm();
+      if (!validationResult.valid) {
+        $("#invalidInput").html(validationResult.message);
+        $("#invalidInput").show();
+        return;
+      }
+      ProcessUser();
+      var aboutThankYouUrl = '@Url.Action("AboutThankYou", "Beta")';
+      window.location.href = aboutThankYouUrl;
+    });
+
+
+    $(document).ready(function () {
+      
+    });
+  </script>
+}
