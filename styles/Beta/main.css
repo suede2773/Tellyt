@@ -1,0 +1,219 @@
+body {
+    /*background-color: #eeecec;*/
+    background-color: #ffffff;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.content_area_ctn {
+    margin-top: 68px;
+}
+
+.no-padding {
+    padding: 0px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+#your-life-story-ctn {
+    background-image: url(/images/Beta/curved_gallery-no_line_top_2200.png);
+    height: 700px;
+}
+
+#your-life-story-tag-line {
+    color: #292929;
+    text-align: center;
+    position: relative;
+    padding-top: 620px;
+    padding-left: 50px;
+    padding-right: 50px;
+    min-width: 325px;
+}
+
+#start-your-life-interview-btn {
+    text-align: center;
+    position: absolute;
+    margin-top: 560px;
+    margin-left: 105px;
+    max-width: 200px;
+    color: #ffffff;
+    background-color: #01b1af;
+    border-radius: 10px;
+    border: solid 1px #01b1af;
+}
+
+#start-your-life-interview-btn:hover {
+    background-color: #9c9c31;
+    border-color: #9c9c31;
+}
+
+.hero-image {
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#greatest-story-ctn {
+    background-color: #1b262e;
+    background-image: url(/images/Beta/greatest-story-background_2200x1356.png);
+    height: 700px;
+}
+
+#greatest-story-tagline-ctn {
+    color: #ffffff;
+    text-align: center;
+    max-width: 500px;
+    padding-top: 100px;
+    margin-left: 800px;
+}
+
+@media only screen and (max-width: 1400px) and (min-width: 0px) {
+    #greatest-story-ctn {
+        background-image: none;
+    }
+
+    #greatest-story-tagline-ctn {
+        margin: 30px;
+        max-width: 95%;
+    }
+
+    #interview-ctn {
+        background-image: none !important;
+    }
+
+    #interview-tagline-ctn {
+        margin: 30px !important;
+        max-width: 95% !important;
+    }
+}
+
+#the-interviewer-btn {
+    text-align: center;
+    position: relative;
+    max-width: 200px;
+    color: #0069ff;
+    background-color: #e5ebfa;
+    border-radius: 30px;
+    border: solid 1px #e5ebfa;
+    margin: 20px;
+    padding: 10px;
+}
+
+#the-interviewer-btn:hover {
+    color: #ffffff;
+    background-color: #689ade;
+    border: solid 1px #689ade;
+}
+
+#interview-ctn {
+    background-color: #fefefe;
+    background-image: url(/images/Beta/interview_2200x1468_2.png);
+    height: 900px;
+}
+
+#interview-tagline-ctn {
+    color: #000000;
+    text-align: left;
+    max-width: 480px;
+    padding-top: 50px;
+    margin-left: 840px;
+}
+
+#the-tellyt-interview-h3 {
+    color: #605e5e;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+
+#join-the-beta-btn {
+    text-align: center;
+    position: relative;
+    max-width: 300px;
+    color: #ffffff;
+    background-color: #0b2f5b;
+    border: solid 4px #ffffff;
+    border-style: double;
+    margin: 100px auto;
+    display: block;
+    padding: 10px 50px;
+    font-size: 18px;
+}
+
+    #join-the-beta-btn:hover {
+        color: #2f2e2e;
+        background-color: #ffffff;
+        border: solid 4px #0b2f5b;
+        border-style: double;
+    }
+
+/*About*/
+#about-ctn {
+    background-color: #ffffff;
+    color: #605e5e;
+}
+
+#about-beta-image-ctn {
+    padding-top: 10px;
+}
+
+#about-text-ctn {
+    padding: 30px;
+}
+
+#about-thanks-for-helping-h2 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+#about-tellyt-beta-ctn {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+#about-tellyt-beta-form-send-btn {
+    text-align: center;
+    position: relative;
+    max-width: 200px;
+    color: #ffffff;
+    background-color: #0b2f5b;
+    border: solid 4px #ffffff;
+    border-style: double;
+    padding: 10px 50px;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+    #about-tellyt-beta-form-send-btn:hover {
+        color: #2f2e2e;
+        background-color: #ffffff;
+        border: solid 4px #0b2f5b;
+        border-style: double;
+    }
+
+.about-tellyt-beta-form-input {
+    width: 100%;
+    padding: 5px;
+}
+
+.about-tellyt-beta-form-row {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#about-tellyt-beta-form-col-thanks-for-submitting{
+    vertical-align: middle;
+}
+
+#about-tellyt-beta-form-col-send {
+    text-align: center;
+}
+
+@media only screen and (max-width: 768px) and (min-width: 0px) {
+    #about-tellyt-beta-form-col-thanks-for-submitting {
+        text-align: center;
+        margin: 10px 0;
+    }
+}

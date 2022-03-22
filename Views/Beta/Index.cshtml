@@ -1,0 +1,79 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout_beta.cshtml";
+    ViewBag.Title = "Home";
+}
+
+<!--<div class="container no-padding">
+    <div id="your-life-story" class="row no-padding">
+        <img src="~/images/Beta/curved_gallery-no_line.png" style="max-height:900px;" title="Your Life Story.... As Only You Can Tell It" alt="Your Life Story.... As Only You Can Tell It" />-->
+@*<h2 style="color: #292929; text-align: center; position: relative; top:90%;">Your Life Story.... As Only You Can Tell It</h2>*@
+<!--</div>
+    <div id="greatest-story" class="row no-padding">
+        <img src="~/images/Beta/greatest_story.png" style="max-height:900px;" title="The Greatest Story Ever Told...Yours" alt="The Greatest Story Ever Told...Yours" />
+    </div>
+    <div id="interview" class="row no-padding">
+        <img src="~/images/Beta/interview.png" style="max-height:900px;" title="Join the Beta" alt="Join the Beta" />
+    </div>
+</div>-->
+
+<div class="container">
+    <div id="your-life-story-ctn" class="row hero-image" title="Your Life Story.... As Only You Can Tell It">
+        <h2 id="your-life-story-tag-line" title="Your Life Story.... As Only You Can Tell It">Your Life Story.... As Only You Can Tell It</h2>
+        <button id="start-your-life-interview-btn" title="Start Your Life Interview">Start Your Life Interview</button>
+    </div>
+    <div id="greatest-story-ctn" class="row hero-image" title="The Greatest Story Ever Told...Yours">
+        <div id="greatest-story-tagline-ctn" title="The Greatest Story Ever Told...Yours">
+            <h3>The Greatest Story Ever Told...</h3>
+            <h3>Yours.</h3>
+            <div>
+                Imagine searching a Genealogical Media library and discovering
+                that your great grandparents left you a series of video interviews talking
+                about life and love, friendships and family, good times and hardships,
+                and everything in between.
+                <br /><br />
+                Wouldn’t a library like this be priceless to you?
+                <br /><br />
+                Tellyt is that online, genealogical media library
+                dedicated to preserving the stories of people's’ lives on Earth.
+                What makes Tellyt so special is that it includes a self-administered video interviewing system to capture these stories.
+                With dozens of topics and hundreds of questions to choose from,
+                Tellyt makes it easy for you to tell your story.
+                <br /><br />
+                This is your chance to preserve your memories for the enjoyment of your family and friends hundreds of years from today.
+            </div>
+            <button id="the-interviewer-btn" title="The Interviewer">The Interviewer</button>
+        </div>
+    </div>
+    <div id="interview-ctn" class="row hero-image">
+        <div id="interview-tagline-ctn" title="THE TELLYT INTERVIEW">
+            <h3 id="the-tellyt-interview-h3">THE TELLYT INTERVIEW</h3>
+            <div>
+                With hundreds of questions for you to choose from in over a dozen languages, you can tell your story the way that you want it to be told. All of your answers are captured in HD Video, and you can add photos and documents to further enhance your viewer's experience. Edit, redo, or submit your responses as often as you like. This is your story, and you know how to tell it best.
+            </div>
+            <button id="join-the-beta-btn" title="Join the Beta">Join the Beta</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $("#start-your-life-interview-btn").click(function () {
+            location.href = "#greatest-story-ctn";
+        });
+
+        $("#the-interviewer-btn").click(function () {
+            location.href = "#interview-ctn";
+        });
+
+        $("#join-the-beta-btn").click(function () {
+            var aboutUrl = '@Url.Action("About", "Beta")';
+            window.location.href = aboutUrl;
+        });
+
+        $(document).ready(function () {
+
+        });
+    </script>
+}
