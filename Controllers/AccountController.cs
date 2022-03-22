@@ -8,12 +8,17 @@ using System.Web;
 using System.Web.Mvc;
 using System.Text;
 
+
 // The following using statements were added for this sample.
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OpenIdConnect;
 using Microsoft.Owin.Security.Cookies;
 using System.Security.Claims;
 using Newtonsoft.Json;
+
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System.Threading.Tasks;
 
 namespace Tellyt.Controllers
 {
@@ -103,10 +108,28 @@ namespace Tellyt.Controllers
       }
       inputUser = JsonConvert.DeserializeObject<InputUserAccount>(response.Content.ReadAsStringAsync().Result);
 
-      //if (!inputUser.IsValid) return inputUser.Error;
-      
-
       return JsonConvert.SerializeObject(inputUser);
+    }
+
+    [HttpPost]
+    public async Task SendBetaEmailConfirmation(string firstName, string lastName, string email)
+    {
+      var apiKey = ConfigurationManager.AppSettings["SendGridPassword"];
+      var client = new SendGridClient(apiKey);
+      var from = new EmailAddress("craig.mobsters@gmail.com", "Tellyt Support");
+      var subject = "Thank you for signing up with Tellyt";
+      var fullName = string.IsNullOrEmpty(firstName) ? "" : firstName;
+      fullName += string.IsNullOrEmpty(lastName) ? "" : " " + lastName;
+      var betaSiteUrl = "<a href=\"https://tellytdev.azurewebsites.net/interview\">https://tellytdev.azurewebsites.net/interview</a>";
+      var to = new EmailAddress(email, fullName);
+      var htmlContent = "<h2>Thanks for Helping!</h2><br>";
+      htmlContent += "<p>";
+      htmlContent += "Your user account has been created! You may now access the beta site at the following location: ";
+      htmlContent += betaSiteUrl;
+      htmlContent += "</p>";
+      var msg = MailHelper.CreateSingleEmail(from, to, subject, string.Empty, htmlContent);
+      var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
+      Console.WriteLine(response.StatusCode);
     }
 
     public ActionResult Logout()

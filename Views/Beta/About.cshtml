@@ -36,20 +36,20 @@
 
     <div id="about-tellyt-beta-form-ctn" title="Tellyt Beta">
       <div class="row about-tellyt-beta-form-row">
-        <div class="col-md-6 about-tellyt-beta-form-col"><label>First Name</label><br /><input id="firstName" class="about-tellyt-beta-form-input form-control" title="First Name" alt="First Name" /></div>
-        <div class="col-md-6 about-tellyt-beta-form-col"><label>Enter Invite Code*</label><br /><input id="enterInviteCode" class="about-tellyt-beta-form-input form-control" title="Enter Invite Code" alt="Enter Invite Code" /></div>
+        <div class="col-md-6 about-tellyt-beta-form-col"><label>First Name</label><br /><input tabindex="1" id="firstName" class="about-tellyt-beta-form-input form-control" title="First Name" alt="First Name" /></div>
+        <div class="col-md-6 about-tellyt-beta-form-col"><label>Enter Invite Code*</label><br /><input  tabindex="4" id="enterInviteCode" class="about-tellyt-beta-form-input form-control" title="Enter Invite Code" alt="Enter Invite Code" /></div>
       </div>
       <div class="row about-tellyt-beta-form-row">
-        <div class="col-md-6 about-tellyt-beta-form-col"><label>Last Name</label><br /><input id="lastName" class="about-tellyt-beta-form-input form-control" title="Last Name" alt="Last Name" /></div>
-        <div class="col-md-6 about-tellyt-beta-form-col"><br /><input id="enterPassword1" class="about-tellyt-beta-form-input bold form-control" title="Enter a Password" alt="Enter a Password" placeholder="Enter a Password" /></div>
+        <div class="col-md-6 about-tellyt-beta-form-col"><label>Last Name</label><br /><input  tabindex="2" id="lastName" class="about-tellyt-beta-form-input form-control" title="Last Name" alt="Last Name" /></div>
+        <div class="col-md-6 about-tellyt-beta-form-col"><br /><input  tabindex="5" id="enterPassword1" type="password" class="about-tellyt-beta-form-input form-control" title="Enter a Password" alt="Enter a Password" placeholder="Enter a Password" /></div>
       </div>
       <div class="row about-tellyt-beta-form-row">
-        <div class="col-md-6 about-tellyt-beta-form-col"><label>Email*</label><br /><input id="email" class="about-tellyt-beta-form-input form-control " title="Email" alt="Email" /></div>
-        <div class="col-md-6 about-tellyt-beta-form-col"><br /><input id="enterPassword2" class="about-tellyt-beta-form-input bold form-control" title="Enter a Password" alt="Enter a Password" placeholder="Confirm Your Password" /></div>
+        <div class="col-md-6 about-tellyt-beta-form-col"><label>Email*</label><br /><input  tabindex="3" id="email" class="about-tellyt-beta-form-input form-control " title="Email" alt="Email" /></div>
+        <div class="col-md-6 about-tellyt-beta-form-col"><br /><input  tabindex="6" id="enterPassword2" type="password" class="about-tellyt-beta-form-input form-control" title="Enter a Password" alt="Enter a Password" placeholder="Confirm Your Password" /></div>
       </div>
       <div class="row about-tellyt-beta-form-row">
         <div id="about-tellyt-beta-form-col-thanks-for-submitting" class="col-md-6 about-tellyt-beta-form-col"><br />Thanks for submitting!</div>
-        <div id="about-tellyt-beta-form-col-send" class="col-md-6 about-tellyt-beta-form-col"><button id="about-tellyt-beta-form-send-btn" title="Send">Send</button><br />
+        <div id="about-tellyt-beta-form-col-send" class="col-md-6 about-tellyt-beta-form-col"><button tabindex="7" id="about-tellyt-beta-form-send-btn" title="Send">Send</button><br />
           <span id="invalidInput" class="invalid-feedback">There was an error!</span>
         </div>
       </div>
@@ -114,12 +114,68 @@
         validationResult.valid = false;
         $("#email").addClass("is-invalid");
       }
-      
+
       return validationResult;
     }
 
-    ProcessUser = async () => {
+    ProcessEmail = async () => {
+      const postEmailData = {
+        firstName: $("#firstName").val(), lastName: $("#lastName").val(), email: $("#email").val()
+      };
+      const postEmailUrl = "@Url.Content("~/Account/SendBetaEmailConfirmation")";
+        fetch(postEmailUrl, {
+        referrerPolicy: 'origin',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postEmailData)
+        });
+    }
 
+    ProcessUser = async () => {
+      const checkInviteCodeData = {
+        inviteCode: $("#enterInviteCode").val()
+      };
+      const checkInviteCodeUrl = "@Url.Content("~/Beta/CheckInviteCode")";
+      const rawCheckInviteCodeResponse = await fetch(checkInviteCodeUrl, {
+        referrerPolicy: 'origin',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(checkInviteCodeData)
+      });
+
+      const returnCheckInviteCodeData = await rawCheckInviteCodeResponse.json();
+      if (!returnCheckInviteCodeData.Success) {
+        $("#enterInviteCode").addClass("is-invalid");
+        $("#invalidInput").html(returnCheckInviteCodeData.message);
+        $("#invalidInput").show();
+        return;
+      }
+      const postNewAccountData = {
+        firstName: $("#firstName").val(), lastName: $("#lastName").val(), email: $("#email").val(), password: $("#enterPassword1").val()
+      };
+      const postNewAccountUrl = "@Url.Content("~/Account/CreateUserAccount")";
+      const rawNewAccountResponse = await fetch(postNewAccountUrl, {
+        referrerPolicy: 'origin',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postNewAccountData)
+      });
+      const returnNewAccountData = await rawNewAccountResponse.json();
+      if (!returnNewAccountData.IsValid) {
+        $("#invalidInput").html(returnNewAccountData.Error);
+        $("#invalidInput").show();
+      }
+      else {
+        ProcessEmail();
+        var aboutThankYouUrl = '@Url.Action("AboutThankYou", "Beta")';
+        window.location.href = aboutThankYouUrl;
+      }
     }
 
     $("#about-tellyt-beta-form-send-btn").click(function () {
@@ -131,13 +187,12 @@
         return;
       }
       ProcessUser();
-      var aboutThankYouUrl = '@Url.Action("AboutThankYou", "Beta")';
-      window.location.href = aboutThankYouUrl;
+
     });
 
 
     $(document).ready(function () {
-      
+
     });
   </script>
 }
