@@ -88,7 +88,8 @@
         <div id="reloadedPhotosHeaderLabel">
           Related Photos
         </div>
-        <div id="uploadPhotoButton" class="uploader" style="float: left; margin-left: 30px; width:100px; cursor:pointer">
+
+        <div id="uploadPhotoButton" class="uploader" style="float: left; margin-left: 30px; cursor: pointer">
           <label>
             <img src="@Url.Content("~/Images/uploadbutton.png")">
             <input id="photoFileInput" type="file" style="visibility: hidden;" multiple="multiple" accept="image/*" />
@@ -178,7 +179,7 @@
         </button>
       </div>
       <div id="videoModalBody" class="modal-body">
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" id="btnDeleteVideo">Delete</button>
@@ -195,7 +196,7 @@
 </audio>
 
 
-
+<input type="hidden" id="defaultCountdownPath" value="https://tellyt.blob.core.windows.net/videos/3SecondCountdown3.mp4" />
 <input type="hidden" id="defaultQuestionPath" value="@Url.Content("~/Questions/default.mp3")" />
 <input type="hidden" id="defaultPlayQuestion" value="@Url.Content("~/Images/sm_play_icon.png")" />
 <input type="hidden" id="defaultPauseQuestion" value="@Url.Content("~/Images/sm_pause_icon.png")" />
@@ -219,6 +220,7 @@
     var currentStream = "";
     var currentLocation = "";
     var currentVideo = "";
+    var enableReviewButtons = true;
 
     function RevertPlayer() {
       $("#videoRecorder").hide();
@@ -228,7 +230,9 @@
     function RevertRecorder() {
       $("#videoRecorder").show();
       $("#videoReviewer").hide();
-      EnableReviewButtons();
+      if (enableReviewButtons) {
+        EnableReviewButtons();
+      }
     }
 
     var pipeParams = { size: { width: 560, height: 315 }, qualityurl: "avq/480p.xml", accountHash: "3a607b4a17256a0676680aca650548be", eid: "A9hIFB", mrt: 3600, asv: 0, showMenu: 0 };
@@ -284,7 +288,7 @@
       });
 
       //$('#videoModal').on('hide.bs.modal', function (e) {
-      //  
+      //
       //})
     }
 
@@ -423,12 +427,12 @@
       });
     }
 
-    function GetRelatedPhotos(topicId, questionId) {
+    function GetRelatedPhotos() {
       $("#loadingPhoto").show();
       var postUrl = "@Url.Content("~/Interview/GetUserRelatedPhotos")";
-      $.post(postUrl, { topicId: topicId, questionId: questionId }, function (data) {
-        $("#uploadPhotoButton").show();
+      $.post(postUrl, { topicId: $currentTopicId, questionId: $currentQuestionId }, function (data) {
         $("#loadingPhoto").hide();
+        $("#uploadPhotoButton").show();
         if (data.length > 0) {
           $relatedPhotos = jQuery.parseJSON(data);
           BuildRelatedPhotoSection();
@@ -575,7 +579,7 @@
 
       $('.collapse').on('hidden.bs.collapse',
         function() {
-          $(this).parent().removeClass('active');
+          $(this).parent().removeClass('active');defau
           $(this).parent().find("button").removeClass('activeaccordionbutton');
         });
 
@@ -782,15 +786,24 @@
           }
 
           if ($currentQuestionId > 0) {
-            startRecording();
-            //turn on the recording icon
-            $("#recordingIcon").addClass("recorder_on").removeClass("recorder_off");
-            //enable the stop button, disable the record/review/redo/post buttons
-            $("#recordButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
-            $("#stopButton").addClass("enabledStopButton").removeClass("disabledStopButton");
-            $("#reviewButton").addClass("disabledReviewButton").removeClass("enabledReviewButton");
-            $("#redoButton").addClass("disabledRedoButton").removeClass("enabledRedoButton");
-            $("#postButton").addClass("disabledPostButton").removeClass("enabledPostButton");
+            recordedVideo.src = null;
+            recordedVideo.srcObject = null;
+            $("#videoReviewer").show();
+            $("#videoRecorder").hide();
+            recordedVideo.src = $("#defaultCountdownPath").val();
+            recordedVideo.play();
+            enableReviewButtons = false;
+            setTimeout(function () {
+              startRecording();
+              //turn on the recording icon
+              $("#recordingIcon").addClass("recorder_on").removeClass("recorder_off");
+              //enable the stop button, disable the record/review/redo/post buttons
+              $("#recordButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
+              $("#stopButton").addClass("enabledStopButton").removeClass("disabledStopButton");
+              $("#reviewButton").addClass("disabledReviewButton").removeClass("enabledReviewButton");
+              $("#redoButton").addClass("disabledRedoButton").removeClass("enabledRedoButton");
+              $("#postButton").addClass("disabledPostButton").removeClass("enabledPostButton");
+            }, 3000);
           } else {
             alert("Please select a topic and question before recording.");
           }
@@ -802,7 +815,7 @@
       });
 
       document.querySelector('#stopButton').addEventListener('click', async () => {
-
+        enableReviewButtons = true;
         if ($("#stopButton").hasClass("enabledStopButton")) {
 
           stopRecording();
@@ -817,6 +830,7 @@
       });
 
       document.querySelector('#reviewButton').addEventListener('click', async () => {
+        enableReviewButtons = true;
         if ($("#reviewButton").hasClass("enabledReviewButton")) {
           $("#videoReviewer").show();
           $("#videoRecorder").hide();
@@ -828,6 +842,8 @@
           recordedVideo.play();
         }
       });
+
+
 
       window.addEventListener('keydown', function(e) {
         if(e.keyCode == 32 && e.target == document.body) {
@@ -856,7 +872,8 @@
          }
         });
 
-          $("#postButton").click(function () {
+      $("#postButton").click(function () {
+        enableReviewButtons = true;
             if ($(this).hasClass("enabledPostButton")) {
 
               $("#postButtonStyle").css("margin-left", "20%");
@@ -895,7 +912,7 @@
                 dataType: "json",
                 success: function (result)
                 {
-                  
+
                   //$("#loadingPost").hide();
                   //if (result.Successful == true) {
 
@@ -908,7 +925,7 @@
                 error: function (xhr, status, error)
                 {
                   //$("#postButtonStyle").css("margin-left", "30%");
-                  
+
                   //console.log(xhr.responseText);
                   //alert(xhr.responseText);
                   //successfulUpload = false;
@@ -930,105 +947,6 @@
             }
           });
 
-
-      @*PipeSDK.insert("divRecorder", pipeParams, function (recorderObject)
-      {
-
-        recorderObject.userHasCamMic = function(id,camNr, micNr){
-          var args = Array.prototype.slice.call(arguments);
-          userHasCam = ((camNr > 0) && (micNr > 0));
-	      }
-
-        recorderObject.onCamAccess = function(id, allowed){
-		      var args = Array.prototype.slice.call(arguments);
-          if (allowed) {
-            isCamReady = true;
-          } else {
-            isCamReady = false;
-          }
-	      }
-
-
-        recorderObject.onSaveOk = function (recorderId, streamName, streamDuration, cameraName, micName, audioCodec, videoCodec, filetype, videoId, audioOnly, location) {
-          var args = Array.prototype.slice.call(arguments);
-          currentLocation = args[10];
-          currentStream = args[1];
-          currentVideo = args[8];
-
-          var postUrl = "@Url.Content("~/Interview/SaveVideo")";
-          $.post(postUrl, { location: currentLocation, hash: "@ViewBag.AccountHash", stream: currentStream, video: currentVideo, questionId: $currentQuestionId, duration:args[2] }, function (data) {
-            var returnData = data;
-            if (returnData == "success") {
-              //do something
-            } else {
-              //display the error
-              alert("Error: " + returnData);
-            }
-            //Refresh the accordion to show the answered question
-            RefreshAccordion();
-            //RefreshPlaybackVideos();
-          });
-        }
-
-        recorderObject.onReadyToRecord()
-        {
-
-          //$("#recordButton").click(function ()
-          //{
-
-          //});
-
-          //$("#stopButton").click(function ()
-          //{
-          //  if ($("#stopButton").hasClass("enabledStopButton")) {
-          //    //recorderObject.stopVideo();
-          //    //if (typeof recorderObject.stopVideo === "function") {
-          //    //  recorderObject.stopVideo();
-          //    //}
-          //    //else {
-          //    //  document.VideoRecorder.stopVideo();
-          //    //}
-          //    stopRecording();
-
-          //    //disable the stop button, enable the review/redo/post buttons
-          //    $("#stopButton").addClass("disabledStopButton").removeClass("enabledStopButton");
-          //    $("#reviewButton").addClass("enabledReviewButton").removeClass("disabledReviewButton");
-          //    $("#redoButton").addClass("enabledRedoButton").removeClass("disabledRedoButton");
-          //    $("#postButton").addClass("enabledPostButton").removeClass("disabledPostButton");
-          //  }
-          //});
-
-          //$("#reviewButton").click(function () {
-          //  if ($("#reviewButton").hasClass("enabledReviewButton")) {
-
-
-          //  }
-          //});
-
-          $("#redoButton").click(function () {
-            if ($(this).hasClass("enabledRedoButton")) {
-              if ($currentQuestionId > 0) {
-                  if (typeof recorderObject.record === "function") {
-                    recorderObject.record();
-                  }
-                  else {
-                    document.VideoRecorder.record();
-                  }
-                //enable the stop button, disable the record/redo/review/post buttons
-                $("#recordButton").addClass("disabledRecordButton").removeClass("enabledRecordButton");
-                $("#stopButton").addClass("enabledStopButton").removeClass("disabledStopButton");
-                $("#reviewButton").addClass("enabledReviewButton").removeClass("disabledReviewButton");
-                $("#redoButton").addClass("enabledRedoButton").removeClass("disabledRedoButton");
-                $("#postButton").addClass("enabledPostButton").removeClass("disabledPostButton");
-              } else {
-                alert("Please select a topic and question before recording.");
-              }
-            }
-          });
-
-
-        }
-      });*@
     });
 
     $(document).ready(function() {
@@ -1053,7 +971,7 @@
         for(var i = 0; i<this.files.length; i++){
           var file = this.files[i];
           //upload each file
-
+          $("#loadingPhoto").show();
           var formData = new FormData();
           let dataValues = {};
           dataValues.questionId = $currentQuestionId;
@@ -1080,19 +998,17 @@
               } else {
                 alert(result.ErrorMessage);
                 successfulUpload = false;
+                GetRelatedPhotos();
               }
             },
             error: function (xhr, status, error)
             {
+              GetRelatedPhotos();
               alert(xhr.responseText);
               successfulUpload = false;
             }
           });
         }
-        //Now refresh the list
-
-
-
       }, false);
 
       $("#btnDeleteVideo").click(function() {
