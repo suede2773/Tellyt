@@ -115,7 +115,7 @@ namespace Tellyt.Controllers
     {
       ViewBag.AccountHash = "3a607b4a17256a0676680aca650548be";
 
-      ViewBag.UserId = CommonController.GetCurrentUserId();// "eaa747d0-60f5-40b5-8257-a25397ef2524"; //hardcode for now
+      ViewBag.UserId = CommonController.GetCurrentUserId();
       return View();
     }
 
