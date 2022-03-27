@@ -149,6 +149,27 @@ body {
         border-style: double;
     }
 
+#login-for-returing-beta-testers-btn {
+    text-align: center;
+    position: relative;
+    max-width: 300px;
+    color: #ffffff;
+    background-color: #0b2f5b;
+    border: solid 4px #ffffff;
+    border-style: double;
+    margin: 100px auto;
+    display: block;
+    padding: 10px 50px;
+    font-size: 18px;
+}
+
+    #login-for-returing-beta-testers-btn:hover {
+        color: #2f2e2e;
+        background-color: #ffffff;
+        border: solid 4px #0b2f5b;
+        border-style: double;
+    }
+
 /*About*/
 #about-ctn {
     background-color: #ffffff;

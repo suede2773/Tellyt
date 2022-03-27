@@ -52,6 +52,7 @@
                 With hundreds of questions for you to choose from in over a dozen languages, you can tell your story the way that you want it to be told. All of your answers are captured in HD Video, and you can add photos and documents to further enhance your viewer's experience. Edit, redo, or submit your responses as often as you like. This is your story, and you know how to tell it best.
             </div>
             <button id="join-the-beta-btn" title="Join the Beta">Join the Beta</button>
+            <button id="login-for-returing-beta-testers-btn" title="LOGIN for returing Beta Testers">LOGIN for returing Beta Testers</button>
         </div>
     </div>
 </div>
@@ -69,6 +70,11 @@
 
         $("#join-the-beta-btn").click(function () {
             var aboutUrl = '@Url.Action("About", "Beta")';
+            window.location.href = aboutUrl;
+        });
+
+        $("#login-for-returing-beta-testers-btn").click(function () {
+            var aboutUrl = "/Interview/";
             window.location.href = aboutUrl;
         });
 
