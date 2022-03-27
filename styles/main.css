@@ -526,6 +526,15 @@ section.dashboard_main {
   padding-top: 15px
 }
 
+.navbar1-footer {
+    padding: 10px;
+    background-color: #ffffff;
+    color: #212529;
+    height: 55px;
+    font-size: 12px;
+    padding-top: 15px
+}
+
 .interviewerheader {
   height: 200px;
   font-size: 14px;
