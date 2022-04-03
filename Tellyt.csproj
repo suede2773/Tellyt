@@ -305,6 +305,12 @@
     <Content Include="images\Beta\interview.png" />
     <Content Include="images\Beta\interview_2200x1468.png" />
     <Content Include="images\Beta\interview_2200x1468_2.png" />
+    <Content Include="images\Beta\Modal\Help\modal_800x358_1.png" />
+    <Content Include="images\Beta\Modal\Help\modal_800x358_2.png" />
+    <Content Include="images\Beta\Modal\Help\modal_800x358_3.png" />
+    <Content Include="images\Beta\Modal\Help\modal_800x358_4.png" />
+    <Content Include="images\Beta\Modal\Help\modal_800x358_5.png" />
+    <Content Include="images\Beta\Modal\Help\modal_800x358_6.png" />
     <Content Include="images\blackboxbutton.png" />
     <Content Include="images\check.png" />
     <Content Include="images\checkbox_empty.png" />

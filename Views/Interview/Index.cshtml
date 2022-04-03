@@ -190,44 +190,48 @@
 
 <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content modal-video">
+        <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title modalTitleVideo" id="helpModalLabel"><input id="dontShowHelpAgain" type="checkbox" /> Don't show again</h5>
+                <h5 class="modal-title modalTitleVideo" id="helpModalLabel">
+                    <input id="dontShowHelpAgain" type="checkbox" /> Don't show again
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div id="helpModalBody" class="modal-body">
-
                 <!-- carousel -->
-                <div id="helpCarouselWithIndicators" class="helpCarousel slide" data-ride="carousel" style="width: 100%; height:600px; background-color: yellow;" align="center">
-                    <ol class="carousel-indicators">
-                        <li data-target="#helpCarouselWithIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#helpCarouselWithIndicators" data-slide-to="1"></li>
-                        <li data-target="#helpCarouselWithIndicators" data-slide-to="2"></li>
-                    </ol>
+                <div id="helpCarouselID" class="helpCarousel carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img class="d-block w-100" alt="First slide">
+                            <img class="d-block w-100" alt="Select a question within a section" src="~/images/Beta/Modal/Help/modal_800x358_1.png" />
                         </div>
                         <div class="carousel-item">
-                            <img class="d-block w-100" alt="Second slide">
+                            <img class="d-block w-100" alt="Click the play button and after the count down record the response" src="~/images/Beta/Modal/Help/modal_800x358_2.png">
                         </div>
                         <div class="carousel-item">
-                            <img class="d-block w-100" alt="Third slide">
+                            <img class="d-block w-100" alt="Press the stop button or the space bar to end the recording" src="~/images/Beta/Modal/Help/modal_800x358_3.png">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" alt="Press the review button to review the recording" src="~/images/Beta/Modal/Help/modal_800x358_4.png" />
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" alt="Press the redo/record button to redo/record the recording" src="~/images/Beta/Modal/Help/modal_800x358_5.png">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" alt="Press the post button to post the recording" src="~/images/Beta/Modal/Help/modal_800x358_6.png">
                         </div>
                     </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <a class="carousel-control-prev" href="#helpCarouselID" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
                     </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <a class="carousel-control-next" href="#helpCarouselID" role="button" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
                 <!-- END carousel -->
-
             </div>
         </div>
     </div>
@@ -998,12 +1002,7 @@
       $("#loadingPost").hide();
       $("#loadingPhoto").hide();
       $("#uploadPhotoButton").hide();
-      $("#recordingIcon").addClass("recorder_off").removeClass("recorder_on");;
-
-      //$('#carousel-modal').carousel();
-      $('.carousel').carousel({
-        interval: false
-      })
+      $("#recordingIcon").addClass("recorder_off").removeClass("recorder_on");
 
       document.getElementById('photoFileInput').addEventListener('change', function ()
       {
@@ -1214,6 +1213,10 @@
         handleTooltips();
         handleHelpModal();
 
+        $('div[class^="carousel"]:not(.helpCarousel)').carousel({
+            interval: false
+        })
+
     });
 
       function handleTooltips() {
@@ -1227,10 +1230,8 @@
           });
 
           $('.helpCarousel').carousel({
-              interval: 10000
+              interval: 5000
           });
-
-          setCookie("dontShowHelpAgain", "notchecked", 30);
           handleHelpModalVisibility();
       }
 
@@ -1244,13 +1245,11 @@
 
       function handleHelpModalVisibility() {
           const cvalue = getCookie("dontShowHelpAgain");
-          if (cvalue === "notchecked") {
-              $('#helpModal').modal('show');
-          } else {
+          if (cvalue === "checked") {
               $('#helpModal').modal('hide');
+          } else {
+              $('#helpModal').modal('show');
           }
-          //$('#helpModal').modal('show');
-          //$('#helpModal').modal('hide');
       }
 
       function setCookie(cname, cvalue, exdays) {

@@ -528,11 +528,14 @@ section.dashboard_main {
 
 .navbar1-footer {
     padding: 10px;
-    background-color: #ffffff;
-    color: #212529;
+    background-color: #eeecec;
     height: 55px;
-    font-size: 12px;
-    padding-top: 15px
+    padding-top: 15px;
+    font-family: var(--bs-body-font-family);
+    font-size: var(--bs-body-font-size);
+    font-weight: var(--bs-body-font-weight);
+    line-height: var(--bs-body-line-height);
+    color: var(--bs-body-color);
 }
 
 .interviewerheader {
