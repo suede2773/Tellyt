@@ -138,15 +138,15 @@
   <!--Nav Bar Top -->
 
 <div class="navbar1 row" id="divHeader">
-  <div class="col-md-1">
+  @*<div class="col-md-1">
     <div class="showside" id="divShowSide">
       <img src="@Url.Content("~/Images/header_menu_icon.png")">
     </div>
-  </div>
-  <div class="col-md-2" style="margin-top: -5px">
+  </div>*@
+  <div class="col-md-9" style="margin-top: -5px">
     <img src="@Url.Content("~/images/Tellyt-logo.png")">
   </div>
-  <div class="col-md-1 menutext menuDashboard">
+  @*<div class="col-md-1 menutext menuDashboard">
     dashboard
   </div>
   <div class="col-md-1 menutext">
@@ -157,7 +157,7 @@
   </div>
   <div class="col-md-2 menutext">
     help center
-  </div>
+  </div>*@
   <div class="col-md-3">
     @if (Request.IsAuthenticated)
     {
@@ -172,31 +172,42 @@
 @RenderBody()
    
 <footer id="divFooter">
-  <div class="row navbar1">
-    <div class="col-md-1">
-    </div>
-    <div class="col-md-2">
-      <span>&copy; @DateTime.Now.Year Tellyt Corporation</span>
-    </div>
-    <div class="col-md-2">
+    <div class="row">
+        <div class="col-md-12">
+            <hr style="margin-left:10px; margin-right:10px;" />
+        </div>
+     </div>
+        <div class="row navbar1-footer">
+            <div class="col-md-12">
+                <span style="margin-left:10px; margin-right:10px;">&copy; @DateTime.Now.Year Tellyt Corporation</span>
+            </div>
+        </div>
 
-    </div>
-    <div class="col-md-1">
+        @*<div class="row navbar1">
+              <div class="col-md-1">
+              </div>
+              <div class="col-md-2">
+                <span>&copy; @DateTime.Now.Year Tellyt Corporation</span>
+              </div>
+              <div class="col-md-2">
 
-    </div>
-    <div class="col-md-2">
+              </div>
+              <div class="col-md-1">
 
-    </div>
-    <div class="col-md-2">
+              </div>
+              <div class="col-md-2">
 
-    </div>
-    <div class="col-md-2" style="padding-left: 0px">
-      <img src="@Url.Content("~/Images/facebookicon.png")" style="cursor: pointer">
-      <img src="@Url.Content("~/Images/instagramicon.png")" style="cursor: pointer">
-      <img src="@Url.Content("~/Images/twittericon.png")" style="cursor: pointer">
-      <img src="@Url.Content("~/Images/youtubeicon.png")" style="cursor: pointer">
-    </div>
-  </div>
+              </div>
+              <div class="col-md-2">
+
+              </div>
+              <div class="col-md-2" style="padding-left: 0px">
+                <img src="@Url.Content("~/Images/facebookicon.png")" style="cursor: pointer">
+                <img src="@Url.Content("~/Images/instagramicon.png")" style="cursor: pointer">
+                <img src="@Url.Content("~/Images/twittericon.png")" style="cursor: pointer">
+                <img src="@Url.Content("~/Images/youtubeicon.png")" style="cursor: pointer">
+              </div>
+            </div>*@
 </footer>
 
 @RenderSection("scripts", required: false)
