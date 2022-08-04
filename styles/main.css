@@ -626,7 +626,7 @@ section.dashboard_main {
 
 .overlaytext {
   left: 10px;
-  top: 90px;
+  top: 60px;
   width: 50px;
   text-align: center;
   color: white;
@@ -959,6 +959,16 @@ section.dashboard_main {
   background-color: white
 }
 
+.overlaytrash {
+  width: 25px;
+  z-index: 3;
+  position: relative;
+  top: 145px;
+  left: 150px;
+  height: 30px;
+  background-color: white;
+}
+
 .overlaylatest {
   background-color: #75c15b;
   border-radius: calc(.5rem - 1px);
@@ -968,7 +978,7 @@ section.dashboard_main {
   margin-top: 5px;
   z-index: 3;
   position: relative;
-  top: 60px;
+  top: 30px;
   left: 90px;
 }
 
