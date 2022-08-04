@@ -181,7 +181,6 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" id="btnDeleteVideo">Delete</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -301,31 +300,42 @@
       userHasCam = ((cam_number > 0) && (mic_number > 0));
     }
 
+    function DeleteVideo(element) {
+      let stream = $(element).parent().attr("stream");
+      console.log("stream", $(element).parent().attr("stream"));
+      if (confirm("Are you sure you wish to delete this video?")) {
+        var postUrl = "@Url.Content("~/Interview/DeleteVideo")";
+        $.post(postUrl, { stream: stream }, function(data) {
+          GetInterviewQuestions($currentTopicId, $currentQuestionId);
+        });
+      }
+    }
+
     function LoadVideo(element) {
       $("#videoModalBody").html("");
 
       var posterImage = "https://";
-      posterImage += $(element).attr("location");
+      posterImage += $(element).parent().attr("location");
       posterImage += "/";
-      posterImage += $(element).attr("hash");
+      posterImage += $(element).parent().attr("hash");
       posterImage += "/";
-      posterImage += $(element).attr("stream");
+      posterImage += $(element).parent().attr("stream");
       posterImage += ".png";
       var videoSource = "https://sqps.onstreamsecure.com/origin/lmskew/tellytdev/";
-      videoSource += $(element).attr("stream");
-      videoSource += ($(element).attr("type") == "WEBM") ? ".webm" : ".mp4";
+      videoSource += $(element).parent().attr("stream");
+      videoSource += ($(element).parent().attr("type") == "WEBM") ? ".webm" : ".mp4";
 
-      var videoType = ($(element).attr("type") == "WEBM") ? "video/webm" : "video/mp4";
+      var videoType = ($(element).parent().attr("type") == "WEBM") ? "video/webm" : "video/mp4";
 
-      var videoPlaybackHtml = "<video id=\"vid" + $(element).attr("stream") + "\" class=\"vjs-default-skin vjs-16-9 vjs-big-play-centered\" controls preload=\"auto\" width=\"720\" height=\"405\" ";
+      var videoPlaybackHtml = "<video id=\"vid" + $(element).parent().attr("stream") + "\" class=\"vjs-default-skin vjs-16-9 vjs-big-play-centered\" controls preload=\"auto\" width=\"720\" height=\"405\" ";
       videoPlaybackHtml += "poster=\"" + posterImage + "\" data-setup=\"{}\">";
       videoPlaybackHtml += "<source src=\"" + videoSource + "\" type=\"" + videoType + "\" />";
       videoPlaybackHtml += "<p class=\"vjs-no-js\">To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video</p>";
       videoPlaybackHtml += "</video>";
 
-      $("#videoModalLabel").html($(element).attr("question"));
+      $("#videoModalLabel").html($(element).parent().attr("question"));
 
-      currentStream = $(element).attr("stream");
+      currentStream = $(element).parent().attr("stream");
 
       var videoPlaybackElement = $(videoPlaybackHtml);
       $("#videoModalBody").append(videoPlaybackElement);
@@ -536,10 +546,13 @@
         interviewHtml += "question=\"";
         interviewHtml += InterviewQuestions[iInterview].Question;
         interviewHtml += "\" ";
-        interviewHtml += "onclick=\"LoadVideo(this)\" ";
+        interviewHtml += " ";
         interviewHtml += "title=\"" + InterviewQuestions[iInterview].Question + "\" ";
         interviewHtml += ">";
-        interviewHtml += "<img class=\"videothumbnailimage\" src=\"" + thumbnailUrl + "\" style=\"height:99px;width:176px\">";
+        interviewHtml += "<img class=\"videothumbnailimage\" onclick=\"LoadVideo(this)\" src=\"" + thumbnailUrl + "\" style=\"height:99px;width:176px\">";
+        interviewHtml += "<div onclick=\"DeleteVideo(this)\" class=\"overlaytrash\" >";
+        interviewHtml += "<img src=\"@Url.Content("~/Images/trash.png")\" style=\"max-height:100%; max-width_100%\">";
+        interviewHtml += "</div>";
         interviewHtml += "<div class=\"overlaytext\">";
         interviewHtml += InterviewQuestions[iInterview].RecordedTime;
         interviewHtml += "</div>";
@@ -550,6 +563,7 @@
         }
         interviewHtml += "</div>";
         interviewHtml += "<div class=\"videodescriptionholder\">";
+
         interviewHtml += "<div class=\"topictext\">";
         interviewHtml += InterviewQuestions[iInterview].Question;
         interviewHtml += "</div>";
@@ -559,6 +573,7 @@
         interviewHtml += "</div>";
         interviewHtml += "</div>";
       }
+      console.log("interviewHtml", interviewHtml);
       $("#interviewRecordingsContainer").html(interviewHtml);
     }
 
@@ -1054,15 +1069,15 @@
         }
       }, false);
 
-      $("#btnDeleteVideo").click(function() {
+      @*$("#btnDeleteVideo").click(function() {
         if (confirm("Are you sure you wish to delete this video?")) {
-          $('#videoModal').modal('hide');
+         // $('#videoModal').modal('hide');
           var postUrl = "@Url.Content("~/Interview/DeleteVideo")";
           $.post(postUrl, { stream: currentStream }, function(data) {
             GetInterviewQuestions($currentTopicId, $currentQuestionId);
           });
         }
-      });
+      });*@
 
       $("div.uploader").hover(function() {
           $(this).find("img").attr("src",

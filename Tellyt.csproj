@@ -409,6 +409,7 @@
     <Content Include="images\tn7.jpg" />
     <Content Include="images\tn8.jpg" />
     <Content Include="images\tn9.jpg" />
+    <Content Include="images\trash.png" />
     <Content Include="images\tribute_background.png" />
     <Content Include="images\tribute_page_demo.png" />
     <Content Include="images\TurnOnCamera.png" />
