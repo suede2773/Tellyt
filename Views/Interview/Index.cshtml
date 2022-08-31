@@ -187,6 +187,23 @@
   </div>
 </div>
 
+<div class="modal fade" id="confirmPostModal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" aria-labelledby="confirmPostModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content modal-video">
+      <div class="modal-header">
+        <h5 class="modal-title modalTitleVideo" id="confirmPostModalLabel">Video Confirmation</h5>
+      </div>
+      <div id="videoModalBody" class="modal-body">
+        You have an unsaved video recording. Do you wish to post it first?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="confirmPostVideo">Post</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirmRemoveVideo">Remove</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -257,6 +274,7 @@
     var $topics;
     var $relatedPhotos;
     var $currentQuestionId = 0;
+    var $newQuestionId = 0;
     var $currentTopicId = 0;
     var isFlashReady = false;
     var isCamReady = false;
@@ -446,15 +464,9 @@
     }
 
     function SelectQuestion() {
-      //turn off the recording icon
+      $currentQuestionId = $newQuestionId;
+      GetInterviewQuestions(0, $currentQuestionId);
       $("#recordingIcon").addClass("recorder_off").removeClass("recorder_on");
-
-      if ($("#postButton").hasClass("enabledPostButton")) {
-        if (confirm("You have an unsaved video recording. Do you want to post it first?")) {
-          $("#postButton").click();
-          return;
-        }
-      }
       $("span.question").removeClass("selectedQuestion");
       $("span.recordedTime").removeClass("selectedQuestion");
       $("div.card-item").addClass("unselectedCardItem").removeClass("selectedCardItem");
@@ -469,11 +481,6 @@
       $("#questionShown").html(questionFormattedText);
       $("#questionShown").attr("title", questionText);
       EnableInitialButtons();
-      //if (QuestionIsAnswered()) {
-      //  EnableButtonsForAnsweredQuestion();
-      //} else {
-      //  EnableButtonsForUnansweredQuestion();
-      //}
     }
 
     function GetInterviewQuestions(topicId, questionId) {
@@ -648,14 +655,20 @@
 
       $(".card-item").click(function ()
       {
-        $currentQuestionId = parseInt($(this)[0].id.replace("question", ""));
-        //topicName
-        GetInterviewQuestions(0, $currentQuestionId);
-        SelectQuestion();
+        $newQuestionId = parseInt($(this)[0].id.replace("question", ""));
+        if ($("#postButton").hasClass("enabledPostButton")) {
+          $("#confirmPostModal").modal("show");
+        }
+        else {
+          SelectQuestion();
+        }
       });
 
       $(".playquestion").click(function ()
       {
+        if ($("#postButton").hasClass("enabledPostButton")) {
+          return;
+        }
         $currentQuestionId = parseInt($(this).parent()[0].id.replace("question", ""));
 
         if ($(this).find("img.imgquestion").attr("src") == $("#defaultPauseQuestion").val()) {
@@ -666,14 +679,14 @@
         else
         {
           var questionAudioLocation = GetQuestionAudioLocationFromId();
-        if (questionAudioLocation.length) {
-          var newAudioPath = $("#defaultQuestionPath").val().replace("default.mp3", questionAudioLocation);
-          $("#questionAudio").attr("src", newAudioPath);
-          document.getElementById('questionAudio').volume = 1;
-          document.getElementById('questionAudio').play();
+          if (questionAudioLocation.length) {
+            var newAudioPath = $("#defaultQuestionPath").val().replace("default.mp3", questionAudioLocation);
+            $("#questionAudio").attr("src", newAudioPath);
+            document.getElementById('questionAudio').volume = 1;
+            document.getElementById('questionAudio').play();
 
-          $("img.imgquestion").attr("src", $("#defaultPlayQuestion").val());
-          $(this).find("img.imgquestion").attr("src", $("#defaultPauseQuestion").val());
+            $("img.imgquestion").attr("src", $("#defaultPlayQuestion").val());
+            $(this).find("img.imgquestion").attr("src", $("#defaultPauseQuestion").val());
 
           }
         }
@@ -874,7 +887,9 @@
       });
 
       document.querySelector('#redoButton').addEventListener('click', async () => {
-        $("#recordButton").click();
+        $("#postButton").addClass("disabledPostButton").removeClass("enabledPostButton");
+        const questionLocator = "#question" + $currentQuestionId;
+        $(questionLocator).find(".playquestion").click();
       });
 
       document.querySelector('#stopButton').addEventListener('click', async () => {
@@ -934,6 +949,17 @@
           $("#postButton").click();
          }
         });
+
+      $("#confirmPostVideo").click(function () {
+        $("#postButton").click();
+        SelectQuestion();
+        $("#confirmPostModal").hide();
+      });
+
+      $("#confirmRemoveVideo").click(function () {
+        SelectQuestion();
+        $("#confirmPostModal").hide();
+      });
 
       $("#postButton").click(function () {
         enableReviewButtons = true;
