@@ -49,7 +49,7 @@
       </div>
       <div class="row about-tellyt-beta-form-row">
         <div id="about-tellyt-beta-form-col-thanks-for-submitting" class="col-md-6 about-tellyt-beta-form-col"><br />Thanks for submitting!</div>
-        <div id="about-tellyt-beta-form-col-send" class="col-md-6 about-tellyt-beta-form-col"><button tabindex="7" id="about-tellyt-beta-form-send-btn" title="Send">Send</button><br />
+        <div id="about-tellyt-beta-form-col-send" class="col-md-6 about-tellyt-beta-form-col"><button tabindex="7" id="about-tellyt-beta-form-send-btn" title="Send">Send <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loadingSignIn"></span></button><br />
           <span id="invalidInput" class="invalid-feedback">There was an error!</span>
         </div>
       </div>
@@ -175,15 +175,18 @@
         ProcessEmail();
         var aboutThankYouUrl = '@Url.Action("AboutThankYou", "Beta")';
         window.location.href = aboutThankYouUrl;
-      }
+        }
+        $("#loadingSignIn").hide();
     }
 
     $("#about-tellyt-beta-form-send-btn").click(function () {
+      $("#loadingSignIn").show();
       resetForm();
       const validationResult = validateForm();
       if (!validationResult.valid) {
         $("#invalidInput").html(validationResult.message);
         $("#invalidInput").show();
+        $("#loadingSignIn").hide();
         return;
       }
       ProcessUser();
@@ -191,8 +194,8 @@
     });
 
 
-    $(document).ready(function () {
-
+      $(document).ready(function () {
+          $("#loadingSignIn").hide();
     });
   </script>
 }
