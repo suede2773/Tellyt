@@ -19,6 +19,9 @@ using Newtonsoft.Json;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
+using System.Net;
+using System.Web.Mail;
+using System.Net.Mail;
 
 namespace Tellyt.Controllers
 {
@@ -100,6 +103,9 @@ namespace Tellyt.Controllers
         signupGatewayUrl + "api/Account/createuser")
       { Content = content };
 
+      ServicePointManager.SecurityProtocol =
+        SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+
       var response = client.SendAsync(newUserRequest).Result;
 
       if (!response.IsSuccessStatusCode)
@@ -114,22 +120,44 @@ namespace Tellyt.Controllers
     [HttpPost]
     public async Task SendBetaEmailConfirmation(string firstName, string lastName, string email)
     {
-      var apiKey = ConfigurationManager.AppSettings["SendGridPassword"];
-      var client = new SendGridClient(apiKey);
-      var from = new EmailAddress("craig.mobsters@gmail.com", "Tellyt Support");
-      var subject = "Thank you for signing up with Tellyt";
-      var fullName = string.IsNullOrEmpty(firstName) ? "" : firstName;
-      fullName += string.IsNullOrEmpty(lastName) ? "" : " " + lastName;
-      var betaSiteUrl = "<a href=\"https://tellytdev.azurewebsites.net/interview\">https://tellytdev.azurewebsites.net/interview</a>";
-      var to = new EmailAddress(email, fullName);
-      var htmlContent = "<h2>Thanks for Helping!</h2><br>";
-      htmlContent += "<p>";
-      htmlContent += "Your user account has been created! You may now access the beta site at the following location: ";
-      htmlContent += betaSiteUrl;
-      htmlContent += "</p>";
-      var msg = MailHelper.CreateSingleEmail(from, to, subject, string.Empty, htmlContent);
-      var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
-      Console.WriteLine(response.StatusCode);
+      try
+      {
+        ServicePointManager.SecurityProtocol =
+          SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+
+        var betaSiteUrl = "<a href=\"https://tellytdev.azurewebsites.net/interview\">https://tellytdev.azurewebsites.net/interview</a>";
+
+        var htmlContent = "<h2>Thanks for Helping!</h2><br>";
+        htmlContent += "<p>";
+        htmlContent += "Your user account has been created! You may now access the beta site at the following location: ";
+        htmlContent += betaSiteUrl;
+        htmlContent += "</p>";
+
+        var smtpAddress = "smtp.gmail.com";
+        var portNumber = 587;
+
+        using (System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage())
+        {
+          mail.From = new MailAddress("tellytservices@gmail.com");
+          mail.To.Add(email);
+          mail.Subject = "Thank you for signing up with Tellyt";
+          mail.Body = htmlContent;
+          mail.IsBodyHtml = true;
+
+          using (SmtpClient smtp = new SmtpClient(smtpAddress, portNumber))
+          {
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential("tellytservices@gmail.com", "rlvxxlpcxgzbyhir");
+            smtp.EnableSsl = true;
+            
+            smtp.Send(mail);
+          }
+        }
+      }
+      catch(Exception ex)
+      {
+        Console.WriteLine(ex.ToString());
+      }
     }
 
     public ActionResult Logout()

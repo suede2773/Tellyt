@@ -16,7 +16,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using Microsoft.Win32.SafeHandles;
-using Tellyt.Utilities;
 using System.Threading.Tasks;
 
 namespace Tellyt.Controllers
