@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Tellyt.Controllers._2
+namespace Tellyt.Controllers.v2
 {
     public class v2Controller : Controller
     {

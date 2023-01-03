@@ -236,7 +236,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\v2\v2Controller.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BetaController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
@@ -245,6 +244,7 @@
     <Compile Include="Controllers\InterviewController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
+    <Compile Include="Controllers\v2\v2Controller.cs" />
     <Compile Include="ExternalMedia.cs">
       <DependentUpon>AmandaDB.tt</DependentUpon>
     </Compile>
@@ -3027,6 +3027,7 @@
     <Content Include="styles\v2\kendoui.2022.3.1109.core\Silver\sprite_2x.png" />
     <Content Include="styles\v2\kendoui.2022.3.1109.core\Silver\sprite_kpi.png" />
     <Content Include="styles\v2\kendoui.2022.3.1109.core\Silver\sprite_kpi_2x.png" />
+    <Content Include="styles\v2\kendoui.2022.3.1109.core\tellyt.css" />
     <Content Include="styles\v2\kendoui.2022.3.1109.core\textures\brushed-metal.png" />
     <Content Include="styles\v2\kendoui.2022.3.1109.core\textures\dots1.png" />
     <Content Include="styles\v2\kendoui.2022.3.1109.core\textures\dots10.png" />

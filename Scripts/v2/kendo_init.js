@@ -5,22 +5,42 @@
 
 function onHandleKendoInit() {
     handleKendoButtons();
+    handleKendoPanelBars();
 }
 
 function handleKendoButtons() {
-    $(".tlyt_kendo_button").each(function (index) {
-        if (!$(this).hasClass("tlyt_kendo_initialized")) {
-            $(this).kendoButton();
-            $(this).addClass("tlyt_kendo_initialized");
+    $(".tlt-kendo-button").each(function (index) {
+        if (!$(this).hasClass("tlt-kendo-initialized")) {
+            if ($(this).hasClass("tlt-kendo-primary-button")) {
+                $(this).kendoButton({
+                    themeColor: "primary"
+                });
+            } else {
+                if ($(this).hasClass("tlt-kendo-disabled-primary-button")) {
+                    $(this).kendoButton({
+                        themeColor: "primary",
+                        enable: false
+                    });
+                } else {
+                    if ($(this).hasClass("tlt-kendo-disabled-button")) {
+                        $(this).kendoButton({
+                            enable: false
+                        });
+                    } else {
+                        $(this).kendoButton();
+                    }
+                }
+            }
+            $(this).addClass("tlt-kendo-initialized");
         }
     });
 }
 
-function handleDropdownListInputs() {
-    $(".tlyt_dropdownlist").each(function (index) {
-        if (!$(this).hasClass("tlyt_kendo_initialized")) {
-            //$(this).kendoDropDownList();
-            $(this).addClass("tlyt_kendo_initialized");
+function handleKendoPanelBars() {
+    $(".tlt-kendo-panel-bar").each(function (index) {
+        if (!$(this).hasClass("tlt-kendo-initialized")) {
+            $(this).kendoPanelBar();
+            $(this).addClass("tlt-kendo-initialized");
         }
     });
 }
