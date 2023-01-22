@@ -1492,6 +1492,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\tether.min.js" />
+    <Content Include="Scripts\v2\header.js" />
     <Content Include="Scripts\v2\kendoui.2022.3.1109.core\angular.min.js" />
     <Content Include="Scripts\v2\kendoui.2022.3.1109.core\cultures\kendo.culture.aa-DJ.min.js" />
     <Content Include="Scripts\v2\kendoui.2022.3.1109.core\cultures\kendo.culture.aa-ER.min.js" />
@@ -4302,11 +4303,14 @@
     <Content Include="Views\Sales\Index.cshtml" />
     <Content Include="Views\Shared\_Layout_beta.cshtml" />
     <Content Include="Views\Shared\_Layout_v2.cshtml" />
+    <Content Include="Views\v2\Dashboard.cshtml" />
+    <Content Include="Views\v2\Search.cshtml" />
+    <Content Include="Views\v2\AccountSettings.cshtml" />
+    <Content Include="Views\v2\HelpCenter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="images\v2\" />
-    <Folder Include="Views\2\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\Manage\" />
