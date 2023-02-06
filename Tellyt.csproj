@@ -417,6 +417,7 @@
     <Content Include="images\twittericon.png" />
     <Content Include="images\uploadbutton.png" />
     <Content Include="images\uploadbuttonactive.png" />
+    <Content Include="images\v2\DashboardBanner.png" />
     <Content Include="images\VideoCameraIcon.png" />
     <Content Include="images\whiteboxbutton.png" />
     <Content Include="images\youtubeicon.png" />
@@ -4310,7 +4311,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="images\v2\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\Manage\" />
