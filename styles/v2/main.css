@@ -101,3 +101,30 @@ body {
     height: 5px;
     --bs-gutter-x: 0rem !important;
 }
+
+#tlt-dashboard-insights-ctn {
+    /*min-height: 467px;*/
+    /*background-color: #ffffff;*/
+    background-color: #eaeaeb;
+    /*margin: 0 0 0 18px;*/
+    /*padding: 0 11px 0 0;*/
+    /*background-position: left;*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
+    /*background-image: url("/images/dashboard-globe-insights.png");*/
+}
+
+#tlt-dashboard-insight-text {
+    margin: 10px 0 0 15%;
+}
+
+@media (max-width: 768px) {
+    #tlt-dashboard-insight-text {
+        margin: 10px 0 0 0;
+    }
+}
+
+#tlt-dashboard-insight-text-ctn {
+    background-color: red;
+    margin: 10px 0 10px 0;
+}
