@@ -325,6 +325,7 @@
     <Content Include="images\curved_gallery_min.png" />
     <Content Include="images\dashboard-dna-match.png" />
     <Content Include="images\dashboard-globe-insights.png" />
+    <Content Include="images\dashboard-globe-insights_2.png" />
     <Content Include="images\dashboard-guest-permissions.png" />
     <Content Include="images\dashboard-interviewer.png" />
     <Content Include="images\dashboard-page-insights.png" />

@@ -24,7 +24,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top tlt-navbar">
         <div class="container-fluid">
             <a href="/v2/Index" class="navbar-brand">
-                <img src="@Url.Content("~/images/Tellyt-logo.png")" border="0" alt="Tellyt" title="Tellyt">
+                <img src="@Url.Content("~/images/Tellyt-logo.png")" border="0" alt="Tellyt" title="Tellyt" />
             </a>
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
@@ -48,11 +48,37 @@
     </div>
 
     <!-- Footer -->
-
-    <div class="container-fluid tlt-footer-ctn">
-        <footer class="container tlt-footer">
-            &copy; @DateTime.Now.Year Tellyt Corporation
-        </footer>
+    <div class="container-fluid tlt-no-lr-padding">
+        <div id="tlt-footer-top-ctn">
+            <div class="container tlt-footer">
+                <div class="row">
+                    <div class="col-md-3 tlt-footer-heading-ctn">
+                        <img style="max-width: 85px;" src="@Url.Content("~/images/Tellyt-logo.png")" border="0" alt="Tellyt" title="Tellyt" />
+                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+                    </div>
+                    <div class="col-md-3 tlt-footer-heading-ctn">
+                        <div class="tlt-footer-heading capitalize">Navigation</div>
+                        <div class="tlt-footer-navigation-ctn tlt-orange-color">Site Map</div>
+                        <div class="tlt-footer-navigation-ctn tlt-orange-color">About Us</div>
+                        <div class="tlt-footer-navigation-ctn tlt-orange-color">Terms of Use</div>
+                        <div class="tlt-footer-navigation-ctn tlt-orange-color">Privacy Policy</div>
+                        <div class="tlt-footer-navigation-ctn tlt-orange-color">Press Releases</div>
+                        <div class="tlt-footer-navigation-ctn tlt-orange-color">Help Center</div>
+                    </div>
+                    <div class="col-md-3 tlt-footer-heading-ctn">
+                        <div class="tlt-footer-heading capitalize">Recent Activity</div>
+                    </div>
+                    <div class="col-md-3 tlt-footer-heading-ctn">
+                        <div class="tlt-footer-heading capitalize">Company</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tlt-footer-bottom-ctn">
+            <div class="container tlt-footer">
+                <div>&copy; @DateTime.Now.Year Tellyt Corporation</div>
+            </div>
+        </div>
     </div>
 
     @RenderSection("scripts", required: false)

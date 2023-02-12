@@ -53,19 +53,12 @@ body {
     background-color: black;
 }
 
-.tlt-footer-ctn {
-    background-color: black;
-    margin-top: 20px;
-}
-
-.tlt-footer {
-    color: #b9bbbc;
-    padding: 10px 0 10px 12px;
-    font-size: 12px;
-}
-
-.tlt-orange {
+.tlt-orange-bg {
     background-color: #ffa613;
+}
+
+.tlt-orange-color {
+    color: #ffa613;
 }
 
 .tlt-row {
@@ -75,6 +68,11 @@ body {
     margin-top: calc(-1 * var(--bs-gutter-y));
     margin-right: calc(-.5 * var(--bs-gutter-x));
     margin-left: calc(-.5 * var(--bs-gutter-x));
+}
+
+.tlt-no-lr-padding {
+    padding-right: 0;
+    padding-left: 0;
 }
 
 .tlt-heading-ctn {
@@ -87,8 +85,35 @@ body {
     height: auto;
 }
 
-/*Dashboard*/
+/*Footer*/
+#tlt-footer-top-ctn {
+    background-color: #464646;
+}
 
+#tlt-footer-bottom-ctn {
+    background-color: black;
+}
+
+.tlt-footer {
+    color: #b9bbbc;
+    padding: 10px 0 10px 12px;
+    font-size: 12px;
+}
+
+.tlt-footer-heading {
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.tlt-footer-heading-ctn {
+    padding: 20px;
+}
+
+.tlt-footer-navigation-ctn {
+    margin-bottom: 10px;
+}
+
+/*Dashboard*/
 #tlt-dashborard-banner-img {
     width: 100%;
 }
@@ -97,21 +122,12 @@ body {
     max-width: 67px;
 }
 
-.tlt-dashboard-orange-ctn {
+#tlt-dashboard-orange-ctn {
     height: 5px;
-    --bs-gutter-x: 0rem !important;
 }
 
 #tlt-dashboard-insights-ctn {
-    /*min-height: 467px;*/
-    /*background-color: #ffffff;*/
     background-color: #eaeaeb;
-    /*margin: 0 0 0 18px;*/
-    /*padding: 0 11px 0 0;*/
-    /*background-position: left;*/
-    /*background-repeat: no-repeat;*/
-    /*background-size: cover;*/
-    /*background-image: url("/images/dashboard-globe-insights.png");*/
 }
 
 #tlt-dashboard-insight-text {
@@ -125,6 +141,15 @@ body {
 }
 
 #tlt-dashboard-insight-text-ctn {
-    background-color: red;
     margin: 10px 0 10px 0;
 }
+
+/*@media (max-width: 1400px) and (min-width: 768px) {
+    #tlt-dashboard-insight-img {*/
+        /*margin: 10px 0 0 0;*/
+        /*background-color: yellow;*/
+        /*border: solid 1px red;
+        max-width: 200px;*/
+        /*display: none;*/
+    /*}
+}*/
