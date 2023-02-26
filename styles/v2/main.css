@@ -61,6 +61,10 @@ body {
     color: #ffa613;
 }
 
+.tlt-white-color {
+    color: #ffffff;
+}
+
 .tlt-row {
     --bs-gutter-y: 0;
     display: flex;
@@ -153,3 +157,19 @@ body {
         /*display: none;*/
     /*}
 }*/
+
+.tlt-footer-navigation-item {
+    font-size: 16px;
+}
+
+.tlt-footer-navigation-company-contact-item {
+    font-size: 16px;
+}
+
+.tlt-footer-navigation-recent-activity-header {
+    font-size: 16px;
+}
+
+.tlt-footer-navigation-recent-activity-item {
+    color: #ffffff;
+}
