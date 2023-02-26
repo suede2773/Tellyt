@@ -4309,6 +4309,14 @@
     <Content Include="Views\v2\Search.cshtml" />
     <Content Include="Views\v2\AccountSettings.cshtml" />
     <Content Include="Views\v2\HelpCenter.cshtml" />
+    <Content Include="Views\v2\ProfileEditor.cshtml" />
+    <Content Include="Views\v2\DashboardSearch.cshtml" />
+    <Content Include="Views\v2\PersonalInfo.cshtml" />
+    <Content Include="Views\v2\GuestPermissions.cshtml" />
+    <Content Include="Views\v2\Tribute.cshtml" />
+    <Content Include="Views\v2\DNAMatch.cshtml" />
+    <Content Include="Views\v2\Interviewer.cshtml" />
+    <Content Include="Views\v2\PublicProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

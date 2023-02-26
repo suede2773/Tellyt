@@ -33,5 +33,53 @@ namespace Tellyt.Controllers.v2
         {
             return View();
         }
+
+        // GET: ProfileEditor
+        public ActionResult ProfileEditor()
+        {
+            return View();
+        }
+
+        // GET: Interviewer
+        public ActionResult Interviewer()
+        {
+            return View();
+        }
+
+        // GET: PublicProfile
+        public ActionResult PublicProfile()
+        {
+            return View();
+        }
+
+        // GET: DashboardSearch
+        public ActionResult DashboardSearch()
+        {
+            return View();
+        }
+
+        // GET: PersonalInfo
+        public ActionResult PersonalInfo()
+        {
+            return View();
+        }
+
+        // GET: GuestPermissions
+        public ActionResult GuestPermissions()
+        {
+            return View();
+        }
+
+        // GET: Tribute
+        public ActionResult Tribute()
+        {
+            return View();
+        }
+
+        // GET: DNAMatch
+        public ActionResult DNAMatch()
+        {
+            return View();
+        }
     }
 }

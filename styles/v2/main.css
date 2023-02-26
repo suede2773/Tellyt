@@ -173,3 +173,8 @@ body {
 .tlt-footer-navigation-recent-activity-item {
     color: #ffffff;
 }
+
+.tlt-dashboard-link {
+    text-decoration: none !important;
+    color: inherit !important;
+}
