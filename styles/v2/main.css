@@ -178,3 +178,41 @@ body {
     text-decoration: none !important;
     color: inherit !important;
 }
+
+/*Interviewer*/
+#tlt-dashboard-interviewer-left-ctn {
+    /*background-color: red;*/
+}
+
+#tlt-dashboard-interviewer-center-ctn {
+    /*background-color: green;*/
+}
+
+#tlt-dashboard-interviewer-right-ctn {
+    /*background-color: blue;*/
+}
+
+.tlt-dashboard-interviewer-content-header {
+    letter-spacing: .45px;
+    font-size: 18px;
+}
+
+.tlt-dashboard-interviewer-content-ctn {
+    /*background-color: blue;*/
+    /*min-height: 200px;*/
+}
+
+#tlt-dashboard-interviewer-questions-content-ctn {
+    /*background-color: red;*/
+    /*min-height: 400px;*/
+}
+
+#tlt-dashboard-interviewer-review-content-ctn {
+    /*background-color: green;*/
+    /*min-height: 400px;*/
+}
+
+#tlt-dashboard-interviewer-interview-content-ctn {
+    /*background-color: blue;*/
+    /*min-height: 400px;*/
+}

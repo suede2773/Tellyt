@@ -109,7 +109,7 @@ namespace Tellyt.Controllers
   public class InterviewController : Controller
   {
     // GET: Interview
-    [Authorize]
+    //[Authorize]
     public ActionResult Index()
     {
       ViewBag.AccountHash = "3a607b4a17256a0676680aca650548be";

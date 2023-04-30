@@ -4,13 +4,40 @@
     Layout = "~/Views/Shared/_Layout_v2.cshtml";
 }
 
-<h2>Interviewer</h2>
+<div class="row">
+    <div class="col-12"><h2>Interviewer</h2></div>
+</div>
 
-@section Scripts
+<div class="row">
+        <!-- begin left -->
+    <div id="tlt-dashboard-interviewer-left-ctn" class="col-lg-3">
+        <div class="tlt-dashboard-interviewer-content-header tlt-orange-color">Questions</div>
+        <div id="tlt-dashboard-interviewer-questions-content-ctn" class="tlt-dashboard-interviewer-content-ctn"></div>
+    </div>
+        <!-- end left -->
+        <!-- begin center -->
+    <div id="tlt-dashboard-interviewer-center-ctn" class="col-lg-6">
+        <div class="tlt-dashboard-interviewer-content-header tlt-orange-color">Review</div>
+        <div id="tlt-dashboard-interviewer-review-content-ctn" class="tlt-dashboard-interviewer-content-ctn"></div>
+    </div>
+        <!-- end center -->
+        <!-- begin right -->
+        <div id="tlt-dashboard-interviewer-right-ctn" class="col-lg-3">
+            <div class="tlt-dashboard-interviewer-content-header tlt-orange-color">Interview</div>
+            <div id="tlt-dashboard-interviewer-interview-content-ctn" class="tlt-dashboard-interviewer-content-ctn"></div>
+        </div>
+        <!-- end right -->
+</div>
+
+<div class="row">
+    <div class="col-12">&nbsp;</div>
+</div>
+
+    @section Scripts
 {
-    <script>
-        $(document).ready(function () {
-            onHandleNavBarHighlight("Dashboard");
-        });
-    </script>
-}
+        <script>
+            $(document).ready(function () {
+                onHandleNavBarHighlight("Dashboard");
+            });
+        </script>
+    }
