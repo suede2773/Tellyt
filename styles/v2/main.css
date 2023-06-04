@@ -216,3 +216,19 @@ body {
     /*background-color: blue;*/
     /*min-height: 400px;*/
 }
+
+#recorderButtonContainer {
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.enabledRecordButton {
+    background-color: #aac148;
+    cursor: pointer;
+}
+
+.disabledRecordButton {
+    /*background-color: #b7cc5e;*/
+    background-color: #D4DFA1;
+    cursor: default;
+}
