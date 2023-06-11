@@ -222,13 +222,119 @@ body {
     overflow: hidden;
 }
 
+.recorder_on {
+    /*background-image: url("../images/recording.png");*/
+    background-image: url("../../images/recording.png");
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    width: 20px;
+    display: inline-block;
+    animation: blink 2s ease-in infinite;
+    margin-top: 10px
+}
+
+.recorder_off {
+    /*background-image: url("../images/recordingOff.png");*/
+    background-image: url("../../images/recordingOff.png");
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    width: 20px;
+    display: inline-block;
+    margin-top: 10px
+}
+
 .enabledRecordButton {
-    background-color: #aac148;
+    background-color: #aac148 !important;
     cursor: pointer;
+    color: #ffffff !important;
+    /*padding: 10px !important;*/
+}
+
+.highlightRecordButton {
+    background-color: #9eb345 !important;
+    cursor: pointer;
+    color: #ffffff !important;
 }
 
 .disabledRecordButton {
     /*background-color: #b7cc5e;*/
-    background-color: #D4DFA1;
+    background-color: #D4DFA1 !important;
     cursor: default;
+    color: #ffffff !important;
+}
+
+.enabledStopButton {
+    background-color: #f61c0d !important;
+    cursor: pointer;
+    color: #ffffff !important;
+}
+
+.highlightStopButton {
+    background-color: #cc1205 !important;
+    cursor: pointer;
+    color: #ffffff !important;
+}
+
+.disabledStopButton {
+    /*  background-color: #fb483c;*/
+    background-color: #FA8A83 !important;
+    cursor: default;
+    color: #ffffff !important;
+}
+
+.enabledReviewButton {
+    background-color: #76a9ea !important;
+    cursor: pointer;
+    color: #ffffff !important;
+}
+
+.highlightReviewButton {
+    background-color: #4f82c3 !important;
+    cursor: pointer;
+    color: #ffffff !important;
+}
+
+.disabledReviewButton {
+    /*background-color: #8cb9f2;*/
+    background-color: #B9D3F4 !important;
+    cursor: default;
+    color: #ffffff !important;
+}
+
+.enabledRedoButton {
+    background-color: #ff5730 !important;
+    cursor: pointer;
+    color: #ffffff !important;
+}
+
+.highlightRedoButton {
+    background-color: #e14622 !important;
+    cursor: pointer;
+    color: #ffffff !important;
+}
+
+.disabledRedoButton {
+    /* background-color: #fd7a5b;*/
+    background-color: #FFA995 !important;
+    cursor: default;
+    color: #ffffff !important;
+}
+
+.enabledPostButton {
+    background-color: #4ebb3e !important;
+    cursor: pointer;
+    color: #ffffff !important;
+}
+
+.highlightPostButton {
+    background-color: #379f27 !important;
+    cursor: pointer;
+    color: #ffffff !important;
+}
+
+.disabledPostButton {
+    /* background-color: #6acf5b;*/
+    background-color: #A4DD9D !important;
+    cursor: default;
+    color: #ffffff !important;
 }

@@ -46,24 +46,28 @@
         </div>
 
         <div id="recorderButtonContainer">
-            <div id="recordingIcon" class="recorder_off" style="width: 20px">
+            <div id="recordingIcon" class="recorder_off" style="width: 20px; height:20px;"></div>
+            <div id="recordButton" class="enabledRecordButton tlt-kendo-button k-button-lg" data-toggle="tooltip" data-placement="bottom" title="Answer/Record">
+                @*<div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 20%; width: 80%">Answer/</div>*@
+                @*<div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 22%; width: 78%">Record</div>*@
+                Answer/Record
             </div>
-            <div id="recordButton" class="enabledRecordButton tlt-kendo-button" data-toggle="tooltip" data-placement="bottom" title="Answer/Record">
-                <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 20%; width: 80%">Answer/</div>
-                <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 22%; width: 78%">Record</div>
+            <div id="stopButton" class="enabledStopButton tlt-kendo-button k-button-lg" data-toggle="tooltip" data-placement="bottom" title="Stop">
+                @*<div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 30%; width: 70%">Stop</div>*@
+                Stop
             </div>
-            <div id="stopButton" class="enabledStopButton tlt-kendo-button" data-toggle="tooltip" data-placement="bottom" title="Stop">
-                <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 30%; width: 70%">Stop</div>
+            <div id="reviewButton" class="enabledReviewButton tlt-kendo-button k-button-lg" data-toggle="tooltip" data-placement="bottom" title="Review">
+                @*<div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 25%; width: 75%">Review</div>*@
+                Review
             </div>
-            <div id="reviewButton" class="enabledReviewButton tlt-kendo-button" data-toggle="tooltip" data-placement="bottom" title="Review">
-                <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 25%; width: 75%">Review</div>
+            <div id="redoButton" class="enabledRedoButton tlt-kendo-button k-button-lg" data-toggle="tooltip" data-placement="bottom" title="Redo/Record">
+                @*<div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 30%; width: 70%">Redo/</div>*@
+                @*<div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 25%; width: 75%">Record</div>*@
+                Redo/Record
             </div>
-            <div id="redoButton" class="enabledRedoButton tlt-kendo-button" data-toggle="tooltip" data-placement="bottom" title="Redo/Record">
-                <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 30%; width: 70%">Redo/</div>
-                <div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 25%; width: 75%">Record</div>
-            </div>
-            <div id="postButton" class="enabledPostButton tlt-kendo-button" data-toggle="tooltip" data-placement="bottom" title="Post">
-                <div id="postButtonStyle" style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 30%; width: 70%"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loadingPost" style="margin-right: 4px"></span>Post</div>
+            <div id="postButton" class="enabledPostButton tlt-kendo-button k-button-lg" data-toggle="tooltip" data-placement="bottom" title="Post">
+                @*<div id="postButtonStyle" style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 30%; width: 70%"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loadingPost" style="margin-right: 4px"></span>Post</div>*@
+                <div id="postButtonStyle"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loadingPost" style="margin-right: 4px"></span>Post</div>
             </div>
         </div>
         <div id="relatedPhotosHeaderContainer">
