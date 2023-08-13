@@ -123,29 +123,85 @@ namespace Tellyt.Controllers
       var userId = CommonController.GetCurrentUserId();
       var topics = new List<Topic>();
       var topicQuestions = new List<TopicQuestion>();
-      using (var db = new AmandaDevEntities())
-      {
-        foreach (var topic in db.Topics)
-        {
-          topics.Add(new Topic
-          {
-            TopicName = topic.Name,
-            TopicId = topic.Id
-          });
+            //using (var db = new AmandaDevEntities())
+            //{
+            //  foreach (var topic in db.Topics)
+            //  {
+            //    topics.Add(new Topic
+            //    {
+            //      TopicName = topic.Name,
+            //      TopicId = topic.Id
+            //    });
 
-        }
+            //  }
 
-        topicQuestions = db.Database
-            .SqlQuery<TopicQuestion>("[dbo].[GetQuestions] @UserId", new SqlParameter("UserId", userId)).ToList();
-      }
-      //Fill in the details
-      foreach (var topic in topics)
-      {
-        topic.TopicQuestions = topicQuestions.Where(t => t.TopicId == topic.TopicId).ToList();
-        topic.QuestionCount = topic.TopicQuestions.Count;
-        topic.AnsweredCount = topic.TopicQuestions.Count(q => q.IsAnswered);
-      }
-      Session["TopicsAndQuestions"] = topics;
+            //  topicQuestions = db.Database
+            //      .SqlQuery<TopicQuestion>("[dbo].[GetQuestions] @UserId", new SqlParameter("UserId", userId)).ToList();
+            //}
+
+            // Test
+            var testTopic_1 = new Topic
+            {
+                TopicName = "TopicName1",
+                TopicId = 1,
+            };
+
+            var testTopicQuestion_1 = new TopicQuestion
+            {
+                QuestionText = "TopicName1TopicQuestion1",
+                TopicId = 1,
+                QuestionId = 1
+            };
+            testTopic_1.TopicQuestions.Add(testTopicQuestion_1);
+            var testTopicQuestion_2 = new TopicQuestion
+            {
+                QuestionText = "TopicName1TopicQuestion2",
+                TopicId = 1, 
+                QuestionId = 2
+            };
+            testTopic_1.TopicQuestions.Add(testTopicQuestion_2);
+            topics.Add(testTopic_1);
+
+            // 2
+            var testTopic_2 = new Topic
+            {
+                TopicName = "TopicName2",
+                TopicId = 2,
+            };
+
+            var testTopic_2Question_1 = new TopicQuestion
+            {
+                QuestionText = "TopicName2TopicQuestion1",
+                TopicId = 2,
+                QuestionId = 1
+            };
+            testTopic_2.TopicQuestions.Add(testTopic_2Question_1);
+            var testTopic_2Question_2 = new TopicQuestion
+            {
+                QuestionText = "TopicName2TopicQuestion2",
+                TopicId = 2,
+                QuestionId = 2
+            };
+            testTopic_2.TopicQuestions.Add(testTopic_2Question_2);
+            topics.Add(testTopic_2);
+
+            //topics.Add(new Topic
+            //{
+            //    TopicName = "TopicName",
+            //    TopicId = 1, 
+            //    //TopicQuestions = 
+            //});
+            // END Test
+
+            //Fill in the details
+            //foreach (var topic in topics)
+            //{
+            //    topic.TopicQuestions = topicQuestions.Where(t => t.TopicId == topic.TopicId).ToList();
+            //    topic.QuestionCount = topic.TopicQuestions.Count;
+            //    topic.AnsweredCount = topic.TopicQuestions.Count(q => q.IsAnswered);
+            //}
+
+            Session["TopicsAndQuestions"] = topics;
       return JsonConvert.SerializeObject(topics);
     }
 

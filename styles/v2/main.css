@@ -220,6 +220,11 @@ body {
 #recorderButtonContainer {
     margin-top: 20px;
     overflow: hidden;
+    text-align: center;
+}
+
+.tlt-video-kendo-button {
+    margin: 10px 0 !important;
 }
 
 .recorder_on {

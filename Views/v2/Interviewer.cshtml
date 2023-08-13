@@ -17,9 +17,12 @@
             <div>
                 <img src=@Url.Content("~/Images/LargeIndicator.gif") id="topicLoadingImage" />
                 <div id="accordionoverflow">
-                    <div class="accordion" id="questionAccordion">
+                    @*<div class="accordion" id="questionAccordion">
 
-                    </div>
+                    </div>*@
+                    <ul id="questionAccordion">
+
+                    </ul>
                 </div>
             </div>
             <!-- END v1: Questions -->
@@ -47,25 +50,25 @@
 
         <div id="recorderButtonContainer">
             <div id="recordingIcon" class="recorder_off" style="width: 20px; height:20px;"></div>
-            <div id="recordButton" class="enabledRecordButton tlt-kendo-button k-button-lg" data-toggle="tooltip" data-placement="bottom" title="Answer/Record">
+            <div id="recordButton" class="enabledRecordButton tlt-video-kendo-button tlt-kendo-button k-button-lg" data-toggle="tooltip" data-placement="bottom" title="Answer/Record">
                 @*<div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 20%; width: 80%">Answer/</div>*@
                 @*<div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 22%; width: 78%">Record</div>*@
                 Answer/Record
             </div>
-            <div id="stopButton" class="enabledStopButton tlt-kendo-button k-button-lg" data-toggle="tooltip" data-placement="bottom" title="Stop">
+            <div id="stopButton" class="enabledStopButton tlt-video-kendo-button tlt-kendo-button k-button-lg" data-toggle="tooltip" data-placement="bottom" title="Stop">
                 @*<div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 30%; width: 70%">Stop</div>*@
                 Stop
             </div>
-            <div id="reviewButton" class="enabledReviewButton tlt-kendo-button k-button-lg" data-toggle="tooltip" data-placement="bottom" title="Review">
+            <div id="reviewButton" class="enabledReviewButton tlt-video-kendo-button tlt-kendo-button k-button-lg" data-toggle="tooltip" data-placement="bottom" title="Review">
                 @*<div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 25%; width: 75%">Review</div>*@
                 Review
             </div>
-            <div id="redoButton" class="enabledRedoButton tlt-kendo-button k-button-lg" data-toggle="tooltip" data-placement="bottom" title="Redo/Record">
+            <div id="redoButton" class="enabledRedoButton tlt-video-kendo-button tlt-kendo-button k-button-lg" data-toggle="tooltip" data-placement="bottom" title="Redo/Record">
                 @*<div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 30%; width: 70%">Redo/</div>*@
                 @*<div style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-left: 25%; width: 75%">Record</div>*@
                 Redo/Record
             </div>
-            <div id="postButton" class="enabledPostButton tlt-kendo-button k-button-lg" data-toggle="tooltip" data-placement="bottom" title="Post">
+            <div id="postButton" class="enabledPostButton tlt-video-kendo-button tlt-kendo-button k-button-lg" data-toggle="tooltip" data-placement="bottom" title="Post">
                 @*<div id="postButtonStyle" style="height: 16px; color: rgb(255, 255, 255); letter-spacing: 0.66px; font-size: 13px; margin-top: calc(.5rem); margin-left: 30%; width: 70%"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loadingPost" style="margin-right: 4px"></span>Post</div>*@
                 <div id="postButtonStyle"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loadingPost" style="margin-right: 4px"></span>Post</div>
             </div>
@@ -562,9 +565,29 @@
       }
       console.log("interviewHtml", interviewHtml);
       $("#interviewRecordingsContainer").html(interviewHtml);
-    }
+        }
 
-    function BuildAccordion() {
+        function BuildAccordion() {
+            //$("#questionAccordion").kendoPanelBar({
+                //expandMode: "single",
+            //});
+            $topics.forEach((element) => BuildAccordianTopic(element));
+        }
+
+        function BuildAccordianTopic(topic) {
+            console.log("BuildAccordianTopic topic= ", topic);
+            //var panelBar = $("#questionAccordion").data("kendoPanelBar");
+            var panelBar = $("#questionAccordion").kendoPanelBar().data("kendoPanelBar");
+            panelBar.append({ text: topic.TopicName });
+            //panelBar.insertAfter(
+            //    { text: "wtf1" },
+            //    //{ text: topic.TopicName },
+            //    //topic,
+            //    panelBar.element.children("li:last")
+            //);
+        }
+
+    @*function BuildAccordion() {
       var allTopics = "";
       var cardHtml =
         "<div class=\"card\" style=\"border:currentColor; border-image: none; background-color: rgb(238, 236, 236);\">";
@@ -671,7 +694,7 @@
           }
         }
       });
-    }
+    }*@
 
     function RefreshAccordion() {
       var getTopicsUrl = "@Url.Content("~/Interview/GetUserTopicsAndQuestions")";
