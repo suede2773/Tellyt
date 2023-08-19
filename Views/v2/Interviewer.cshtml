@@ -568,23 +568,27 @@
         }
 
         function BuildAccordion() {
-            //$("#questionAccordion").kendoPanelBar({
-                //expandMode: "single",
-            //});
             $topics.forEach((element) => BuildAccordianTopic(element));
         }
 
         function BuildAccordianTopic(topic) {
-            console.log("BuildAccordianTopic topic= ", topic);
-            //var panelBar = $("#questionAccordion").data("kendoPanelBar");
-            var panelBar = $("#questionAccordion").kendoPanelBar().data("kendoPanelBar");
-            panelBar.append({ text: topic.TopicName });
-            //panelBar.insertAfter(
-            //    { text: "wtf1" },
-            //    //{ text: topic.TopicName },
-            //    //topic,
-            //    panelBar.element.children("li:last")
-            //);
+            //console.log("BuildAccordianTopic topic= ", topic);
+            let panelBar = $("#questionAccordion").kendoPanelBar({ expandMode: "single" }).data("kendoPanelBar");
+            panelBar.append({ text: topic.TopicName, encoded: false, content: getAccordianItems(topic) });
+        }
+
+        function getAccordianItems(topic) {
+            let accordianItemsHTML = "<div>";
+            for (let iQuestion = 0; iQuestion < topic.TopicQuestions.length; iQuestion++) {
+                accordianItemsHTML += `<div>${getAccordianItemHTML(topic.TopicQuestions[iQuestion])}</div>`;
+            }
+            accordianItemsHTML += "</div>";
+            return accordianItemsHTML;
+        }
+
+        function getAccordianItemHTML(question) {
+            //return question.QuestionText + " 1";
+            return `<div id=${question.QuestionId}>${question.QuestionText}</div>`;
         }
 
     @*function BuildAccordion() {
