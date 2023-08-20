@@ -195,6 +195,7 @@ body {
 .tlt-dashboard-interviewer-content-header {
     letter-spacing: .45px;
     font-size: 18px;
+    font-weight: bold;
 }
 
 .tlt-dashboard-interviewer-content-ctn {
@@ -205,16 +206,19 @@ body {
 #tlt-dashboard-interviewer-questions-content-ctn {
     /*background-color: red;*/
     /*min-height: 400px;*/
+    margin-bottom: 30px;
 }
 
 #tlt-dashboard-interviewer-review-content-ctn {
     /*background-color: green;*/
     /*min-height: 400px;*/
+    margin-bottom: 30px;
 }
 
 #tlt-dashboard-interviewer-interview-content-ctn {
     /*background-color: blue;*/
     /*min-height: 400px;*/
+    margin-bottom: 30px;
 }
 
 #recorderButtonContainer {
@@ -342,4 +346,14 @@ body {
     background-color: #A4DD9D !important;
     cursor: default;
     color: #ffffff !important;
+}
+
+.tlt-question-play-btn {
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.tlt-question-accordian-item {
+    margin: 10px;
+    display: flex;
 }

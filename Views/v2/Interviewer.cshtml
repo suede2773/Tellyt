@@ -35,7 +35,7 @@
         <div id="tlt-dashboard-interviewer-review-content-ctn" class="tlt-dashboard-interviewer-content-ctn">
             <!-- v1: Review -->
             <div>
-        <div style="margin-top: 15px">
+        <div>
             <span id="questionShown"></span>
         </div>
         <div class="player">
@@ -569,6 +569,9 @@
 
         function BuildAccordion() {
             $topics.forEach((element) => BuildAccordianTopic(element));
+            setTimeout(() => {
+                handleTooltips();
+            }, 1000);
         }
 
         function BuildAccordianTopic(topic) {
@@ -587,8 +590,7 @@
         }
 
         function getAccordianItemHTML(question) {
-            //return question.QuestionText + " 1";
-            return `<div id=${question.QuestionId}>${question.QuestionText}</div>`;
+            return `<div class="tlt-question-accordian-item" id="${question.QuestionId}" data-toggle="tooltip" data-placement="bottom" title="${question.QuestionText}"><span>${question.QuestionText}</span><span class="k-icon k-i-play tlt-question-play-btn"></span></div>`;
         }
 
     @*function BuildAccordion() {
