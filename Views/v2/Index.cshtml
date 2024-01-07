@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout_v2.cshtml";
+}
+
+<div class="container">
+    <div id="page-ctn" class="row">
+        <h2>Home</h2>
+
+        <div style="padding-bottom:10px;">
+            <label for="primary-buttons">Primary Button:</label>
+            <button id="primary-buttons" class="tlt-kendo-button tlt-kendo-primary-button">Primary Button</button>
+        </div>
+
+        <div style="padding-bottom:10px;">
+            <label for="buttons">button:</label>
+            <button id="buttons" class="tlt-kendo-button">Button</button>
+        </div>
+
+        <div style="padding-bottom:10px;">
+            <label for="disabled-primary-buttons">Disabled Primary Button:</label>
+            <button id="disabled-primary-buttons" class="tlt-kendo-button tlt-kendo-disabled-primary-button">Disabled Primary Button</button>
+        </div>
+
+        <div style="padding-bottom:10px;">
+            <label for="disabled-buttons">Disabled Button:</label>
+            <button id="disabled-buttons" class="tlt-kendo-button tlt-kendo-disabled-button">Disabled Button</button>
+        </div>
+
+        <div style="padding-bottom:10px;">
+            <label for="panel-bars">Panel Bar (Accordion):</label>
+            <ul id="panel-bars" class="tlt-kendo-panel-bar">
+                <li>
+                    Item 1
+                    <ul>
+                        <li>Sub Item 1</li>
+                        <li>Sub Item 2</li>
+                    </ul>
+                </li>
+                <li>Item 2
+                    <ul>
+                        <li>Sub Item 1</li>
+                        <li>Sub Item 2</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+
+        });
+    </script>
+}
+

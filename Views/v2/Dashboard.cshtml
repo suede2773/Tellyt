@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout_v2.cshtml";
+}
+
+<div class="row">
+    <div class="col-12 tlt-no-lr-padding"><img id="tlt-dashborard-banner-img" src="~/images/v2/DashboardBanner.png" title="Your Time on Earth" /></div>
+</div>
+<div class="row">
+    <div id="tlt-dashboard-orange-ctn" class="col-12 tlt-no-lr-padding tlt-orange-bg">&nbsp;</div>
+</div>
+<div class="row">
+    <div class="col-12 text-center tlt-heading-ctn"><h2>Dashboard</h2></div>
+</div>
+<div class="row">
+    <div class="col-md-3" title="Profile Editor">
+            <a href="/v2/ProfileEditor" class="tlt-dashboard-link" title="Profile Editor">
+                <div class="row">
+                    <div class="col-4 text-center"><img class="tlt-flex-img tlt-dashboard-icon-img" src="~/images/dashboard-profile-editor.png" alt="Profile Editor" /></div>
+                    <div class="col-8">
+                        <h6>Profile Editor</h6>
+                        <p>Quickly make changes to you profile, add content or create a special section.</p>
+                    </div>
+                </div>
+            </a>
+    </div>
+    <div class="col-md-3" title="Interviewer">
+        <a href="/v2/Interviewer" class="tlt-dashboard-link" title="Interviewer">
+            <div class="row">
+                <div class="col-4 text-center"><img class="tlt-flex-img tlt-dashboard-icon-img" src="~/images/dashboard-interviewer.png" alt="Interviewer" /></div>
+                <div class="col-8">
+                    <h6>Interviewer</h6>
+                    <p>Lights, camera, action! Answer questions, record your responses, review and post your legacy.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3" title="Public Profile">
+        <a href="/v2/PublicProfile" class="tlt-dashboard-link" title="Public Profile">
+            <div class="row">
+                <div class="col-4 text-center"><img class="tlt-flex-img tlt-dashboard-icon-img" src="~/images/dashboard-public-profile.png" alt="Public Profile" /></div>
+                <div class="col-8">
+                    <h6>Public Profile</h6>
+                    <p>Showtime! This is where it all gets shared with a world wide audience.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3" title="Search Page">
+        <a href="/v2/DashboardSearch" class="tlt-dashboard-link" title="Search Page">
+            <div class="row">
+                <div class="col-4 text-center"><img class="tlt-flex-img tlt-dashboard-icon-img" src="~/images/dashboard-search-page.png" alt="Search Page" /></div>
+                <div class="col-8">
+                    <h6>Search Page</h6>
+                    <p>They're out there somewhere! Fill out a few text fields and you never know who you might find!</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3" title="Personal Info">
+        <a href="/v2/PersonalInfo" class="tlt-dashboard-link" title="Personal Info">
+            <div class="row">
+                <div class="col-4 text-center"><img class="tlt-flex-img tlt-dashboard-icon-img" src="~/images/dashboard-personal-info.png" alt="Personal Info" /></div>
+                <div class="col-8">
+                    <h6>Personal Info</h6>
+                    <p>Member profile page contains all the information about the member, including member type, name, address and more.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3" title="Guest Permissions">
+        <a href="/v2/GuestPermissions" class="tlt-dashboard-link" title="Guest Permissions">
+            <div class="row">
+                <div class="col-4 text-center"><img class="tlt-flex-img tlt-dashboard-icon-img" src="~/images/dashboard-guest-permissions.png" alt="Guest Permissions" /></div>
+                <div class="col-8">
+                    <h6>Guest Permissions</h6>
+                    <p>Customize who can interact with you and what they can see.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3" title="Tribute">
+        <a href="/v2/Tribute" class="tlt-dashboard-link" title="Tribute">
+            <div class="row">
+                <div class="col-4 text-center"><img class="tlt-flex-img tlt-dashboard-icon-img" src="~/images/dashboard-tribute.png" alt="Tribute" /></div>
+                <div class="col-8">
+                    <h6>Tribute</h6>
+                    <p>Create a space to honor friends or family.  Share memories and post photos and stories.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3" title="DNA Match">
+        <a href="/v2/DNAMatch" class="tlt-dashboard-link" title="DNA Match">
+            <div class="row">
+                <div class="col-4 text-center"><img class="tlt-flex-img tlt-dashboard-icon-img" src="~/images/dashboard-dna-match.png" alt="DNA Match" /></div>
+                <div class="col-8">
+                    <h6>DNA Match</h6>
+                    <p>Are you related to someone?  Upload your DNA or have your DNA mapped.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div id="tlt-dashboard-insights-ctn" class="col-12">
+        <div class="row">
+            <div class="col-12"><h4 id="tlt-dashboard-insight-text" class="capitalize">Your Visitors</h4></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-3" id="tlt-dashboard-insight-text-ctn">
+                <div><h4>Insights</h4></div>
+                <div><img id="tlt-dashboard-insight-img" class="tlt-flex-img" src="~/images/dashboard-page-insights.png" alt="Insights" /></div>
+            </div>
+            <div class="col-md-7">
+                <div style="margin: 10px 0;" class="col-12"><img class="tlt-flex-img" src="~/images/dashboard-globe-insights_2.png" alt="Map" /></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            onHandleNavBarHighlight("Dashboard");
+        });
+    </script>
+}
